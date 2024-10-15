@@ -14,7 +14,7 @@ const BestSellers = () => {
     const navigate=useNavigate();
 
     const handleImageClick = () => {
-        navigate('/cart');
+        navigate('/shop-grid-full-width');
       };
   return (
     <div className="carousel-container">

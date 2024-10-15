@@ -75,7 +75,6 @@ const ShopGridFullWidth = ({ location }) => {
     }
 
 
-
     const pageLimit = 15;
 
 

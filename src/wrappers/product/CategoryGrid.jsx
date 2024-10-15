@@ -61,8 +61,11 @@ import image13 from '../../assets/images/categories/10032.jpg'
 import image14 from '../../assets/images/categories/10033.jpg'
 import image15 from '../../assets/images/categories/10035.jpg'
 import './styles/categories.css'
+import { useNavigate } from 'react-router-dom';
+
 
 const CategoryGrid = () => {
+  const navigate = useNavigate();
   const categories = [
     { name: 'Oversized T-Shirt', image: image1 },
     { name: 'Jeans', image: image2 },
@@ -81,9 +84,12 @@ const CategoryGrid = () => {
     { name: 'Hat', image: image15},
 
   ];
+  const handleImageClick = () => {
+    navigate('/shop-grid-full-width');
+  };
 
   return (
-    <Container fluid>
+    <Container fluid onClick={handleImageClick}>
       <h3 className="text-center my-5"><b>CATEGORIES</b></h3>
       {/* First Row - 3 Cards */}
       <Row className="mb-4">
@@ -110,28 +116,7 @@ const CategoryGrid = () => {
           </Col>
         ))}
       </Row>
-      {/*Third Row-4 Cards */}
-      {/* <Row>
-        {categories.slice(7).map((category, index) => (
-          <Col key={index} md={3}>
-            <Card className="h-100 mb-3" style={{ border: 'none' }}>
-              <Card.Img variant="top" src={category.image} alt={category.name} />
-             
-            </Card>
-          </Col>
-        ))}
-      </Row> */}
-      {/* Fourth Row-4 Cards */}
-      {/* <Row>
-        {categories.slice(11).map((category, index) => (
-          <Col key={index} md={3}>
-            <Card className="h-100 mb-3" style={{ border: 'none' }}>
-              <Card.Img variant="top" src={category.image} alt={category.name} />
-              
-            </Card>
-          </Col>
-        ))}
-      </Row> */}
+      
       
     </Container>
   );

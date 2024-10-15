@@ -21,8 +21,18 @@ const Cart = () => {
   }, []);
 
   const handleClick = () => {
-    navigate('/delivery-address');
+    const billingDetails = {
+      cartTotal: calculateTotal(),
+      gst: 0,  
+      shippingCharges: 0,  
+    };
+  
+    // Passing cartItems and billing details to the DeliveryAddress component
+    navigate('/delivery-address', {
+      state: { cartItems, billingDetails }
+    });
   };
+  
 
   // const handleRemoveItem = (productId, size, color) => {
   //   removeFromCart(productId, size, color);
@@ -44,6 +54,31 @@ const Cart = () => {
         </div>
       );
     }
+    const handleQuantityChange = async (productId, size, newQuantity) => {
+      try {
+        const token = localStorage.getItem("token");  // Assuming the token is stored in localStorage
+        
+        const response = await fetch(`http://localhost:8000/cart/${productId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Add Authorization header
+          },
+          body: JSON.stringify({ size, quantity: newQuantity }),
+        });
+    
+        const data = await response.json();
+    
+        if (response.ok) {
+          fetchCartData(); // Refresh the cart data
+        } else {
+          console.error("Error updating cart:", data.message);
+        }
+      } catch (error) {
+        console.error("Network error:", error);
+      }
+    };
+    
     return (
       <>
         {cartItems.map((item) => (
@@ -65,6 +100,21 @@ const Cart = () => {
                   <h6 className="text-muted">Oversized T-Shirts</h6>
 
                   {/* Size and Quantity Section */}
+                  {/* <Form.Group as={Row} className="align-items-center">
+                    <Form.Label column xs="auto">Size:</Form.Label>
+                    <Col xs="auto">
+                      <Form.Control type="text" value={item.size} readOnly className="size-input" />
+                    </Col>
+                    <Form.Label column xs="auto">Qty:</Form.Label>
+                    <Col xs="auto">
+                      <Form.Select aria-label="Select quantity" defaultValue={item.quantity} className="quantity-select"
+                     onChange={(e) => handleQuantityChange(item.product._id, item.size, e.target.value)}>
+                        {[...Array(10).keys()].map((num) => (
+                          <option key={num + 1} value={num + 1}>{num + 1}</option>
+                        ))}
+                      </Form.Select>
+                    </Col>
+                  </Form.Group> */}
                   <Form.Group as={Row} className="align-items-center">
                     <Form.Label column xs="auto">Size:</Form.Label>
                     <Col xs="auto">
@@ -72,13 +122,21 @@ const Cart = () => {
                     </Col>
                     <Form.Label column xs="auto">Qty:</Form.Label>
                     <Col xs="auto">
-                      <Form.Select aria-label="Select quantity" defaultValue={item.quantity} className="quantity-select">
+                      <Form.Select
+                        aria-label="Select quantity"
+                        defaultValue={item.quantity}
+                        className="quantity-select"
+                        onChange={(e) => handleQuantityChange(item.product._id, item.size, e.target.value)}
+                      >
                         {[...Array(10).keys()].map((num) => (
-                          <option key={num + 1} value={num + 1}>{num + 1}</option>
+                          <option key={num + 1} value={num + 1}>
+                            {num + 1}
+                          </option>
                         ))}
                       </Form.Select>
                     </Col>
                   </Form.Group>
+
 
                   <p className="text-danger">Hurry! Only 1 in stock</p>
                   {/* <p>Estimated Delivery by <strong>20 Oct</strong></p> */}
@@ -124,9 +182,13 @@ const Cart = () => {
     );
   };
 
+  // const calculateTotal = () => {
+  //   return cartItems.reduce((total, item) => total + ((item.price || item.product?.price || 0) * item.quantity), 0);
+  // };
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + ((item.price || item.product?.price || 0) * item.quantity), 0);
   };
+
 
   return (
     <React.Fragment>
@@ -134,68 +196,68 @@ const Cart = () => {
         titleTemplate="Cart"
         description="Cart page of flone react minimalist eCommerce template."
       />
-      
+
       <LayoutOne headerTop="visible">
         <div className="cart-main-area pt-20 pb-100">
-        {cartItems.length > 0 && (
-          <>
-           <CheckoutHeader currentStep="bag" />
-           <hr />
-          </>
-       
-        )}
+          {cartItems.length > 0 && (
+            <>
+              <CheckoutHeader currentStep="bag" />
+              <hr />
+            </>
+
+          )}
           <Container className="mt-5">
             <Row>
               <Col md={8}>
-              {renderCartContent()}
+                {renderCartContent()}
               </Col>
               <Col md={4}>
-              {cartItems.length > 0 && (
-                <>
-                 <Accordion defaultActiveKey="0" className="mb-4">
-                  <Accordion.Item>
-                    <Accordion.Header className="custom-accordion-header">Apply Coupons</Accordion.Header>
-                    <Accordion.Body>
-                      <Form className="d-flex">
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter Code Here"
-                          className="me-2 form-control-sm"
-                        />
-                        <Button variant="outline-success" size="sm">
-                          APPLY
-                        </Button>
-                      </Form>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-                <h5 style={{color:'gray' }}>BILLING DETAILS</h5>
-                <Card className="mb-4" style={{ border: '0.5px solid lightgrey', borderRadius: 'none' }}>
-                  <Card.Body>
-                    <Row className="mb-2">
-                      <Col>Cart Total</Col>
-                      <Col className="text-end">₹ {calculateTotal()}</Col>
-                    </Row>
-                    <Row className="mb-2">
-                      <Col>GST</Col>
-                      <Col className="text-end">₹ 0</Col>
-                    </Row>
-                    <Row className="mb-2">
-                      <Col>Shipping Charges</Col>
-                      <Col className="text-end">₹ 0</Col>
-                    </Row>
-                    <hr />
-                    <Row>
-                      <Col>Total Amount</Col>
-                      <Col className="text-end">₹ {calculateTotal()}</Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-                <Button onClick={handleClick} className="w-100" style={{ backgroundColor: 'teal', border: 'none' }}>
-                  PLACE ORDER
-                </Button>
-                </>
-              )}
+                {cartItems.length > 0 && (
+                  <>
+                    <Accordion defaultActiveKey="0" className="mb-4">
+                      <Accordion.Item>
+                        <Accordion.Header className="custom-accordion-header">Apply Coupons</Accordion.Header>
+                        <Accordion.Body>
+                          <Form className="d-flex">
+                            <Form.Control
+                              type="text"
+                              placeholder="Enter Code Here"
+                              className="me-2 form-control-sm"
+                            />
+                            <Button variant="outline-success" size="sm">
+                              APPLY
+                            </Button>
+                          </Form>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    </Accordion>
+                    <h5 style={{ color: 'gray' }}>BILLING DETAILS</h5>
+                    <Card className="mb-4" style={{ border: '0.5px solid lightgrey', borderRadius: 'none' }}>
+                      <Card.Body>
+                        <Row className="mb-2">
+                          <Col>Cart Total</Col>
+                          <Col className="text-end">₹ {calculateTotal()}</Col>
+                        </Row>
+                        <Row className="mb-2">
+                          <Col>GST</Col>
+                          <Col className="text-end">₹ 0</Col>
+                        </Row>
+                        <Row className="mb-2">
+                          <Col>Shipping Charges</Col>
+                          <Col className="text-end">₹ 0</Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                          <Col>Total Amount</Col>
+                          <Col className="text-end">₹ {calculateTotal()}</Col>
+                        </Row>
+                      </Card.Body>
+                    </Card>
+                    <Button onClick={handleClick} className="w-100" style={{ backgroundColor: 'teal', border: 'none' }}>
+                      PLACE ORDER
+                    </Button>
+                  </>
+                )}
               </Col>
             </Row>
           </Container>
