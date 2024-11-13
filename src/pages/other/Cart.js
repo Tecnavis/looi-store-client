@@ -312,6 +312,7 @@ const Cart = () => {
   const { cartItems, removeFromCart, fetchCartData } = useCart();
   const { addToWishlist } = useContext(WishlistContext);
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [wishlistStatus, setWishlistStatus] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
@@ -324,7 +325,6 @@ const Cart = () => {
         setIsLoading(false);
       }
     };
-
     loadCartData();
   }, [fetchCartData, isLoading]);
 

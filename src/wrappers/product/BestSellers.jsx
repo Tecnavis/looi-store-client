@@ -177,7 +177,7 @@ const BestSellers = () => {
         console.error('Error fetching data:', error);
       }
     };
-
+ 
     fetchData();
   }, []);
 

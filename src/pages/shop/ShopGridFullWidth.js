@@ -3,13 +3,11 @@
 
 import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { Card, Row, Col, Spinner, Form } from "react-bootstrap";
+import { Card, Row, Col, Form } from "react-bootstrap";
 import SEO from "../../components/seo";
 import LayoutOne from '../../layouts/LayoutOne';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import axiosInstance from '../../config/axiosconfig';
-import banner from '../../assets/images/logo/banner/10010.webp';
-import BlogPagination from '../../wrappers/blog/BlogPagination';
 import { Loader } from 'lucide-react';
 
 
@@ -29,7 +27,6 @@ const ShopGridFullWidth = () => {
     const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
 
     // const BASE_URL = process.env.REACT_APP_BASE_URL || 'https://looi-store-server-ypdx.onrender.com'
-
     // pagination
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12); // Show 12 items per page
@@ -51,7 +48,6 @@ const ShopGridFullWidth = () => {
             });
         }
     };
-
 
     const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
     const priceRanges = [

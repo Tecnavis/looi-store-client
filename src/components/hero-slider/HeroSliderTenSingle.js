@@ -44,7 +44,6 @@
 
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import axiosInstance from '../../config/axiosconfig'; // Adjust path as needed
 
 const HeroSliderTenSingle = () => {
@@ -54,7 +53,6 @@ const HeroSliderTenSingle = () => {
   const [error, setError] = useState(null);
 
   const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
-
 
   useEffect(() => {
     fetchBanners();

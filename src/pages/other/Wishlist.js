@@ -705,15 +705,13 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from 'react-icons/fa';
-import { Spinner, Row, Col, Card, Container, Modal, Form } from "react-bootstrap";
-import axiosInstance from "../../config/axiosconfig";
+import {  Row, Col, Card, Container, Modal, Form } from "react-bootstrap";
 import LayoutOne from "../../layouts/LayoutOne";
 import SEO from "../../components/seo";
 import { WishlistContext } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext";
 import cogoToast from 'cogo-toast';
 import { Loader } from 'lucide-react';
-
 
 const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
 
