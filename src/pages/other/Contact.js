@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-import GoogleMap from "../../components/google-map"
 
 const Contact = () => {
   let { pathname } = useLocation();
@@ -18,7 +17,7 @@ const Contact = () => {
         {/* breadcrumb */}
         <Breadcrumb 
           pages={[
-            
+
             {label: "Contact", path: process.env.PUBLIC_URL + pathname }
           ]} 
         />

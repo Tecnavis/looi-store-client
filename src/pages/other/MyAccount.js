@@ -176,14 +176,13 @@
 
 
 import { Fragment, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
 import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
 import axiosInstance from '../../config/axiosconfig';
 
 const MyAccount = () => {
-  let { pathname } = useLocation();
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -223,7 +222,7 @@ const MyAccount = () => {
   const handleViewOrder = (orderId) => {
     navigate(`/myorders/${orderId}`);
   };
-
+  
   return (
     <Fragment>
       <SEO

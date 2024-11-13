@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import SubscribeEmail from "./sub-components/SubscribeEmail";
+// import SubscribeEmail from "./sub-components/SubscribeEmail";
 
 const FooterNewsletter = ({
   spaceBottomClass,

@@ -1,9 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
-import { Button, Card, Col, Row, Spinner, Form, Container, Modal } from "react-bootstrap";
+import { Button, Card, Col, Row, Form, Container, Modal } from "react-bootstrap";
 import axiosInstance from "../../config/axiosconfig";
 import CheckoutHeader from "../../components/checkout-header/CheckOutHeader";
 import EditAddressModal from "./EditAddressModal";

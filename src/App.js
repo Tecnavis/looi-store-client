@@ -112,13 +112,13 @@ const ResetPassword = lazy(() => import("./pages/other/ResetPassword"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 const Privacy=lazy(()=>import("./pages/other/Links/Privacy"))
-const Terms=lazy(()=>import("./pages/other/Links/TermsConditions"))
+// const Terms=lazy(()=>import("./pages/other/Links/TermsConditions"))
 const Cancellation=lazy(()=>import("./pages/other/Links/Cancellation"))
 const Shipping=lazy(()=>import("./pages/other/Links/Shipping"))
 
 
 // payment
-const payment=lazy(() => import("./pages/other/Payment"));
+// const payment=lazy(() => import("./pages/other/Payment"));
 
 // Myorders
 const Myorders=lazy(()=>import("./pages/other/MyOrder"))

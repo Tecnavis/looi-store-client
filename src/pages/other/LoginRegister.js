@@ -1,10 +1,9 @@
 import React, { Fragment, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
-import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axiosInstance from "../../config/axiosconfig";
 import logo from '../../assets/images/logo/LOOInew.png';
 import { Eye, EyeOff, Loader } from 'lucide-react';
@@ -15,7 +14,7 @@ import cogoToast from 'cogo-toast';
 
 
 const LoginRegister = () => {
-  let { pathname } = useLocation();
+  // let { pathname } = useLocation();
   let navigate = useNavigate();
  
   const [loginForm, setLoginForm] = useState({

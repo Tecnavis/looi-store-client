@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import { useLocation } from "react-router-dom";
-import SEO from "../../../components/seo";
 import LayoutOne from "../../../layouts/LayoutOne";
 import Breadcrumb from "../../../wrappers/breadcrumb/Breadcrumb";
 

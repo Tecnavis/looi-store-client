@@ -10,7 +10,7 @@ import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Swiper, { SwiperSlide } from "../../components/swiper";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
 import './styles/cartstyle.css'
 import axiosInstance from '../../config/axiosconfig'
@@ -325,10 +325,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                     +
                   </button>
                 </div>
-                
-
-
-                
+                                
               </div>
 
               <div className="d-flex justify-space-between">

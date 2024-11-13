@@ -3,15 +3,11 @@ import { useParams, useLocation } from "react-router-dom";
 import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
 import ProductImageDescription from "../../wrappers/product/ProductImageDescription";
-import ProductDescriptionTab from "../../wrappers/product/ProductDescriptionTab";
-import SimilarProduct from "../../wrappers/product/SimilarProduct";
 import axiosInstance from '../../config/axiosconfig';
 import { Loader } from 'lucide-react';
-import { Spinner } from "react-bootstrap";
 
 
 const ProductTabLeft = () => {
-  let { pathname}=useLocation();
   let { productId } = useParams(); // Get product id from URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
