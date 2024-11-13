@@ -1,55 +1,3 @@
-// import { Fragment } from "react"; 
-// import { useSelector } from "react-redux";
-// import { useParams, useLocation } from "react-router-dom";
-// import SEO from "../../components/seo";
-// import LayoutOne from "../../layouts/LayoutOne";
-// import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-// import RelatedProductSlider from "../../wrappers/product/RelatedProductSlider";
-// import ProductDescriptionTab from "../../wrappers/product/ProductDescriptionTab";
-// import ProductImageDescription from "../../wrappers/product/ProductImageDescription";
-// import SimilarProduct from "../../wrappers/product/SimilarProduct";
-
-
-// const ProductTabLeft = () => {
-//   let { pathname } = useLocation();
-//   let { id } = useParams();
-//   const { products } = useSelector((state) => state.product);
-//   const product = products.find(product => product.id === id);
-
-//   return (
-//     <Fragment>
-//       <SEO
-//         titleTemplate="Product Page"
-//         description="Product page of flone react minimalist eCommerce template."
-//       />
-
-//       <LayoutOne headerTop="visible">
-      
-//         {/* product description with image */}
-//         <ProductImageDescription
-//           spaceTopClass="pt-100"
-//           spaceBottomClass="pb-100"
-//           product={product}
-//           galleryType="leftThumb"
-//         />
-
-//         {/* product description tab */}
-//         <ProductDescriptionTab
-//           spaceBottomClass="pb-90"
-//           productFullDesc={product.fullDescription}
-//         />
-
-        
-//       <SimilarProduct/>
-//       </LayoutOne>
-//     </Fragment>
-//   );
-// };
-
-
-// export default ProductTabLeft;
-
-
 import React, { useEffect, useState, Fragment } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import SEO from "../../components/seo";
@@ -58,6 +6,9 @@ import ProductImageDescription from "../../wrappers/product/ProductImageDescript
 import ProductDescriptionTab from "../../wrappers/product/ProductDescriptionTab";
 import SimilarProduct from "../../wrappers/product/SimilarProduct";
 import axiosInstance from '../../config/axiosconfig';
+import { Loader } from 'lucide-react';
+import { Spinner } from "react-bootstrap";
+
 
 const ProductTabLeft = () => {
   let { pathname}=useLocation();
@@ -82,9 +33,19 @@ const ProductTabLeft = () => {
 
     fetchProduct();
   }, [productId]);
+ 
+  if (loading) {
+    return (
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+     <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <Loader size={38} className="animate-spin text-center" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <Fragment>
@@ -102,15 +63,9 @@ const ProductTabLeft = () => {
           galleryType="leftThumb"
         />
 
-        {/* product description tab */}
-        {/* <ProductDescriptionTab
-          spaceBottomClass="pb-90"
-          productFullDesc={product.fullDescription}
-          product={product}
-        /> */}
-
-        <SimilarProduct />
+      
       </LayoutOne>
+    
     </Fragment>
   );
 };

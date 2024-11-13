@@ -3,6 +3,8 @@ import ScrollToTop from "./helpers/scroll-top";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { WishlistProvider } from "./context/WishlistContext";
 import { CartProvider } from "./context/CartContext";
+import Payment from "./pages/other/Payment";
+import TermsConditions from "./pages/other/Links/TermsConditions";
 
 // home pages
 const HomeFashion = lazy(() => import("./pages/home/HomeFashion"));
@@ -105,8 +107,21 @@ const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const DeliveryAddress = lazy(() => import("./pages/other/DeliveryAddress"));
+const ForgotPassword = lazy(() => import("./pages/other/ForgetPassword"));
+const ResetPassword = lazy(() => import("./pages/other/ResetPassword"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
+const Privacy=lazy(()=>import("./pages/other/Links/Privacy"))
+const Terms=lazy(()=>import("./pages/other/Links/TermsConditions"))
+const Cancellation=lazy(()=>import("./pages/other/Links/Cancellation"))
+const Shipping=lazy(()=>import("./pages/other/Links/Shipping"))
+
+
+// payment
+const payment=lazy(() => import("./pages/other/Payment"));
+
+// Myorders
+const Myorders=lazy(()=>import("./pages/other/MyOrder"))
 
 
 const App = () => {
@@ -310,7 +325,7 @@ const App = () => {
                 element={<ShopGridNoSidebar/>}
               />
               <Route
-                path={process.env.PUBLIC_URL + "/shop-grid-full-width"}
+                path={process.env.PUBLIC_URL + "/shop-grid-full-width/:subcategoryId"}
                 element={<ShopGridFullWidth/>}
               />
               <Route
@@ -384,6 +399,23 @@ const App = () => {
                 element={<Contact/>}
               />
               <Route
+                path={process.env.PUBLIC_URL + "/privacy"}
+                element={<Privacy/>}
+              />
+              <Route
+                path={process.env.PUBLIC_URL + "/terms"}
+                element={<TermsConditions/>}
+              />
+              <Route
+                path={process.env.PUBLIC_URL + "/cancellation"}
+                element={<Cancellation/>}
+              />
+              <Route
+                path={process.env.PUBLIC_URL + "/shipping"}
+                element={<Shipping/>}
+              />
+
+              <Route
                 path={process.env.PUBLIC_URL + "/my-account"}
                 element={<MyAccount/>}
               />
@@ -391,7 +423,16 @@ const App = () => {
                 path={process.env.PUBLIC_URL + "/login-register"}
                 element={<LoginRegister/>}
               />
-
+             {/* forget password */}
+              <Route
+                path={process.env.PUBLIC_URL + "/forget-password"}
+                element={<ForgotPassword/>}
+              />
+              {/* reset password */}
+              <Route
+                path={process.env.PUBLIC_URL + "/reset-password/:token"}  
+                element={<ResetPassword/>}
+              />
               <Route
                 path={process.env.PUBLIC_URL + "/cart"}
                 element={<Cart/>}
@@ -408,8 +449,17 @@ const App = () => {
                 path={process.env.PUBLIC_URL + "/checkout"}
                 element={<Checkout/>}
               /> 
+              {/* payment */}
+              <Route
+                path={process.env.PUBLIC_URL + "/payment"}
+                element={<Payment/>}
+              />  
+              {/* myorders */}
+              <Route
+                path={process.env.PUBLIC_URL + "/myorders/:orderId"}
+                element={<Myorders/>}
+              />
             
-          
               <Route path="*" element={<NotFound/>} />
             
             </Routes>

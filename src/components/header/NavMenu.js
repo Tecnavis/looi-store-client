@@ -757,7 +757,7 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }) => {
         <ul>
           {mainCategories.map((mainCategory) => (
             <li key={mainCategory._id}>
-              <Link to={process.env.PUBLIC_URL + `/category/${mainCategory._id}`}>
+              <Link to={process.env.PUBLIC_URL + `/`}>
                 {mainCategory.mainCategoryName}
                 {sidebarMenu ? (
                   <span>
@@ -771,13 +771,13 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }) => {
               <ul className="mega-menu mega-menu-padding" style={{ marginTop: '0', paddingTop: '0' }}>
                 {getCategoriesByMainCategory(mainCategory._id).map((category) => (
                   <li key={category._id}>
-                    <Link to={process.env.PUBLIC_URL + `/subcategory/${category._id}`}>
+                    <Link to={process.env.PUBLIC_URL + ``}>
                       {category.name}
                     </Link>
                     <ul>
                       {getSubcategoriesByCategory(category._id).map((subcategory) => (
                         <li key={subcategory._id}>
-                          <Link to={process.env.PUBLIC_URL + `/product/${subcategory._id}`}>
+                          <Link to={process.env.PUBLIC_URL + `/shop-grid-full-width/${subcategory._id}`}>
                             {subcategory.subcategoryname}
                           </Link>
                         </li>

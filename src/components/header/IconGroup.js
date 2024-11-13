@@ -3,7 +3,7 @@
 
 // --------------------------------------------------------------------------
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
@@ -12,8 +12,18 @@ import { useCart } from "../../context/CartContext";
 
 const IconGroup = ({ iconWhiteClass }) => {
   const navigate = useNavigate();
-  const { wishlistCount } = useContext(WishlistContext);
-  const { cartCount } = useCart();
+  const { wishlistCount,fetchWishlistData } = useContext(WishlistContext);
+  const { cartCount,fetchCartData } = useCart();
+
+  useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Fetch latest counts when component mounts or token changes
+      fetchWishlistData();
+      fetchCartData();
+    }
+  }, [localStorage.getItem('token')]);
 
   const handleClick = e => {
     e.currentTarget.nextSibling.classList.toggle("active");
@@ -26,10 +36,12 @@ const IconGroup = ({ iconWhiteClass }) => {
     offcanvasMobileMenu.classList.add("active");
   };
   const handleLogout = () => {
-    // Remove the token or session data from localStorage or cookies
+   
     localStorage.removeItem('token');
-    
-    // Redirect to login page using navigate
+    window.location.reload();
+
+    fetchWishlistData();
+    fetchCartData();
     navigate(process.env.PUBLIC_URL + "/login-register"); // Corrected the route
   };
   
@@ -51,7 +63,7 @@ const IconGroup = ({ iconWhiteClass }) => {
           </form>
         </div>
       </div>
-      <div className="same-style account-setting d-none d-lg-block">
+      <div className="same-style account-setting ">
         <button
           className="account-setting-active"
           onClick={e => handleClick(e)}
@@ -134,6 +146,7 @@ const IconGroup = ({ iconWhiteClass }) => {
           </span>
         </Link>
       </div>
+
       <div className="same-style mobile-off-canvas d-block d-lg-none">
         <button
           className="mobile-aside-button"

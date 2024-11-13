@@ -7,12 +7,9 @@ const SectionTitleWithText = ({ spaceTopClass, spaceBottomClass }) => {
       <div className="container">
         <div className="welcome-content text-center">
           <h5>Who Are We</h5>
-          <h1>Welcome To Flone</h1>
+          <h1>Welcome To Looi</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt labor et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commo consequat irure{" "}
+          Looi Clothing Store is more than just a fashion destination; it’s a brand committed to blending style, comfort, and quality to help you express yourself with confidence. At Looi, we believe that fashion should be both beautiful and functional, which is why our collections are crafted with attention to detail and a focus on timeless elegance and modern aesthetics.{" "}
           </p>
         </div>
       </div>

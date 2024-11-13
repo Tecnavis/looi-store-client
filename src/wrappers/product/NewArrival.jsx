@@ -9,7 +9,8 @@ const NewArrival = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  // const BASE_URL = 'https://looi-store-server-1.onrender.com';
+  const BASE_URL =  process.env.REACT_APP_BASE_URL || 'https://looi-store-server-1.onrender.com'
 
   useEffect(() => {
     const fetchNewArrivals = async () => {
@@ -27,9 +28,9 @@ const NewArrival = () => {
     fetchNewArrivals();
   }, []);
 
-  if (loading) {
-    return <Spinner animation="border" variant="primary" />;
-  }
+  // if (loading) {
+  //   return <Spinner animation="border" variant="primary" />;
+  // }
 
   if (error) {
     return <div className="text-center">{error}</div>;
@@ -45,17 +46,19 @@ const NewArrival = () => {
   return (
     <div className="product-area pb-60 section-padding-1">
       <div className="container-fluid">
-        <h3 className="text-center my-5"><b>New Arrivals</b></h3>
-
+      {products.length > 0 && (
+          <h3 className="text-center my-5"><b>New Arrivals</b></h3>
+        )}
+       
         <Row className="justify-content-center">
           {limitedProducts.map((product) => (
             <Col xs={12} sm={6} md={3} className="mb-4 d-flex justify-content-center" key={product._id}>
               <Card style={{ width: '100%', border: 'none', height: '100%' }} onClick={() => handleCardClick(product._id)}>
                 {product.coverImage ? (
                   <img
-                    src={`http://localhost:8000/uploads/${product.coverImage}`}
+                    src={`${BASE_URL}/uploads/${product.coverImage}`}
                     alt={product.name}
-                    style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                    style={{ width: '100%', height: '380px', objectFit: 'cover' }}
                   />
                 ) : (
                   <p>No Cover Image Available</p>
@@ -67,7 +70,7 @@ const NewArrival = () => {
                   <hr />
                   <Card.Text style={{ flex: 1 }}>
 
-                    <h5 style={{ color: '#999999' }}>Men's T-shirts</h5>
+                    <h5 style={{ color: '#999999' }}>{product.subcategory.subcategoryname}</h5>
                     <b>₹ {product.price}</b>
                   </Card.Text>
                 </Card.Body>

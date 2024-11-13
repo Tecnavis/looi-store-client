@@ -8,12 +8,12 @@ const MobileWidgets = () => {
           <ul className="header-contact-info__list">
             <li>
               <i className="fa fa-phone"></i>{" "}
-              <a href="tel://12452456012">(1245) 2456 012 </a>
+              <a href="tel://12452456012">+91 8891022217 </a>
             </li>
-            <li>
+            {/* <li>
               <i className="fa fa-envelope"></i>{" "}
               <a href="mailto:info@yourdomain.com">info@yourdomain.com</a>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
@@ -28,9 +28,9 @@ const MobileWidgets = () => {
         <a href="//facebook.com" title="Facebook">
           <i className="fa fa-facebook"></i>
         </a>
-        <a href="//pinterest.com" title="Pinterest">
+        {/* <a href="//pinterest.com" title="Pinterest">
           <i className="fa fa-pinterest"></i>
-        </a>
+        </a> */}
       </div>
       {/*Off Canvas Widget Social End*/}
     </div>

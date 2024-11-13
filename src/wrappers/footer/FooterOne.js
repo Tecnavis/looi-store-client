@@ -54,11 +54,7 @@ const FooterOne = ({
                       Contact
                     </Link>
                   </li>
-                  <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>
-                      Orders tracking
-                    </Link>
-                  </li>
+                  
                 </ul>
               </div>
             </div>
@@ -68,31 +64,32 @@ const FooterOne = ({
               sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
             }`}
           >
-            <div
+            {/* <div
               className={`${
                 sideMenu
                   ? "footer-widget mb-30 ml-95"
                   : "footer-widget mb-30 ml-50"
               }`}
-            >
+            > */}
+            <div className={`footer-widget mb-30 ml-50`}>
               <div className="footer-title">
-                <h3>USEFUL LINKS</h3>
+                <h3>IMPORTANT LINKS</h3>
               </div>
               <div className="footer-list">
                 <ul>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>Returns</Link>
+                    <Link to={process.env.PUBLIC_URL + "/privacy"}>Privacy Policy</Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>
-                      Support Policy
+                    <Link to={process.env.PUBLIC_URL + "/terms"}>
+                      Terms and Conditions
                     </Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>Size guide</Link>
+                    <Link to={process.env.PUBLIC_URL + "/cancellation"}>Cancellation and Refund</Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>FAQs</Link>
+                    <Link to={process.env.PUBLIC_URL + "/shipping"}>Shipping and Delivery</Link>
                   </li>
                 </ul>
               </div>

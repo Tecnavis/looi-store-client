@@ -53,6 +53,9 @@ const HeroSliderTenSingle = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const BASE_URL = 'https://looi-store-server-1.onrender.com';
+
+
   useEffect(() => {
     fetchBanners();
   }, []);
@@ -101,7 +104,7 @@ const HeroSliderTenSingle = () => {
   }
 
   const currentBanner = banners[currentBannerIndex];
-  const imageUrl = `http://localhost:8000/uploads/${currentBanner.images[0]}`;
+  const imageUrl = `${BASE_URL}/uploads/${currentBanner.images[0]}`;
 
   return (
     <div

@@ -1,216 +1,297 @@
-import { Fragment, useState, useEffect } from 'react';
 
+// editing code-new
 
-import { useNavigate } from "react-router-dom"
-import { getSortedProducts } from '../../helpers/product';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import { Card, Row, Col, Spinner, Form } from "react-bootstrap";
 import SEO from "../../components/seo";
 import LayoutOne from '../../layouts/LayoutOne';
-import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb';
-import ShopSidebar from '../../wrappers/product/ShopSidebar';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
-import ShopProducts from '../../wrappers/product/ShopProducts';
 import axiosInstance from '../../config/axiosconfig';
-import { Card, Row, Col, Spinner } from "react-bootstrap";
-import { Form, ListGroup } from 'react-bootstrap';
-import banner from '../../assets/images/logo/banner/10010.webp'
-import { FaHeart } from 'react-icons/fa';
+import banner from '../../assets/images/logo/banner/10010.webp';
+import BlogPagination from '../../wrappers/blog/BlogPagination';
+import { Loader } from 'lucide-react';
 
 
-
-const ShopGridFullWidth = ({ location }) => {
+const ShopGridFullWidth = () => {
     const [layout, setLayout] = useState('grid three-column');
-    const [sortType, setSortType] = useState('');
-    const [sortValue, setSortValue] = useState('');
-    const [filterSortType, setFilterSortType] = useState('');
-    const [filterSortValue, setFilterSortValue] = useState('');
-    const [offset, setOffset] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [currentData, setCurrentData] = useState([]);
-    const [sortedProducts, setSortedProducts] = useState([]);
     const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const { subcategoryId } = useParams();
+    const [selectedSizes, setSelectedSizes] = useState([]);
+    const [selectedColors, setSelectedColors] = useState([]);
+    const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
+    const [availableColors, setAvailableColors] = useState([]);
+    const [sortOrder, setSortOrder] = useState('default');
+    const BASE_URL = process.env.REACT_APP_BASE_URL || 'https://looi-store-server-1.onrender.com'
 
-    const [isHovered, setIsHovered] = useState(false);
+    // pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(12); // Show 12 items per page
 
-    const categories = [
-        'All Categories',
-        'Fashion',
-        'Men',
-        'Women',
-        'Electronics',
-        'Furniture',
+    // Calculate pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+    // Handle page changes
+    const handlePageChange = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            setCurrentPage(pageNumber);
+            // Scroll to top of product section
+            window.scrollTo({
+                top: document.querySelector('.shop-area').offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+
+    const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+    const priceRanges = [
+        { label: 'Rs. 299 To Rs. 499', value: '299-499' },
+        { label: 'Rs. 499 To Rs. 999', value: '499-999' },
+        { label: 'Rs. 999 To Rs. 1999', value: '999-1999' },
+        { label: 'Rs. 1999 To Rs. 2999', value: '1999-2999' },
     ];
-    const sizes = [
-        'S',
-        'M',
-        'L',
-        'XL',
-
-    ];
+    const [banners, setBanners] = useState([]);
 
     useEffect(() => {
-        const fetchNewArrivals = async () => {
+        const fetchProducts = async () => {
             try {
-                const response = await axiosInstance.get('/get-allproduct'); // Ensure this URL is correct
-                setProducts(response.data.products); // Adjust based on your actual response structure
+                setLoading(true);
+                const response = await axiosInstance.get(`/get-allproduct`);
+                const allProducts = response.data.products;
+                const filteredProducts = allProducts.filter(product => product.subcategory === subcategoryId);
+                setProducts(filteredProducts);
+                setFilteredProducts(filteredProducts);
+
+                // Extract all unique colors from the products
+                const colors = new Set();
+                filteredProducts.forEach(product => {
+                    product.sizes.forEach(size => {
+                        size.colors.forEach(colorObj => {
+                            colors.add(colorObj.color);
+                        });
+                    });
+                });
+                setAvailableColors(Array.from(colors));
+
                 setLoading(false);
             } catch (err) {
-                console.error("Error fetching new arrivals:", err);
-                setError("Failed to load new arrivals");
+                console.error("Error fetching products:", err);
+                setError("Failed to load products");
+                setLoading(false);
+            }
+        };
+        const fetchBanners = async () => {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await axiosInstance.get('/get-adbanner', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                setBanners(response.data.banners); // Assuming response.data.banners contains the list of banners
+            } catch (err) {
+                setError('Error fetching banners');
+            } finally {
                 setLoading(false);
             }
         };
 
-        fetchNewArrivals();
-    }, []);
+        fetchBanners();
+
+        fetchProducts();
+    }, [subcategoryId]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+        filterProducts();
+    }, [selectedSizes, selectedColors, selectedPriceRanges, sortOrder]);
+
+    const filterProducts = () => {
+        let filtered = [...products];
+
+        if (selectedSizes.length > 0) {
+            filtered = filtered.filter(product =>
+                product.sizes.some(sizeObj => selectedSizes.includes(sizeObj.size))
+            );
+        }
+
+        if (selectedColors.length > 0) {
+            filtered = filtered.filter(product =>
+                product.sizes.some(sizeObj =>
+                    sizeObj.colors.some(colorObj => selectedColors.includes(colorObj.color))
+                )
+            );
+        }
+
+        if (selectedPriceRanges.length > 0) {
+            filtered = filtered.filter(product =>
+                selectedPriceRanges.some(range => {
+                    const [min, max] = range.split('-').map(Number);
+                    return product.price >= min && product.price <= max;
+                })
+            );
+        }
+
+        switch (sortOrder) {
+            case 'lowToHigh':
+                filtered.sort((a, b) => a.price - b.price);
+                break;
+            case 'highToLow':
+                filtered.sort((a, b) => b.price - a.price);
+                break;
+            default:
+                // Default sorting (you might want to define a default sort order)
+                break;
+        }
+
+        setFilteredProducts(filtered);
+    };
+
+    const handleSizeChange = (size) => {
+        setSelectedSizes(prev =>
+            prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size]
+        );
+    };
+
+    const handleColorChange = (color) => {
+        setSelectedColors(prev =>
+            prev.includes(color) ? prev.filter(c => c !== color) : [...prev, color]
+        );
+    };
+
+    const handlePriceChange = (value) => {
+        setSelectedPriceRanges(prev =>
+            prev.includes(value) ? prev.filter(r => r !== value) : [...prev, value]
+        );
+    };
+
+    const handleCardClick = (productId) => {
+        navigate(`/product-tab-left/${productId}`);
+    };
+
+    const getLayout = (layout) => {
+        setLayout(layout);
+    };
+    const getFilterSortParams = (sortType, value) => {
+        if (sortType === "filterSort") {
+            setSortOrder(value);
+        }
+    };
+
+   
 
     if (loading) {
-        return <Spinner animation="border" variant="primary" />;
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <Loader size={38} className="animate-spin text-center" />
+      </div>
+        );
     }
 
     if (error) {
         return <div className="text-center">{error}</div>;
     }
 
-
-    const pageLimit = 15;
-
-
-    const getLayout = (layout) => {
-        setLayout(layout)
-    }
-
-    const getSortParams = (sortType, sortValue) => {
-        setSortType(sortType);
-        setSortValue(sortValue);
-    }
-
-    const getFilterSortParams = (sortType, sortValue) => {
-        setFilterSortType(sortType);
-        setFilterSortValue(sortValue);
-    }
-    const handleCardClick = (productId) => {
-        navigate(`/product-tab-left/1`); // Navigate to the /cart page with productId
-    };
-
-
-    // useEffect(() => {
-    //     let sortedProducts = getSortedProducts(products, sortType, sortValue);
-    //     const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
-    //     sortedProducts = filterSortedProducts;
-    //     setSortedProducts(sortedProducts);
-    //     setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
-    // }, [offset, products, sortType, sortValue, filterSortType, filterSortValue ]);
-
     return (
         <Fragment>
-            <SEO
-                titleTemplate="Shop Page"
-                description="Shop page of flone react minimalist eCommerce template."
-            />
-
+            <SEO titleTemplate="Shop Page" description="Shop page of flone react minimalist eCommerce template." />
             <LayoutOne headerTop="visible">
-                <div className='banner-div'>
-                    <img src={banner} className="img-fluid" alt="banner" />
+                <div className="banner-container ">
+                    {banners.length > 0 ? (
+                        banners.map((banner, index) => (
+                            <div key={banner._id} className="banner-item">
+                                <div className="banner-div">
+                                    {banner.image ? (
+                                        <img
+                                            src={`${BASE_URL}/uploads/${banner.image}`}
+                                            className="img-fluid"
+                                            alt={`Banner ${index}`}
+                                            style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+                                        />
+                                    ) : (
+                                        <p>No Image Available</p>
+                                    )}
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No Banners Available</p>
+                    )}
                 </div>
-
                 <div className="shop-area pt-50 pb-100">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-lg-3 order-2 order-lg-1">
-                                {/* shop sidebar */}
-                                {/* <ShopSidebar getSortParams={getSortParams} sideSpaceClass="mr-30" /> */}
-                                <h4 className='mb-3'>Categories</h4>
-                                {categories.map((category, idx) => (
+                                <h4 className='mb-3' style={{ color: 'grey' }}>COLORS</h4>
+                                {availableColors.map((color, idx) => (
                                     <div key={idx} className="mb-2">
                                         <Form.Check
                                             type="checkbox"
-                                            label={category}
-                                            id={`category-${idx}`}
+                                            label={color}
+                                            id={`color-${color}`}
+                                            onChange={() => handleColorChange(color)}
+                                            checked={selectedColors.includes(color)}
                                         />
                                     </div>
                                 ))}
-                                <div>
-                                    <h4 className='mt-3 mb-3'>Sizes</h4>
-                                    {sizes.map((category, idx) => (
-                                        <div key={idx} className="mb-2">
-                                            <Form.Check
-                                                type="checkbox"
-                                                label={category}
-                                                id={`category-${idx}`}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-
+                                <h4 className='mt-3 mb-3' style={{ color: 'grey' }}>SIZES</h4>
+                                {sizes.map((size, idx) => (
+                                    <div key={idx} className="mb-2">
+                                        <Form.Check
+                                            type="checkbox"
+                                            label={size}
+                                            id={`size-${size}`}
+                                            onChange={() => handleSizeChange(size)}
+                                            checked={selectedSizes.includes(size)}
+                                        />
+                                    </div>
+                                ))}
+                                <h4 className='mt-3 mb-3' style={{ color: 'grey' }}>PRICES</h4>
+                                {priceRanges.map((range, idx) => (
+                                    <div key={idx} className="mb-2">
+                                        <Form.Check
+                                            type="checkbox"
+                                            label={range.label}
+                                            id={`priceRange-${idx}`}
+                                            onChange={() => handlePriceChange(range.value)}
+                                            checked={selectedPriceRanges.includes(range.value)}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                             <div className="col-lg-9 order-1 order-lg-2">
-
-
-                                {/* shop topbar default */}
-                                <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} sortedProductCount={currentData.length} />
-
-
-
-                                {/* shop page content default */}
-                                {/* <ShopProducts layout={layout} products={currentData} /> */}
-
-                                {/* shop product pagination */}
-                                {/* <div className="pro-pagination-style text-center mt-30">
-                                    <Paginator
-                                        totalRecords={sortedProducts.length}
-                                        pageLimit={pageLimit}
-                                        pageNeighbours={2}
-                                        setOffset={setOffset}
-                                        currentPage={currentPage}
-                                        setCurrentPage={setCurrentPage}
-                                        pageContainerClass="mb-0 mt-0"
-                                        pagePrevText="«"
-                                        pageNextText="»"
-                                    />
-                                </div> */}
-
+                                <ShopTopbar
+                                    getLayout={getLayout}
+                                    getFilterSortParams={getFilterSortParams}
+                                    productCount={filteredProducts.length} />
                                 <Row className="justify-content-center">
-                                    {products.map((product) => (
-                                        <Col xs={12} sm={6} md={3} className="mb-4 d-flex justify-content-center" key={product._id}>
+                                    {filteredProducts.map((product) => (
+                                        <Col xs={12} sm={6} md={4} lg={3} className="mb-4" key={product._id}>
                                             <Card style={{ width: '100%', border: 'none', height: '100%' }} onClick={() => handleCardClick(product._id)}>
-                                                {product.coverImage ? (
-                                                    <div className="position-relative">
-                                                        <FaHeart
-                                                            style={{
-                                                                position: 'absolute',
-                                                                top: '10px',
-                                                                right: '10px',
-                                                                cursor: 'pointer',
-                                                                zIndex: 1,
-                                                                color: '#fff', // White color for the heart icon
-                                                                backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent dark circle background
-                                                                borderRadius: '50%', // Make it circular
-                                                                padding: '8px', // Padding for space around the heart
-                                                                width: '32px', // Set a fixed width for a circular effect
-                                                                height: '32px', // Set a fixed height for a circular effect
-                                                            }}
-                                                        />
-                                                        <img
-                                                            src={`http://localhost:8000/uploads/${product.coverImage}`}
-                                                            alt={product.name}
-                                                            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                                                        />
-                                                    </div>
-
-                                                ) : (
-                                                    <p>No Cover Image Available</p>
-                                                )}
-                                                <Card.Body style={{ height: '100%' }}>
+                                                <div className="position-relative">
+                                                    <Card.Img
+                                                        variant="top"
+                                                        src={`${BASE_URL}/uploads/${product.coverImage}`}
+                                                        alt={product.name}
+                                                        style={{ width: '100%', height: '300px', objectFit: 'cover' }}
+                                                    />
+                                                </div>
+                                                <Card.Body>
                                                     <Card.Title className="product-name" style={{ color: '#5b5b5b', fontSize: '16px', height: '20px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                                         <h5><b>{product.name}</b></h5>
                                                     </Card.Title>
                                                     <hr />
-                                                    <Card.Text style={{ flex: 1 }}>
-
-                                                        <h5 style={{ color: '#999999' }}>Men's T-shirts</h5>
+                                                    <Card.Text>
                                                         <b>₹ {product.price}</b>
                                                     </Card.Text>
                                                 </Card.Body>
@@ -218,13 +299,20 @@ const ShopGridFullWidth = ({ location }) => {
                                         </Col>
                                     ))}
                                 </Row>
+                                {/* <BlogPagination
+                            
+                                    currentPage={currentPage}
+                                    totalPages={totalPages}
+                                    onPageChange={handlePageChange}
+                                /> */}
+
                             </div>
                         </div>
                     </div>
                 </div>
             </LayoutOne>
         </Fragment>
-    )
-}
+    );
+};
 
 export default ShopGridFullWidth;

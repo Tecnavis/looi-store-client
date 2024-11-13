@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-
 import { setActiveLayout } from "../../helpers/product";
 
 const ShopTopAction = ({
@@ -16,16 +15,15 @@ const ShopTopAction = ({
             onChange={e => getFilterSortParams("filterSort", e.target.value)}
           >
             <option value="default">Default</option>
-            <option value="priceHighToLow">Price - High to Low</option>
-            <option value="priceLowToHigh">Price - Low to High</option>
+            <option value="highToLow">Price - High to Low</option>
+            <option value="lowToHigh">Price - Low to High</option>
           </select>
         </div>
         <p>
           Showing {sortedProductCount} of {productCount} result
         </p>
       </div>
-
-      <div className="shop-tab">
+      {/* <div className="shop-tab">
         <button
           onClick={e => {
             getLayout("grid two-column");
@@ -50,7 +48,7 @@ const ShopTopAction = ({
         >
           <i className="fa fa-list-ul" />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
