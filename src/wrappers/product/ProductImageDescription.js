@@ -10,7 +10,7 @@ import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Swiper, { SwiperSlide } from "../../components/swiper";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
 import './styles/cartstyle.css'
 import axiosInstance from '../../config/axiosconfig'
@@ -150,7 +150,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
   const { addToWishlist } = useContext(WishlistContext);
 
   const handleAddToWishlist = async () => {
-    
+
     try {
       const token = localStorage.getItem("token"); // Assuming JWT token is stored in localStorage
 
@@ -171,7 +171,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
       if (response.status === 200) {
         addToWishlist();
         setWishlistStatus("Product added to wishlist successfully!");
-        cogoToast.success("Product added to wishlist successfully", {position: "top-right"});
+        cogoToast.success("Product added to wishlist successfully", { position: "top-right" });
 
       } else {
         setWishlistStatus(response.data.message);
@@ -188,7 +188,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
   const [cartStatus, setCartStatus] = useState('');
 
   const handleAddToCart = async () => {
-    
+
     try {
       const token = localStorage.getItem('token');
 
@@ -199,7 +199,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
       await addToCart(product._id, quantityCount, selectedSize, selectedColor);
       setIsInCart(true);
       setCartStatus('Product added to cart successfully!');
-      cogoToast.success("Product added to cart successfully", {position: "top-right"});
+      cogoToast.success("Product added to cart successfully", { position: "top-right" });
 
     } catch (error) {
       console.error('Error adding to cart:', error.message);
@@ -231,9 +231,13 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                           <button className="lightgallery-button" onClick={() => handleThumbnailClick(key)}>
                             <i className="pe-7s-expand1"></i>
                           </button>
-                          <div className="single-image">
+                          {/* <div className="single-image">
                             <img src={single.src} className="img-fluid" alt={`${name} - Image ${key + 1}`} />
+                          </div> */}
+                          <div className="single-image">
+                            <img src={single.src} className="img-fluid" alt={name} />
                           </div>
+
                         </SwiperSlide>
                       ))}
                       <AnotherLightbox
@@ -264,7 +268,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
               </div>
             </div>
           </div>
-         
+
           <div className="col-lg-6 col-md-6">
             <div className="product-details-content ml-70">
               <h1 style={{ color: 'grey' }}>{name}</h1>
@@ -325,58 +329,58 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                     +
                   </button>
                 </div>
-                                
+
               </div>
 
               <div className="d-flex justify-space-between">
-              <div className="pro-details-cart " style={{width:'100%'}}>
-        {isOutOfStock() ? (
-          <button 
-            disabled 
-            style={{
-              border: 'none', 
-              height: '40px',
-              width:'90%',
-              backgroundColor:'#cccccc',
-              color:'white',
-              borderRadius:'5px',
-              cursor: 'not-allowed'
-            }}
-          >
-            Out of Stock
-          </button>
-        ) : isInCart ? (
-          <button 
-            onClick={handleGoToCart} 
-            style={{
-              border: 'none', 
-              height: '40px',
-              width:'90%',
-              backgroundColor:'green',
-              color:'white',
-              borderRadius:'5px'
-            }}
-          >
-            Go to Cart
-          </button>
-        ) : (
-          <button 
-            onClick={handleAddToCart} 
-            style={{
-              border: 'none', 
-              height: '40px',
-              width:'90%',
-              backgroundColor:'red',
-              color:'white',
-              borderRadius:'5px'
-            }}
-          >
-            Add To Cart
-          </button>
-        )}
-      </div>
+                <div className="pro-details-cart " style={{ width: '100%' }}>
+                  {isOutOfStock() ? (
+                    <button
+                      disabled
+                      style={{
+                        border: 'none',
+                        height: '40px',
+                        width: '90%',
+                        backgroundColor: '#cccccc',
+                        color: 'white',
+                        borderRadius: '5px',
+                        cursor: 'not-allowed'
+                      }}
+                    >
+                      Out of Stock
+                    </button>
+                  ) : isInCart ? (
+                    <button
+                      onClick={handleGoToCart}
+                      style={{
+                        border: 'none',
+                        height: '40px',
+                        width: '90%',
+                        backgroundColor: 'green',
+                        color: 'white',
+                        borderRadius: '5px'
+                      }}
+                    >
+                      Go to Cart
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleAddToCart}
+                      style={{
+                        border: 'none',
+                        height: '40px',
+                        width: '90%',
+                        backgroundColor: 'red',
+                        color: 'white',
+                        borderRadius: '5px'
+                      }}
+                    >
+                      Add To Cart
+                    </button>
+                  )}
+                </div>
 
-              {/* <div className="pro-details-cart " style={{width:'100%'}}>
+                {/* <div className="pro-details-cart " style={{width:'100%'}}>
                   {isInCart ? (
                     <button onClick={handleGoToCart} style={{border: 'none', height: '40px',width:'90%',backgroundColor:'green',color:'white',borderRadius:'5px'}}>Go to Cart</button>
                   ) : (
@@ -386,18 +390,18 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                   )}
               </div> */}
 
-              <div className="pro-details-cart " style={{width:'100%'}}>
-                 
-                    <button  onClick={handleAddToWishlist} style={{ height: '40px',width:'75%',border:'green 1px solid',borderRadius:'5px',color:'green'}}>
-                      {/* <i className="pe-7s-like me-2" style={{color:'green'}} /> */}
-                      Add To Wishlist
-                    </button>
-                 
-              </div>
+                <div className="pro-details-cart " style={{ width: '100%' }}>
 
-             
-             
+                  <button onClick={handleAddToWishlist} style={{ height: '40px', width: '75%', border: 'green 1px solid', borderRadius: '5px', color: 'green' }}>
+                    {/* <i className="pe-7s-like me-2" style={{color:'green'}} /> */}
+                    Add To Wishlist
+                  </button>
+
                 </div>
+
+
+
+              </div>
 
               <div className="accordion-div mt-4">
                 <Accordion>
@@ -465,7 +469,7 @@ ProductImageDescription.propTypes = {
   spaceTopClass: PropTypes.string,
   wishlistItem: PropTypes.object,
   compareItem: PropTypes.object,
-  
+
   subcategory: PropTypes.shape({
     _id: PropTypes.string,
     subcategoryname: PropTypes.string
