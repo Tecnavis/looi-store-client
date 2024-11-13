@@ -19,11 +19,13 @@ import { useCart } from "../../context/CartContext"; // Import useCart
 import SimilarProduct from "../../wrappers/product/SimilarProduct";
 import cogoToast from 'cogo-toast';
 
+const BASE_URL = 'https://looi-store-server-ypdx.onrender.com/uploads/';
+
 // const BASE_URL = 'http://localhost:8000/uploads/';
 // Dynamically set the base URL based on environment
-const BASE_URL = process.env.NODE_ENV === 'development' 
-  ? 'http://localhost:8000/uploads/' 
-  : 'https://looi-store-server-1.onrender.com/uploads/';
+// const BASE_URL = process.env.NODE_ENV === 'development' 
+//   ? 'http://localhost:8000/uploads/' 
+//   : 'https://looi-store-server-ypdx.onrender.com/uploads/';
 
 
 const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType, product, wishlistItem, compareItem }) => {

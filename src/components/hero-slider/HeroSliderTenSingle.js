@@ -53,7 +53,7 @@ const HeroSliderTenSingle = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const BASE_URL = 'https://looi-store-server-1.onrender.com';
+  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
 
 
   useEffect(() => {

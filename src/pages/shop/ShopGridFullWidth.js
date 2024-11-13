@@ -26,7 +26,9 @@ const ShopGridFullWidth = () => {
     const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
     const [availableColors, setAvailableColors] = useState([]);
     const [sortOrder, setSortOrder] = useState('default');
-    const BASE_URL = process.env.REACT_APP_BASE_URL || 'https://looi-store-server-1.onrender.com'
+    const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
+
+    // const BASE_URL = process.env.REACT_APP_BASE_URL || 'https://looi-store-server-ypdx.onrender.com'
 
     // pagination
     const [currentPage, setCurrentPage] = useState(1);

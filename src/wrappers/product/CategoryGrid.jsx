@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const CategoryGrid = () => {
   const navigate = useNavigate();
   const [categoriesData, setCategoriesData] = useState([]);
-  const BASE_URL = 'https://looi-store-server-1.onrender.com';
+  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
 
 
   // Fetch categories data from API using axios

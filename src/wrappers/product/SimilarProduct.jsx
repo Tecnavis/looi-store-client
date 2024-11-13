@@ -6,15 +6,18 @@ import './styles/newarrivalstyle.css';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+
 const SimilarProducts = ({ subcategory, currentProductId }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const BASE_URL = process.env.NODE_ENV === 'development' 
-  ? 'http://localhost:8000/uploads/' 
-  : 'https://looi-store-server-1.onrender.com/uploads/';
 
+  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com/uploads/';
+
+  // const BASE_URL = process.env.NODE_ENV === 'development' 
+  // ? 'http://localhost:8000/uploads/' 
+  // : 'https://looi-store-server-ypdx.onrender.com/uploads/';
 
   useEffect(() => {
     const fetchProducts = async () => {

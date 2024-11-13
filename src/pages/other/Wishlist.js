@@ -715,7 +715,7 @@ import cogoToast from 'cogo-toast';
 import { Loader } from 'lucide-react';
 
 
-const BASE_URL = 'https://looi-store-server-1.onrender.com';
+const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
 
 const Wishlist = () => {
   const { wishlistItems, removeFromWishlist, fetchWishlistData } = useContext(WishlistContext);

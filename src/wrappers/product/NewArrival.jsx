@@ -9,8 +9,8 @@ const NewArrival = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  // const BASE_URL = 'https://looi-store-server-1.onrender.com';
-  const BASE_URL =  process.env.REACT_APP_BASE_URL || 'https://looi-store-server-1.onrender.com'
+  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
+  // const BASE_URL =  process.env.REACT_APP_BASE_URL || 'https://looi-store-server-ypdx.onrender.com'
 
   useEffect(() => {
     const fetchNewArrivals = async () => {

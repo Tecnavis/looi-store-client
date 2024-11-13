@@ -314,7 +314,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const [wishlistStatus, setWishlistStatus] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const BASE_URL = 'https://looi-store-server-1.onrender.com';
+  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
 
 
   useEffect(() => {

@@ -162,7 +162,7 @@ const BestSellers = () => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [subcategoriesData, setSubcategoriesData] = useState([]);
   const navigate = useNavigate();
-  const BASE_URL = 'https://looi-store-server-1.onrender.com';
+  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
 
   useEffect(() => {
     const fetchData = async () => {
