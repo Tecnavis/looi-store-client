@@ -337,11 +337,11 @@ const MobileNavMenu = () => {
             </li>
           </ul>
         </li> */}
-        <li>
+        {/* <li>
           <Link to={process.env.PUBLIC_URL + "/"}>
             {t("collection")}
           </Link>
-        </li>
+        </li> */}
         {/* <li className="menu-item-has-children">
           <Link to={process.env.PUBLIC_URL + "/"}>{t("pages")}</Link>
           <ul className="sub-menu">

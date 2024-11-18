@@ -273,7 +273,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
             <div className="product-details-content ml-70">
               <h1 style={{ color: 'grey' }}>{name}</h1>
               {/* <p>{product.subcategory.subcategoryname}</p> */}
-              <hr className="product-divider" style={{ border: '0', height: '1px', backgroundColor: 'grey', marginBottom: '20px' }} />
+              <hr className="product-divider" style={{ border: '0', height: '1px', backgroundColor: '#00B7EB', marginBottom: '20px' }} />
 
               <div>
                 <h2 className="mt-3 ">₹{price}</h2> <span style={{ textDecoration: 'line-through', color: '#999' }}>₹{product.oldPrice}</span>
@@ -306,6 +306,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                     ))}
                   </div>
                 </div>
+
               </div>
 
               <div className="pro-details-quality">
@@ -370,7 +371,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                         border: 'none',
                         height: '40px',
                         width: '90%',
-                        backgroundColor: 'red',
+                        backgroundColor: '#007FFF',
                         color: 'white',
                         borderRadius: '5px'
                       }}
@@ -392,7 +393,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
 
                 <div className="pro-details-cart " style={{ width: '100%' }}>
 
-                  <button onClick={handleAddToWishlist} style={{ height: '40px', width: '75%', border: 'green 1px solid', borderRadius: '5px', color: 'green' }}>
+                  <button onClick={handleAddToWishlist} style={{ height: '40px', width: '75%', border: '#007FFF 1px solid', borderRadius: '5px', color: '#007FFF' }}>
                     {/* <i className="pe-7s-like me-2" style={{color:'green'}} /> */}
                     Add To Wishlist
                   </button>

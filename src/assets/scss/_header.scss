@@ -356,7 +356,7 @@
 
           letter-spacing: 0.8px;
 
-          color: #555252;
+          color: white;
           i {
             font-size: 15px;
 
@@ -373,7 +373,7 @@
           }
         }
         &:hover a {
-          color: $theme-color;
+          color: #2b2b2b;
         }
       }
     }
@@ -443,9 +443,6 @@
 }
 
 
-
-
-
 .header-right-wrap {
   display: flex;
   justify-content: flex-end;
@@ -474,7 +471,8 @@
     button {
       font-size: 23px;
 
-      color: #000;
+      // color: #000;
+      color:white;
     }
     > button {
       border: none;
@@ -485,7 +483,8 @@
     }
     &:hover > a,
     &:hover > button {
-      color: $theme-color;
+      // color: $theme-color;
+      color:white;
     }
     .account-dropdown {
       position: absolute;
@@ -586,7 +585,7 @@
 
       padding: 0;
 
-      color: #000;
+      color: white;
       border: none;
       background: transparent;
       span.count-style {

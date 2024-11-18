@@ -6,7 +6,7 @@ import clsx from "clsx";
 const HeaderTop = ({ borderStyle }) => {
   // const currency = useSelector((state) => state.currency);
   return (
-    <div className={clsx("header-top-wap", borderStyle === "fluid-border" && "border-bottom")} >
+    <div className={clsx("header-top-wap", borderStyle === "fluid-border" && "border-bottom")}  >
       {/* <LanguageCurrencyChanger currency={currency} />
       <div className="header-offer">
         <p>

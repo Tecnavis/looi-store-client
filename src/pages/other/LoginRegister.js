@@ -331,7 +331,7 @@ const LoginRegister = () => {
                                 </div>
                               </div>
                               <div className="text-center mt-5">
-                                <button type="submit" className="text-center" style={{ borderRadius: '15px', border: 'none', backgroundColor: 'black', width: '50%', height: '50px', color: 'white' }}>
+                                <button type="submit" className="text-center" style={{ borderRadius: '15px', border: 'none', backgroundColor: '#007FFF', width: '50%', height: '50px', color: 'white' }}>
                                   LOGIN
                                 </button>
                               </div>
@@ -448,7 +448,7 @@ const LoginRegister = () => {
                                 </button>
                               </div>
                               <div className="button-box text-center ">
-                                <button type="submit" style={{ borderRadius: '15px', border: 'none', backgroundColor: 'black', width: '50%', height: '50px', color: 'white' }}>
+                                <button type="submit" style={{ borderRadius: '15px', border: 'none', backgroundColor: '#007FFF', width: '50%', height: '50px', color: 'white' }}>
                                   REGISTER
                                 </button>
                               </div>

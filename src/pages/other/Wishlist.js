@@ -846,7 +846,7 @@ const Wishlist = () => {
             </div>
           ) : (
             <>
-              <h4 className="mb-4">My Wishlist ({wishlistItems.length} items)</h4>
+              <h4 className="mb-4" style={{color:'#007fff'}}>My Wishlist ({wishlistItems.length} items)</h4>
               <Row>
                 {wishlistItems.map((item) => (
                   <Col xs={12} sm={6} md={4} lg={3} className="mb-4" key={item.productId._id}>
@@ -886,7 +886,7 @@ const Wishlist = () => {
                           <b>₹ {item.productId.price}</b>
                         </Card.Text>
                         <button 
-                          style={{color: 'green', border: '1px solid green', height: '40px', backgroundColor: 'white'}}
+                          style={{color: '#007FFF', border: '1px solid #007FFF', height: '40px', backgroundColor: 'white'}}
                           className="w-100"
                           onClick={(e) => {
                             e.stopPropagation();

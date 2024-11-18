@@ -264,7 +264,7 @@ function DeliveryAddress() {
                                             <Card.Body className="d-flex align-items-start">
                                                 <div className="flex-grow-1">
                                                     <Card.Title className="h5 mb-3">
-                                                        {address.firstName} {address.lastName}
+                                                       <h4>{address.firstName} {address.lastName}</h4> 
                                                     </Card.Title>
                                                     <Card.Text className="mb-1">
                                                         {address.houseBuilding}
@@ -279,13 +279,13 @@ function DeliveryAddress() {
                                                         Mobile: <strong>{address.phoneNumber}</strong>
                                                     </Card.Text>
                                                     <div className="d-flex gap-2">
-                                                        <button style={{ border: 'none' }}
+                                                        <button style={{ border: '#007fff 1px solid', color: '#007fff' }}
                                                             className="edit-btn w-50 w-md-50"
                                                             onClick={() => handleEditClick(address)}
                                                         >
                                                             EDIT
                                                         </button>
-                                                        <button style={{ border: 'none' }}
+                                                        <button style={{ border: 'none', color: 'white',backgroundColor: 'red' }}
                                                             className="remove-btn w-50 w-md-50"
                                                             onClick={() => deleteAddress(address._id)}
                                                         >
@@ -318,7 +318,7 @@ function DeliveryAddress() {
                                 <Card className="text-center p-5">
                                     <Card.Body>
                                         <Button onClick={handleShow} variant="light" className="rounded-circle p-3 mb-3">
-                                            <i className="fa-solid fa-plus"></i>
+                                            <i className="fa-solid fa-plus" style={{ color: '#007fff' }}></i>
                                         </Button>
                                         <p>Add New Address</p>
                                     </Card.Body>
@@ -334,10 +334,7 @@ function DeliveryAddress() {
                                             <Col>Cart Total (Excl. of all taxes)</Col>
                                             <Col className="text-end">{billingDetails.cartTotal}</Col>
                                         </Row>
-                                        {/* <Row className="mb-2">
-                                            <Col>Member Savings</Col>
-                                            <Col className="text-end text-success">- ₹ 100.00</Col>
-                                        </Row> */}
+                                       
                                         <Row className="mb-2">
                                             <Col>GST</Col>
                                             <Col className="text-end">₹ 0</Col>
@@ -351,7 +348,7 @@ function DeliveryAddress() {
                                             <Col>Total Amount</Col>
                                             <Col className="text-end">{billingDetails.cartTotal}</Col>
                                         </Row>
-                                        <Button onClick={handleContinueToPayment} className="mt-3 w-100" style={{ backgroundColor: 'teal', border: 'none' }}>
+                                        <Button onClick={handleContinueToPayment} className="mt-3 w-100" style={{ backgroundColor: '#007fff', border: 'none' }}>
                                             CONTINUE TO PAYMENT
                                         </Button>
                                     </Card.Body>
@@ -365,13 +362,17 @@ function DeliveryAddress() {
                             <Modal.Body style={{ maxHeight: '400px', overflowY: 'auto' }}>
                                 <Form>
                                     <Form.Group className="mb-3">
+                                        
                                         <Form.Control
                                             type="text"
                                             placeholder="First Name"
                                             name="firstName"
                                             value={address.firstName}
                                             onChange={handleInputChange}
+                                            
                                         />
+                                      
+                                        
                                     </Form.Group>
                                     <Form.Group className="mb-3">
                                         <Form.Control

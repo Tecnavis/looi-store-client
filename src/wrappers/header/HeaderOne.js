@@ -96,7 +96,7 @@ import NavMenu from "../../components/header/NavMenu";
 import IconGroup from "../../components/header/IconGroup";
 import MobileMenu from "../../components/header/MobileMenu";
 import HeaderTop from "../../components/header/HeaderTop";
-import logo from "../../assets/images/logo/LOOInew.png";
+import logo from "../../assets/images/logo/LOOIwh.png";
 import './headerstyle.css'
 
 const HeaderOne = ({
@@ -146,9 +146,10 @@ const HeaderOne = ({
           "sticky-bar header-res-padding clearfix",
           scroll > headerTop && "stick"
         )}
+        style={{ backgroundColor: '#007fff' }}
       >
-        <div className={layout === "container-fluid" ? layout : "container"}>
-          <div className="row align-items-center">
+        <div className={layout === "container-fluid" ? layout : "container"} >
+          <div className="row align-items-center" >
             {/* Logo Column */}
             <div className="col-xl-2 col-lg-2 col-md-6 col-4" style={{ height: '80px' }}>
               <div className="logo-container " style={{ height: '100%', display: 'flex', alignItems: 'center' }}>

@@ -16,7 +16,7 @@
   }
   
   .step.active {
-    color: teal; /* Highlight active step */
+    color: #007fff; /* Highlight active step */
   }
   
   .dashed-line {
