@@ -415,6 +415,8 @@ const Payment = () => {
                     landmark: selectedAddress.landmark,
                     postalCode: selectedAddress.postalCode,
                     cityDistrict: selectedAddress.cityDistrict,
+                    country: selectedAddress.country,
+                    state: selectedAddress.state,
                     phoneNumber: selectedAddress.phoneNumber
                 },
                 paymentMethod: 'COD',
@@ -498,6 +500,8 @@ const Payment = () => {
                                     landmark: selectedAddress.landmark,
                                     postalCode: selectedAddress.postalCode,
                                     cityDistrict: selectedAddress.cityDistrict,
+                                    country: selectedAddress.country,
+                                    state: selectedAddress.state,
                                     phoneNumber: selectedAddress.phoneNumber
                                 },
                                 paymentMethod: 'Razorpay',

@@ -202,7 +202,12 @@ const MyAccount = () => {
         });
 
         if (response.data.success) {
-          setOrders(response.data.orders); // Set orders if successfully retrieved
+           // Sort orders by creation date in ascending order
+           const sortedOrders = response.data.orders.sort((a, b) => 
+            new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          setOrders(sortedOrders)
+          // setOrders(response.data.orders); 
         } else {
           setError(response.data.message);
         }
@@ -216,7 +221,6 @@ const MyAccount = () => {
 
     fetchOrders();
   }, []);
-
 
   // Navigate to specific order details
   const handleViewOrder = (orderId) => {
