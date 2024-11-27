@@ -1,10 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Spinner } from "react-bootstrap";
 import axiosInstance from '../../config/axiosconfig';
 import './styles/newarrivalstyle.css';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { BASE_URL} from '../../config/baseurlconfig';
 
 
 const SimilarProducts = ({ subcategory, currentProductId }) => {
@@ -13,7 +13,7 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com/uploads/';
+  // const BASE_URL = 'https://api.looi.in/uploads/';
 
   // const BASE_URL = process.env.NODE_ENV === 'development' 
   // ? 'http://localhost:8000/uploads/' 
@@ -77,7 +77,7 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
           <Card style={{ width: '100%', border: 'none', height: '100%' }} onClick={() => handleCardClick(product._id)}>
             {product.coverImage ? (
               <img
-                src={`${BASE_URL}/${product.coverImage}`}
+                src={`${BASE_URL}/uploads/${product.coverImage}`}
                 alt={product.name}
                 style={{ width: '100%', height: '380px', objectFit: 'cover' }}
               />

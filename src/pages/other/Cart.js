@@ -307,6 +307,8 @@ import { WishlistContext } from "../../context/WishlistContext";
 import CheckoutHeader from "../../components/checkout-header/CheckOutHeader";
 import axiosInstance from '../../config/axiosconfig';
 import cogoToast from 'cogo-toast';
+import { BASE_URL} from '../../config/baseurlconfig';
+
 
 const Cart = () => {
   const { cartItems, removeFromCart, fetchCartData } = useCart();
@@ -315,7 +317,7 @@ const Cart = () => {
   // eslint-disable-next-line no-unused-vars
   const [wishlistStatus, setWishlistStatus] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
+  // const BASE_URL = 'https://api.looi.in';
 
 
   useEffect(() => {

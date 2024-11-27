@@ -3,11 +3,13 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import axiosInstance from '../../config/axiosconfig'; // Assuming axios instance is already set up
 import './styles/categories.css';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL} from '../../config/baseurlconfig';
+
 
 const CategoryGrid = () => {
   const navigate = useNavigate();
   const [categoriesData, setCategoriesData] = useState([]);
-  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
+  // const BASE_URL = 'https://api.looi.in';
 
 
   // Fetch categories data from API using axios

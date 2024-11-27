@@ -16,13 +16,12 @@ const FooterOne = ({
   sideMenu
 }) => {
   return (
-    <footer className={clsx("footer-area", backgroundColorClass, spaceTopClass, spaceBottomClass, extraFooterClass, spaceLeftClass, spaceRightClass )}>
+    <footer className={clsx("footer-area", backgroundColorClass, spaceTopClass, spaceBottomClass, extraFooterClass, spaceLeftClass, spaceRightClass)}>
       <div className={`${containerClass ? containerClass : "container"}`}>
         <div className="row">
           <div
-            className={`${
-              sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
-            }`}
+            className={`${sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
+              }`}
           >
             {/* footer copyright */}
             <FooterCopyright
@@ -31,9 +30,8 @@ const FooterOne = ({
             />
           </div>
           <div
-            className={`${
-              sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
-            }`}
+            className={`${sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
+              }`}
           >
             <div className="footer-widget mb-30 ml-30">
               <div className="footer-title">
@@ -50,19 +48,21 @@ const FooterOne = ({
                     </Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/contact"}>
-                      Contact
-                    </Link>
+                    {/* <Link to={process.env.PUBLIC_URL + "/contact"}>
+                      Contact Us
+                    </Link> */}
+                    <a href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/contact_us" target="_blank" rel="noopener noreferrer">
+                    Contact Us
+                    </a>
                   </li>
-                  
+
                 </ul>
               </div>
             </div>
           </div>
           <div
-            className={`${
-              sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
-            }`}
+            className={`${sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
+              }`}
           >
             {/* <div
               className={`${
@@ -78,34 +78,44 @@ const FooterOne = ({
               <div className="footer-list">
                 <ul>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/privacy"}>Privacy Policy</Link>
+                    {/* <Link to={process.env.PUBLIC_URL + "/privacy"}>Privacy Policy</Link> */}
+                    <a href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/privacy" target="_blank" rel="noopener noreferrer">
+                      Privacy Policy
+                    </a>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/terms"}>
+                    {/* <Link to={process.env.PUBLIC_URL + "/terms"}>
+                      Terms and Conditions</Link> */}
+                      <a href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/terms" target="_blank" rel="noopener noreferrer">
                       Terms and Conditions
-                    </Link>
+                    </a>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/cancellation"}>Cancellation and Refund</Link>
+                    {/* <Link to={process.env.PUBLIC_URL + "/cancellation"}>Cancellation and Refund</Link> */}
+                    <a href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/refund" target="_blank" rel="noopener noreferrer">
+                    Cancellation and Refund
+                    </a>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/shipping"}>Shipping and Delivery</Link>
+                    {/* <Link to={process.env.PUBLIC_URL + "/shipping"}>Shipping and Delivery</Link> */}
+                    <a href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/shipping" target="_blank" rel="noopener noreferrer">
+                    Shipping and Delivery
+                    </a>
+
                   </li>
                 </ul>
               </div>
             </div>
           </div>
           <div
-            className={`${
-              sideMenu ? "col-xl-3 col-sm-4" : "col-lg-2 col-sm-6"
-            }`}
+            className={`${sideMenu ? "col-xl-3 col-sm-4" : "col-lg-2 col-sm-6"
+              }`}
           >
             <div
-              className={`${
-                sideMenu
+              className={`${sideMenu
                   ? "footer-widget mb-30 ml-145"
                   : "footer-widget mb-30 ml-75"
-              }`}
+                }`}
             >
               <div className="footer-title">
                 <h3>FOLLOW US</h3>
@@ -153,9 +163,8 @@ const FooterOne = ({
             </div>
           </div>
           <div
-            className={`${
-              sideMenu ? "col-xl-3 col-sm-8" : "col-lg-4 col-sm-6"
-            }`}
+            className={`${sideMenu ? "col-xl-3 col-sm-8" : "col-lg-4 col-sm-6"
+              }`}
           >
             {/* footer newsletter */}
             <FooterNewsletter

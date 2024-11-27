@@ -4,6 +4,8 @@ import { Card, Row, Col, Spinner } from "react-bootstrap";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Fragment } from "react";
 import LayoutOne from "../../layouts/LayoutOne";
+import { BASE_URL} from '../../config/baseurlconfig';
+
 
 
 const SearchResults = () => {
@@ -11,7 +13,7 @@ const SearchResults = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchTerm = location.state?.searchTerm || '';
-  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
+  // const BASE_URL = 'https://api.looi.in';
 
   const handleCardClick = (productId) => {
     navigate(`/product-tab-left/${productId}`);

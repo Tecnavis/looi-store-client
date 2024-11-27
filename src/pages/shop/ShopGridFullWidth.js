@@ -9,6 +9,8 @@ import LayoutOne from '../../layouts/LayoutOne';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import axiosInstance from '../../config/axiosconfig';
 import { Loader } from 'lucide-react';
+import { BASE_URL} from '../../config/baseurlconfig';
+
 
 
 const ShopGridFullWidth = () => {
@@ -24,7 +26,7 @@ const ShopGridFullWidth = () => {
     const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
     const [availableColors, setAvailableColors] = useState([]);
     const [sortOrder, setSortOrder] = useState('default');
-    const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
+    // const BASE_URL = 'https://api.looi.in';
 
     // const BASE_URL = process.env.REACT_APP_BASE_URL || 'https://looi-store-server-ypdx.onrender.com'
     // pagination

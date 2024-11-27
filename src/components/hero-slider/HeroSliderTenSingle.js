@@ -1,43 +1,3 @@
-// import PropTypes from "prop-types";
-
-// import { Link } from "react-router-dom";
-// import backgroundImage from '../../assets/images/logo/banner/10001.webp';
-
-// const HeroSliderTenSingle = ({ data }) => {
-
-//   return (
-//     <div
-//       className="single-slider-3 slider-height-5 d-flex align-items-center bg-img ms-3 me-3"
-//       style={{ backgroundImage:  `url(${backgroundImage})` }}
-//     >
-//       {/* <div className="container">
-//         <div className="row">
-//           <div className="col-xl-6 col-lg-7 col-md-8 col-12 ms-auto">
-//             <div className="slider-content-3 slider-animated-1 text-center">
-//               <h3 className="animated">{data.title}</h3>
-//               <h1 className="animated">{data.subtitle}</h1>
-//               <p className="animated">{data.text}</p>
-//               <div className="slider-btn btn-hover">
-//                 <Link
-//                   className="animated"
-//                   to={process.env.PUBLIC_URL + data.url}
-//                 >
-//                   SHOP NOW
-//                 </Link>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div> */}
-//     </div>
-//   );
-// };
-
-// HeroSliderTenSingle.propTypes = {
-//   data: PropTypes.shape({})
-// };
-
-// export default HeroSliderTenSingle;
 
 
 // ------------------------------------------------------------------
@@ -45,6 +5,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import axiosInstance from '../../config/axiosconfig'; // Adjust path as needed
+import { BASE_URL} from '../../config/baseurlconfig';
 
 const HeroSliderTenSingle = () => {
   const [banners, setBanners] = useState([]);
@@ -52,7 +13,7 @@ const HeroSliderTenSingle = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
+  // const BASE_URL = 'https://api.looi.in';
 
   useEffect(() => {
     fetchBanners();

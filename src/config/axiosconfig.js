@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 // export const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
-
+export const BASE_URL = 'https://api.looi.in';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8000',
-  // baseURL: BASE_URL,
+  // baseURL: 'http://localhost:8000',
+  baseURL: BASE_URL,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',

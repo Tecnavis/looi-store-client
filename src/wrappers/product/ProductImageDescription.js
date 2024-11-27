@@ -18,11 +18,12 @@ import { WishlistContext } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext"; // Import useCart
 import SimilarProduct from "../../wrappers/product/SimilarProduct";
 import cogoToast from 'cogo-toast';
+import { BASE_URL} from '../../config/baseurlconfig';
 
-const BASE_URL = 'https://looi-store-server-ypdx.onrender.com/uploads/';
 
-// const BASE_URL = 'http://localhost:8000/uploads/';
-// Dynamically set the base URL based on environment
+// const BASE_URL = 'https://api.looi.in/uploads/';
+
+
 // const BASE_URL = process.env.NODE_ENV === 'development' 
 //   ? 'http://localhost:8000/uploads/' 
 //   : 'https://looi-store-server-ypdx.onrender.com/uploads/';
@@ -88,7 +89,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
   }, [selectedColor, sizes, coverImage]);
 
   const slides = currentImages.map((imgFileName, i) => ({
-    src: `${BASE_URL}${imgFileName}`,
+    src: `${BASE_URL}/uploads/${imgFileName}`,
     key: i,
   }));
 

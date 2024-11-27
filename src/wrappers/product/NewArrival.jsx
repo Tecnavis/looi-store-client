@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Spinner } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import axiosInstance from '../../config/axiosconfig';
 import './styles/newarrivalstyle.css';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL} from '../../config/baseurlconfig';
 
 const NewArrival = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const BASE_URL = 'https://looi-store-server-ypdx.onrender.com';
-  // const BASE_URL =  process.env.REACT_APP_BASE_URL || 'https://looi-store-server-ypdx.onrender.com'
+  // const BASE_URL = 'https://api.looi.in';
 
   useEffect(() => {
     const fetchNewArrivals = async () => {
@@ -28,10 +28,7 @@ const NewArrival = () => {
     fetchNewArrivals();
   }, []);
 
-  // if (loading) {
-  //   return <Spinner animation="border" variant="primary" />;
-  // }
-
+ 
   if (error) {
     return <div className="text-center">{error}</div>;
   }
