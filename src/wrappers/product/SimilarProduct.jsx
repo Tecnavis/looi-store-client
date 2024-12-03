@@ -73,7 +73,7 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
             <h3 className="text-center my-5"><b>SIMILAR PRODUCTS</b></h3>
     <Row className="justify-content-center">
       {limitedProducts.map((product) => (
-        <Col xs={12} sm={6} md={3} className="mb-4 d-flex justify-content-center" key={product._id}>
+        <Col xs={6} sm={6} md={3} className="mb-4 d-flex justify-content-center" key={product._id}>
           <Card style={{ width: '100%', border: 'none', height: '100%' }} onClick={() => handleCardClick(product._id)}>
             {product.coverImage ? (
               <img

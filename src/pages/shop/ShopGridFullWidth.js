@@ -276,7 +276,7 @@ const ShopGridFullWidth = () => {
                                     productCount={filteredProducts.length} />
                                 <Row className="justify-content-center">
                                     {filteredProducts.map((product) => (
-                                        <Col xs={12} sm={6} md={4} lg={3} className="mb-4" key={product._id}>
+                                        <Col xs={6} sm={6} md={4} lg={3} className="mb-4" key={product._id}>
                                             <Card style={{ width: '100%', border: 'none', height: '100%' }} onClick={() => handleCardClick(product._id)}>
                                                 <div className="position-relative">
                                                     <Card.Img
