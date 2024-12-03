@@ -207,6 +207,25 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
       setCartStatus('Failed to add product to cart.');
     }
   };
+  const handleAddToCart1 = async () => {
+
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        navigate('/login-register');
+        return;
+      }
+      await addToCart(product._id, quantityCount, selectedSize, selectedColor);
+      setIsInCart(true);
+      setCartStatus('Product added to cart successfully!');
+      cogoToast.success("Product added to cart successfully", { position: "top-right" });
+     navigate('/cart');
+    } catch (error) {
+      console.error('Error adding to cart:', error.message);
+      setCartStatus('Failed to add product to cart.');
+    }
+  };
 
   const handleGoToCart = () => {
     navigate('/cart');
@@ -393,18 +412,17 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
               </div> */}
 
                 <div className="pro-details-cart " style={{ width: '100%' }}>
-
-                  <button onClick={handleAddToWishlist} style={{ height: '40px', width: '75%', border: '#007FFF 1px solid', borderRadius: '5px', color: '#007FFF' }}>
-                    {/* <i className="pe-7s-like me-2" style={{color:'green'}} /> */}
+                  <button onClick={handleAddToWishlist} style={{ height: '40px', width: '100%', border: '#007FFF 1px solid', borderRadius: '5px', color: '#007FFF' }}>
                     Add To Wishlist
                   </button>
-
                 </div>
-
-
-
-              </div>
-
+                
+              </div><br/>
+              <div className="pro-details-cart " style={{ width: '100%' }}>
+                  <button  onClick={handleAddToCart1} style={{ height: '40px', width: '100%',  color: 'white',backgroundColor:"rgb(0, 127, 255)" ,border: 'none', borderRadius: '5px'}}>
+                    BUY NOW
+                  </button>
+                </div>
               <div className="accordion-div mt-4">
                 <Accordion>
                   <Accordion.Item eventKey="0">
