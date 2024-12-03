@@ -240,25 +240,8 @@ const IconGroup = ({ iconWhiteClass }) => {
      
       {/* Profile Dropdown */}
      
-      <div className="same-style header-search">
-        <button className="search-active" onClick={handleClick}>
-          <i className="pe-7s-search" />
-        </button>
-        <div className={`search-content ${isSearchOpen ? 'active' : ''}`}>
-          <form onSubmit={handleSearch}>
-            <input 
-              type="text" 
-              placeholder="Search" 
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            <button type="submit" className="button-search">
-              <i className="pe-7s-search" />
-            </button>
-          </form>
-        </div>
-      </div>
-      <div className="same-style account-setting">
+      
+      <div className="same-style account-setting" style={{marginLeft: "8px"}}>
         <button
           className="account-setting-active"
           onClick={handleProfileClick} // Updated
@@ -284,7 +267,7 @@ const IconGroup = ({ iconWhiteClass }) => {
             ) : (
               <>
                 {/* Show my account and logout if token exists */}
-                <li>
+                <li >
                   <Link to={process.env.PUBLIC_URL + "/my-account"}>
                     My Account
                   </Link>
@@ -300,7 +283,7 @@ const IconGroup = ({ iconWhiteClass }) => {
         </div>
       </div>
       
-      <div className="same-style header-wishlist">
+      <div className="same-style header-wishlist" style={{marginLeft: "8px"}}>
         <Link to={process.env.PUBLIC_URL + "/wishlist"}>
           <i className="pe-7s-like" />
           <span className="count-style">
@@ -308,6 +291,7 @@ const IconGroup = ({ iconWhiteClass }) => {
           </span>
         </Link>
       </div>
+      
       <div className="same-style cart-wrap d-none d-lg-block">
         {/* <button className="icon-cart" to={process.env.PUBLIC_URL + "/cart"} >
           <i className="pe-7s-shopbag" />
@@ -315,6 +299,7 @@ const IconGroup = ({ iconWhiteClass }) => {
             {cartCount}
           </span>
         </button> */}
+
          <Link className="icon-cart" to={process.env.PUBLIC_URL + "/cart"}>
           <i className="pe-7s-shopbag" />
           <span className="count-style">
@@ -324,7 +309,8 @@ const IconGroup = ({ iconWhiteClass }) => {
         {/* menu cart */}
         {/* <MenuCart /> */}
       </div>
-      <div className="same-style cart-wrap d-block d-lg-none">
+
+      <div className="same-style cart-wrap d-block d-lg-none" style={{marginLeft: "13px"}}>
         <Link className="icon-cart" to={process.env.PUBLIC_URL + "/cart"}>
           <i className="pe-7s-shopbag" />
           <span className="count-style">
@@ -332,8 +318,26 @@ const IconGroup = ({ iconWhiteClass }) => {
           </span>
         </Link>
       </div>
+      <div className="same-style header-search" style={{marginLeft: "7px"}}>
+        <button className="search-active" onClick={handleClick}>
+          <i className="pe-7s-search" />
+        </button>
+        <div className={`search-content ${isSearchOpen ? 'active' : ''}`}>
+          <form onSubmit={handleSearch}>
+            <input 
+              type="text" 
+              placeholder="Search" 
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+            <button type="submit" className="button-search">
+              <i className="pe-7s-search" />
+            </button>
+          </form>
+        </div>
+      </div>
 
-      <div className="same-style mobile-off-canvas d-block d-lg-none">
+      <div className="same-style mobile-off-canvas d-block d-lg-none" style={{marginLeft: "4px"}}>
         <button
           className="mobile-aside-button"
           onClick={() => triggerMobileMenu()}
