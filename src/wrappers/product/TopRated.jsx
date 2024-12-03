@@ -3,7 +3,7 @@ import { Card, Row, Col, Spinner } from "react-bootstrap";
 import axiosInstance from '../../config/axiosconfig'; 
 import './styles/newarrivalstyle.css';
 import { useNavigate } from 'react-router-dom';
-
+import { BASE_URL} from '../../config/baseurlconfig';
 
 const TopRated = () => {
   const [products, setProducts] = useState([]);
@@ -42,7 +42,7 @@ const TopRated = () => {
   const handleCardClick = (productId) => {
     navigate(`/product-tab-left/${productId}`); // Navigate to the /cart page with productId
   };
-
+  
   return (
     <div className="product-area pb-60 section-padding-1">
       <div className="container-fluid">
@@ -54,7 +54,7 @@ const TopRated = () => {
               <Card style={{ width: '100%' }} onClick={() => handleCardClick(product._id)}>
                 {product.coverImage ? (
                   <img
-                    src={`http://localhost:8000/uploads/${product.coverImage}`} // Adjusted to use product.coverImage
+                    src={`${BASE_URL}/uploads/${product.coverImage}`} // Adjusted to use product.coverImage
                     alt={product.name}
                     style={{ width: '100%', height: 'auto' }} // Maintain aspect ratio
                   />
