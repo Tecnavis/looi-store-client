@@ -16,11 +16,6 @@ import cogoToast from 'cogo-toast';
 const LoginRegister = () => {
   // let { pathname } = useLocation();
   let navigate = useNavigate();
- 
-  // const location = useLocation(); 
-  //  useEffect(() => {
-  //   localStorage.setItem("lastVisitedPage", location.pathname);
-  // }, [location.pathname]);
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: ""
