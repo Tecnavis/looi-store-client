@@ -146,6 +146,11 @@ const LoginRegister = () => {
       const response = await axiosInstance.post('/user-register', registerForm);
       // console.log("Registration successful", response.data);
       cogoToast.success("Registration successful", {position: "top-right"});
+
+    // Save user data in localStorage
+    const userData = response.data; // Assuming response.data contains user information
+    localStorage.setItem("user", JSON.stringify(userData));
+    
       setRegisterForm({
         username: "",
         email: "",
