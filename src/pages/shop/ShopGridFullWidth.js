@@ -2,7 +2,7 @@
 // editing code-new
 
 import React, { Fragment, useState, useEffect } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Card, Row, Col, Form } from "react-bootstrap";
 import SEO from "../../components/seo";
 import LayoutOne from '../../layouts/LayoutOne';
@@ -14,6 +14,8 @@ import { BASE_URL} from '../../config/baseurlconfig';
 
 
 const ShopGridFullWidth = () => {
+
+  const location = useLocation(); 
     const [layout, setLayout] = useState('grid three-column');
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -49,7 +51,9 @@ const ShopGridFullWidth = () => {
             });
         }
     };
-
+    useEffect(() => {
+        localStorage.setItem("lastVisitedPage", location.pathname);
+      }, [location.pathname]);
     const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
     const priceRanges = [
         { label: 'Rs. 299 To Rs. 499', value: '299-499' },

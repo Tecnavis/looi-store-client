@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import SEO from "../../components/seo";
@@ -17,6 +17,10 @@ const LoginRegister = () => {
   // let { pathname } = useLocation();
   let navigate = useNavigate();
  
+  // const location = useLocation(); 
+  //  useEffect(() => {
+  //   localStorage.setItem("lastVisitedPage", location.pathname);
+  // }, [location.pathname]);
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: ""
@@ -31,110 +35,44 @@ const LoginRegister = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
+ 
 
-   const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Basic frontend validation
     if (!loginForm.email || !loginForm.password) {
-        cogoToast.error("Please fill in all fields", { position: "top-right" });
-        setIsLoading(false);
-        return;
-    }
-
-    // Email format validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(loginForm.email)) {
-        cogoToast.error("Please enter a valid email address", { position: "top-right" });
-        setIsLoading(false);
-        return;
-    }
-
-    // Password length validation
-    if (loginForm.password.length < 6) {
-        cogoToast.error("Password must be at least 6 characters long", { position: "top-right" });
-        setIsLoading(false);
-        return;
+      cogoToast.error("Please fill in all fields", { position: "top-right" });
+      setIsLoading(false);
+      return;
     }
 
     try {
-        const response = await axiosInstance.post('/user-login', loginForm);
-        
-        // Save auth data to localStorage
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userId', response.data.user._id);
-        localStorage.setItem('username', response.data.user.username);
-        localStorage.setItem('email', response.data.user.email);
-        
-        cogoToast.success("Welcome back, " + response.data.user.username + "!", {
-            position: "top-right",
-            hideAfter: 3
-        });
+      const response = await axiosInstance.post('/user-login', loginForm);
 
-        // Redirect user to home page after successful login
-        setTimeout(() => {
-            navigate('/');
-        }, 2000);
+      // Save auth data to localStorage
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userId', response.data.user._id);
+      localStorage.setItem('username', response.data.user.username);
+      localStorage.setItem('email', response.data.user.email);
+
+      cogoToast.success("Welcome back, " + response.data.user.username + "!", {
+        position: "top-right",
+        hideAfter: 3,
+      });
+
+      // Redirect to the last visited page or home page
+      const lastVisitedPage = localStorage.getItem("lastVisitedPage") || "/";
+      setTimeout(() => {
+        navigate(lastVisitedPage);
+      }, 2000);
 
     } catch (error) {
-        console.error("Login error:", error);
-        
-        // Handle different types of errors
-        if (error.response) {
-            switch (error.response.status) {
-                case 401:
-                    // Check for specific message from backend
-                    if (error.response.data.message === "User not found") {
-                        cogoToast.error("No account found with this email. Please sign up.", { 
-                            position: "top-right",
-                            hideAfter: 4
-                        });
-                    } else if (error.response.data.message === "Invalid password") {
-                        cogoToast.error("Incorrect password. Please try again.", { 
-                            position: "top-right" 
-                        });
-                    } else {
-                        cogoToast.error("Invalid login credentials", { 
-                            position: "top-right" 
-                        });
-                    }
-                    break;
-                case 404:
-                    cogoToast.error("No account found with this email. Please sign up.", { 
-                        position: "top-right",
-                        hideAfter: 4
-                    });
-                    break;
-                case 429:
-                    cogoToast.error("Too many login attempts. Please try again later", { 
-                        position: "top-right" 
-                    });
-                    break;
-                case 500:
-                    cogoToast.error("Server error. Please try again later", { 
-                        position: "top-right" 
-                    });
-                    break;
-                default:
-                    cogoToast.error("Login failed. Please try again", { 
-                        position: "top-right" 
-                    });
-            }
-        } else if (error.request) {
-            cogoToast.error("Network error. Please check your connection", { 
-                position: "top-right" 
-            });
-        } else {
-            cogoToast.error("An unexpected error occurred", { 
-                position: "top-right" 
-            });
-        }
+      cogoToast.error("Login failed. Please try again.", { position: "top-right" });
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
-};
-
+  };
 
   // const handleInputChange = (e) => {
   //   setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
@@ -170,7 +108,7 @@ const LoginRegister = () => {
  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setLoginForm(prev => ({ ...prev, [name]: value }));
+    setLoginForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const toggleLoginPasswordVisibility = () => {
@@ -189,20 +127,15 @@ const LoginRegister = () => {
 
   return (
     <Fragment>
-      <SEO
-        titleTemplate="Login"
-        description="Login page of flone react minimalist eCommerce template."
-      />
+      <SEO titleTemplate="Login" description="Login page of flone react minimalist eCommerce template." />
       <LayoutOne headerTop="visible">
-    
         <div className="login-register-area pt-60 pb-60">
-          <div className="container" >
+          <div className="container">
             <div className="row">
               <div className="col-lg-7 col-md-12 ms-auto me-auto">
                 <div className="login-register-wrapper">
-
                   <Tab.Container defaultActiveKey="login">
-                    <Nav variant="pills" className="login-register-tab-list ">
+                    <Nav variant="pills" className="login-register-tab-list">
                       <Nav.Item>
                         <Nav.Link eventKey="login">
                           <h4>LOGIN</h4>
@@ -215,9 +148,7 @@ const LoginRegister = () => {
                       </Nav.Item>
                     </Nav>
                     <Tab.Content>
-                      {/* Login Form */}
                       <Tab.Pane eventKey="login">
-
                         <div className="login-form-container" style={{ borderRadius: '15px' }}>
                           <div className="login-register-form">
                             <div className="d-flex justify-content-center align-items-center mb-5">
@@ -250,7 +181,6 @@ const LoginRegister = () => {
                                     position: 'absolute',
                                     right: '10px',
                                     top: '30%',
-                                    transform: 'translateY(-50%)',
                                     background: 'none',
                                     border: 'none',
                                     cursor: 'pointer'
@@ -259,21 +189,14 @@ const LoginRegister = () => {
                                   {showLoginPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                 </button>
                               </div>
-                              <div className="button-box">
-                                <div className="d-flex justify-content-end" style={{ fontSize: '12px' }}>
-                                  <Link to="/forget-password">
-                                    Forgot Password?
-                                  </Link>
-                                </div>
-                              </div>
                               <div className="text-center mt-5">
-                                <button type="submit" className="text-center" style={{ borderRadius: '15px', border: 'none', backgroundColor: '#007FFF', width: '50%', height: '50px', color: 'white' }}>
-                                  LOGIN
+                                <button
+                                  type="submit"
+                                  style={{ borderRadius: '15px', backgroundColor: '#007FFF', width: '50%', height: '50px', color: 'white' }}
+                                >
+                                  {isLoading ? "Loading..." : "LOGIN"}
                                 </button>
                               </div>
-                              {/* <div className="text-center mt-5">
-                                <p>Don't have an account? <Link to="/register">Register</Link></p>
-                              </div> */}
                             </form>
                           </div>
                         </div>

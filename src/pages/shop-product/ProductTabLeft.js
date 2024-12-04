@@ -12,6 +12,10 @@ const ProductTabLeft = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const location = useLocation(); 
+  useEffect(() => {
+   localStorage.setItem("lastVisitedPage", location.pathname);
+ }, [location.pathname]);
 
   // Fetch product by id from API or static data
   useEffect(() => {
