@@ -45,7 +45,7 @@ const Contact = () => {
                     <div className="contact-info-dec">
                       <p>
                         <a href="mailto:yourname@email.com">
-                          looistore@email.com
+                        looiclothingstores@gmail.com
                         </a>
                       </p>
                       <p>

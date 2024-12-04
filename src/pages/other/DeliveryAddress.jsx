@@ -194,68 +194,7 @@ function DeliveryAddress() {
                     {/* <CheckoutHeader currentStep="address" />
                     <hr /> */}
                     <Container className="mt-5">
-                        <Row>
-                            {/* Delivery Section */}
-                            {/* <Col md={6}>
-                                <h5 style={{ color: 'gray' }}>DELIVERY TO</h5>
-                                <Card className="mb-3 bg-light">
-                                    <Card.Body className="d-flex align-items-start">
-                                        <div className="flex-grow-1">
-                                            {addressDetails ? (
-                                                <>
-                                                    <Card.Title className="h5 mb-3">
-                                                        {addressDetails.firstName} {addressDetails.lastName}
-                                                    </Card.Title>
-                                                    <Card.Text className="mb-1">
-                                                        {addressDetails.houseBuilding}
-                                                    </Card.Text>
-                                                    <Card.Text className="mb-1">
-                                                        {addressDetails.streetArea}
-                                                    </Card.Text>
-                                                    <Card.Text className="mb-1">
-                                                        {addressDetails.cityDistrict}, {addressDetails.postalCode}
-                                                    </Card.Text>
-                                                    <Card.Text className="mb-3">
-                                                        Mobile: <strong>{addressDetails.phoneNumber}</strong>
-                                                    </Card.Text>
-                                                    <div className="d-flex gap-2">
-                                                        <button style={{border: 'none'}}
-                                                            className="edit-btn w-50 w-md-50"
-                                                            variant="outline-secondary"
-                                                        >
-                                                            EDIT
-                                                        </button>
-                                                        <button style={{border: 'none'}}
-                                                            className="remove-btn w-50 w-md-50"
-                                                            variant="outline-secondary"
-                                                        >
-                                                            REMOVE
-                                                        </button>
-                                                    </div>
-                                                </>
-                                            ) : (
-                                               <p>no address</p>
-                                            )}
-                                        </div>
-                                        <Form.Check
-                                            type="radio"
-                                            id="contact-select"
-                                            className="ms-3 mt-1"
-                                        />
-                                    </Card.Body>
-                                </Card>
-
-                                <Card className="text-center p-5">
-                                    <Card.Body>
-                                        <Button onClick={handleShow} variant="light" className="rounded-circle p-3 mb-3">
-                                            <i className="fa-solid fa-plus"></i>
-                                        </Button>
-                                        <p>Add New Address</p>
-                                    </Card.Body>
-                                </Card>
-
-                            </Col> */}
-
+                        <Row>                          
                             <Col md={6}>
                                 <h5 style={{ color: 'gray' }}>DELIVERY TO</h5>
                                 {addressDetails.length > 0 ? (
