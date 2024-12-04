@@ -251,10 +251,10 @@ function DeliveryAddress() {
                       >
                         <i
                           className="fa-solid fa-plus"
-                          style={{ color: "#007fff" }}
+                          style={{ color: "black" }}
                         ></i>
                       </Button>
-                      <p>Add New Address</p>
+                      <p style={{color:"gray"}}>Add New Address</p>
                     </Card.Body>
                   </Card>
                 </Col>
