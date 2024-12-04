@@ -53,8 +53,6 @@ function DeliveryAddress() {
                 setLoading(false);
             }
         };
-    }, []);
-    useEffect(() => {
         const fetchAddress = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -65,23 +63,26 @@ function DeliveryAddress() {
                         'Content-Type': 'application/json',
                     },
                 });
-                if (response.data && response.data.user && response.data.user.address) {
-                    const addresses = response.data.user.address;
-                    setAddressDetails(addresses);
-                    if (addresses.length > 0) {
-                        setDefaultSelectedIndex(0); // Default index to the first address
-                    }
+        
+                // Check if response and necessary properties exist
+                const addresses = response?.data?.user?.address || [];
+                setAddressDetails(addresses);
+        
+                // Default selection
+                if (addresses.length > 0) {
+                    setDefaultSelectedIndex(0);
                 } else {
                     setAddressDetails([]);
                 }
-                setLoading(false);
             } catch (err) {
                 console.error("Error fetching address:", err);
                 setError("Failed to load address");
+            } finally {
                 setLoading(false);
             }
         };
         fetchAddress();
+        fetchProducts();
     }, []);
     const location = useLocation();
     const { cartItems, billingDetails } = location.state || {};
@@ -111,7 +112,7 @@ function DeliveryAddress() {
             const response = await axiosInstance.post(`/add-address/${userId}`, address);
             if (response.status === 200) {
                 // Handle successful address update
-                cogoToast.success("Address updated successfully:", response.data);
+                cogoToast.success("Address updated successfully:");
                 window.location.reload();
                 handleClose();
             }

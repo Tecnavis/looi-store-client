@@ -55,7 +55,7 @@ const EditAddressModal = ({ show, handleClose, address, userId, refreshAddresses
         refreshAddresses(); // Refresh the address list after update
       }
     } catch (error) {
-      console.error('Error updating address:', error.response.data.message);
+      // console.error('Error updating address:', error.response.data.message);
     }
   };
 
