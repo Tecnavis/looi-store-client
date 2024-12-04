@@ -32,32 +32,7 @@ const LoginRegister = () => {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  // Handle login form submission
-  // const handleLoginSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await axiosInstance.post('/user-login', loginForm);
-  //     // console.log("Login successful", response.data);
-     
-  //     // Save the token to localStorage (or sessionStorage)
-  //     localStorage.setItem('token', response.data.token);
-  //     localStorage.setItem('userId', response.data.user._id);
-  //     cogoToast.success("Login successful!", {position: "top-right"});
-  //     // Redirect user to home or any protected page after login
-  //     setTimeout(() => {
-  //       navigate('/');
-  //     }, 2000); 
-  //   } catch (error) {
-  //     // console.error("Error during login", error.response?.data);
-  //     cogoToast.error("Invalid email or password. Please try again.", {position: "top-right"});
-
-  //   }
-  //   finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-  const handleLoginSubmit = async (e) => {
+   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -238,50 +213,6 @@ const LoginRegister = () => {
                       {/* Login Form */}
                       <Tab.Pane eventKey="login">
 
-                        {/* <div className="login-form-container" style={{ borderRadius: '15px' }}>
-                          <div className="login-register-form">
-                            <div className=" d-flex justify-content-center align-items-center mb-5">
-                              <img src={logo} width={100} height={100}></img>
-                            </div>
-                            <form onSubmit={handleLoginSubmit}>
-                              <input
-                                style={{ borderRadius: '15px' }}
-                                type="email"
-                                name="email"
-                                placeholder="Email"
-                                value={loginForm.email}
-                                onChange={handleInputChange}
-                                required
-                              />
-                              <input
-                                style={{ borderRadius: '15px' }}
-                                type="password"
-                                name="password"
-                                placeholder="Password"
-                                value={loginForm.password}
-                                onChange={handleInputChange}
-                                required
-                              />
-                              <div className="button-box">
-                                <div className="d-flex justify-content-end" style={{fontSize:'12px'}}>
-
-                                  <Link to="/forget-password">
-                                    Forgot Password?
-                                  </Link>
-                                </div>
-
-                              </div>
-                              <div className="text-center mt-5">
-                                <button type="submit" className="text-center " style={{ borderRadius: '15px' ,border: 'none',backgroundColor:'black',width:'50%',height:'50px',color:'white'}}>
-                                  LOGIN
-                                </button>
-                              </div>
-                              <div className="text-center mt-5">
-                                    <p>Don't have an account? <Link to="/register">Register</Link></p>
-                              </div>
-                            </form>
-                          </div>
-                        </div> */}
                         <div className="login-form-container" style={{ borderRadius: '15px' }}>
                           <div className="login-register-form">
                             <div className="d-flex justify-content-center align-items-center mb-5">
