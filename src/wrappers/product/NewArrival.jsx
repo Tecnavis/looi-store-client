@@ -10,7 +10,6 @@ const NewArrival = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  // const BASE_URL = 'https://api.looi.in';
 
   useEffect(() => {
     const fetchNewArrivals = async () => {

@@ -715,7 +715,6 @@ import { Loader } from 'lucide-react';
 import { BASE_URL} from '../../config/baseurlconfig';
 
 
-// const BASE_URL = 'https://api.looi.in';
 
 const Wishlist = () => {
   const { wishlistItems, removeFromWishlist, fetchWishlistData } = useContext(WishlistContext);

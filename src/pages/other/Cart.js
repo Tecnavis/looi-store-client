@@ -317,7 +317,6 @@ const Cart = () => {
   // eslint-disable-next-line no-unused-vars
   const [wishlistStatus, setWishlistStatus] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  // const BASE_URL = 'https://api.looi.in';
 
 
   useEffect(() => {

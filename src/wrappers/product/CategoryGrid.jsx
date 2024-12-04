@@ -9,7 +9,6 @@ import { BASE_URL} from '../../config/baseurlconfig';
 const CategoryGrid = () => {
   const navigate = useNavigate();
   const [categoriesData, setCategoriesData] = useState([]);
-  // const BASE_URL = 'https://api.looi.in';
 
 
   // Fetch categories data from API using axios

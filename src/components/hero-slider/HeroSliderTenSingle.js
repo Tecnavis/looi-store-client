@@ -13,7 +13,6 @@ const HeroSliderTenSingle = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // const BASE_URL = 'https://api.looi.in';
 
   useEffect(() => {
     fetchBanners();

@@ -13,7 +13,6 @@ const BestSellers = () => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [subcategoriesData, setSubcategoriesData] = useState([]);
   const navigate = useNavigate();
-  // const BASE_URL = 'https://api.looi.in';
 
   useEffect(() => {
     const fetchData = async () => {

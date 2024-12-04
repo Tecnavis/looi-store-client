@@ -13,7 +13,6 @@ const SearchResults = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchTerm = location.state?.searchTerm || '';
-  // const BASE_URL = 'https://api.looi.in';
 
   const handleCardClick = (productId) => {
     navigate(`/product-tab-left/${productId}`);
