@@ -11,20 +11,15 @@ import indiaData from './indiaStates.json'
 
 
 function DeliveryAddress() {
-
     const [addressDetails, setAddressDetails] = useState([]);
     const [defaultSelectedIndex, setDefaultSelectedIndex] = useState(0); // Default to the first address
-
     const navigate = useNavigate();
-
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const userId = localStorage.getItem('userId');
-
     const [address, setAddress] = useState({
         firstName: '',
         lastName: '',
@@ -37,26 +32,20 @@ function DeliveryAddress() {
         country: 'India',
         phoneNumber: ''
     });
-
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [showModal, setShowModal] = useState(false);
-
     const handleEditClick = (address) => {
         setSelectedAddress(address);
         setShowModal(true);
     };
-
     const handleCloseModal = () => {
         setShowModal(false);
         setSelectedAddress(null);
     };
-
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const response = await axiosInstance.get('/get-allproduct');
-                // Assuming you would do something with response.data
-                // setProducts(response.data.products); 
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching products:", err);
@@ -64,34 +53,6 @@ function DeliveryAddress() {
                 setLoading(false);
             }
         };
-        // const fetchAddress = async () => {
-        //     try {
-        //         const token = localStorage.getItem('token');
-        //         const userId = localStorage.getItem('userId');
-        //         const response = await axiosInstance.get(`/user-details/${userId}`, {
-        //             headers: {
-        //                 Authorization: `Bearer ${token}`,
-        //                 'Content-Type': 'application/json',
-        //             },
-        //         });
-        //         // console.log("Full response data:", response.data);
-        //         if (response.data && response.data.user && response.data.user.address) {
-        //             setAddressDetails(response.data.user.address);
-        //             console.log("Address details set:", response.data.user.address);
-        //         } else {
-        //             console.log("No address found in response");
-        //             setAddressDetails(null);
-        //         }
-        //         setLoading(false);
-        //     } catch (err) {
-        //         console.error("Error fetching address:", err);
-        //         setError("Failed to load address");
-        //         setLoading(false);
-        //     }
-        // };
-
-        // fetchAddress();
-        fetchProducts();
     }, []);
     useEffect(() => {
         const fetchAddress = async () => {
@@ -104,12 +65,9 @@ function DeliveryAddress() {
                         'Content-Type': 'application/json',
                     },
                 });
-    
                 if (response.data && response.data.user && response.data.user.address) {
                     const addresses = response.data.user.address;
                     setAddressDetails(addresses);
-    
-                    // Automatically select the first address as the default
                     if (addresses.length > 0) {
                         setDefaultSelectedIndex(0); // Default index to the first address
                     }
@@ -123,27 +81,22 @@ function DeliveryAddress() {
                 setLoading(false);
             }
         };
-    
         fetchAddress();
     }, []);
-    // Fetch products if needed
     const location = useLocation();
     const { cartItems, billingDetails } = location.state || {};
 
     if (!cartItems || !billingDetails) {
         return <div>Error: No data received from the cart</div>;
     }
-
     if (loading) {
         <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
             <Loader size={38} className="animate-spin text-center" />
         </div>
     }
-
     if (error) {
         return <div className="text-center">{error}</div>;
     }
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setAddress({
@@ -155,8 +108,6 @@ function DeliveryAddress() {
         try {
             setLoading(true);
             const userId = localStorage.getItem('userId');
-            console.log(userId);  // This should log the userId to the console
-
             const response = await axiosInstance.post(`/add-address/${userId}`, address);
             if (response.status === 200) {
                 // Handle successful address update
@@ -171,10 +122,8 @@ function DeliveryAddress() {
             setLoading(false);
         }
     };
-
     const deleteAddress = async (addressId) => {
         if (!window.confirm('Are you sure you want to delete this address?')) return;
-
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
@@ -184,7 +133,6 @@ function DeliveryAddress() {
                     Authorization: `Bearer ${token}`
                 }
             });
-
             if (response.status === 200) {
                 // Remove the deleted address from the state
                 setAddressDetails((prevAddresses) => prevAddresses.filter((address) => address._id !== addressId));
@@ -212,8 +160,6 @@ function DeliveryAddress() {
             },
         });
     };
-    
-
     return (
       <Fragment>
         <LayoutOne headerTop="visible">
@@ -222,8 +168,6 @@ function DeliveryAddress() {
               <CheckoutHeader currentStep="address" />
               <hr />
             </>
-            {/* <CheckoutHeader currentStep="address" />
-                    <hr /> */}
             <Container className="mt-5">
               <Row>
                 <Col md={6}>
@@ -279,7 +223,6 @@ function DeliveryAddress() {
                                 handleClose={handleCloseModal}
                                 address={selectedAddress}
                                 userId={userId}
-                                //    refreshAddresses={refreshAddresses}
                               />
                             )}
                           </div>
@@ -314,7 +257,6 @@ function DeliveryAddress() {
                     </Card.Body>
                   </Card>
                 </Col>
-
                 {/* Billing Details Section */}
                 <Col md={6}>
                   <h5 className="mt-2" style={{ color: "gray" }}>
@@ -472,6 +414,4 @@ function DeliveryAddress() {
       </Fragment>
     );
 }
-
 export default DeliveryAddress;
-
