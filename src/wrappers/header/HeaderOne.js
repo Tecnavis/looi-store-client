@@ -32,8 +32,9 @@ const HeaderOne = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { wishlistCount,fetchWishlistData } = useContext(WishlistContext);
-
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     // Check if user is logged in
     const token = localStorage.getItem('token');
@@ -75,7 +76,21 @@ const HeaderOne = ({
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
+  const handleLogout = () => {
+   
+    localStorage.removeItem('token');
+    window.location.reload();
 
+    fetchWishlistData();
+    fetchCartData();
+    navigate(process.env.PUBLIC_URL + "/login-register"); // Corrected the route
+  };
+  const token = localStorage.getItem('token'); 
+
+  const handleProfileClick = () => {
+    setIsProfileOpen((prev) => !prev);
+    setIsSearchOpen(false); // Ensure search dropdown closes
+  };
   return (
     <header
       className={clsx(
@@ -133,45 +148,96 @@ const HeaderOne = ({
 
             {/* Icon Group Column */}
             <div className="col-xl-2 col-lg-2 col-md-6 col-8">
-            <div className={clsx("header-right-wrap", iconWhiteClass)}>
-
-              {/* <IconGroup /> */}
-              
-              
-              <div
-                className="same-style header-search"
-                style={{ marginLeft: "0px" }}
-              >
-                <button className="search-active" onClick={handleClick}>
-                  <i className="pe-7s-search" />
-                </button>
-                <div
-                  className={`search-content ${isSearchOpen ? "active" : ""}`}
-                >
-                  <form onSubmit={handleSearch}>
-                    <input
-                      type="text"
-                      placeholder="Search"
-                      value={searchTerm}
-                      onChange={handleSearchChange}
-                    />
-                    <button type="submit" className="button-search">
-                      <i className="pe-7s-search" />
-                    </button>
-                  </form>
+              <div className={clsx("header-right-wrap", iconWhiteClass)}>
+                {/* <IconGroup /> */}
+ {/* //profile */}
+ <div
+  className="same-style mobile-off-canvas d-none d-lg-block"
+  style={{ marginLeft: "4px" }}
+>
+                  <button
+                    className="account-setting-active"
+                    onClick={handleProfileClick} // Updated
+                  >
+                    <i className="pe-7s-user-female " />
+                  </button>
+                  <div
+                    className={`account-dropdown ${
+                      isProfileOpen ? "active" : ""
+                    }`}
+                  >
+                    <ul>
+                      {!token ? (
+                        <>
+                          {/* Show login and register when no token */}
+                          <li>
+                            <Link
+                              to={process.env.PUBLIC_URL + "/login-register"}
+                            >
+                              Login
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              to={process.env.PUBLIC_URL + "/login-register"}
+                            >
+                              Register
+                            </Link>
+                          </li>
+                        </>
+                      ) : (
+                        <>
+                          {/* Show my account and logout if token exists */}
+                          <li>
+                            <Link to={process.env.PUBLIC_URL + "/my-account"}>
+                              My Account
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to="#" onClick={handleLogout}>
+                              Logout
+                            </Link>
+                          </li>
+                        </>
+                      )}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-              <div className="same-style header-wishlist" style={{marginLeft: "0px"}}>
-        <Link to={process.env.PUBLIC_URL + "/wishlist"}>
-          <i className="pe-7s-like" />
-          <span className="count-style">
-            {wishlistCount}
-          </span>
-        </Link>
-      </div>
+                <div
+                  className="same-style header-search"
+                  style={{ marginLeft: "0px" }}
+                >
+                  <button className="search-active" onClick={handleClick}>
+                    <i className="pe-7s-search" />
+                  </button>
+                  <div
+                    className={`search-content ${isSearchOpen ? "active" : ""}`}
+                  >
+                    <form onSubmit={handleSearch}>
+                      <input
+                        type="text"
+                        placeholder="Search"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                      />
+                      <button type="submit" className="button-search">
+                        <i className="pe-7s-search" />
+                      </button>
+                    </form>
+                  </div>
+                </div>
+                <div
+                  className="same-style header-wishlist"
+                  style={{ marginLeft: "0px" }}
+                >
+                  <Link to={process.env.PUBLIC_URL + "/wishlist"}>
+                    <i className="pe-7s-like" />
+                    <span className="count-style">{wishlistCount}</span>
+                  </Link>
+                </div>
                 <div
                   className="same-style cart-wrap  d-lg-block"
-                  style={{ marginRight: "8px" }}
+                  style={{ marginRight: "0px" }}
                 >
                   <Link
                     className="icon-cart"
@@ -181,9 +247,11 @@ const HeaderOne = ({
                     <span className="count-style">{cartCount}</span>
                   </Link>
                 </div>
+               
+               {/* //menu */}
                 <div
                   className="same-style mobile-off-canvas d-block d-lg-none"
-                  style={{ marginLeft: "4px" }}
+                  style={{ marginLeft: "12px" }}
                 >
                   <button
                     className="mobile-aside-button"

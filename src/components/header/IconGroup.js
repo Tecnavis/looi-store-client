@@ -127,13 +127,6 @@ const IconGroup = ({ iconWhiteClass }) => {
       </div>
       
       <div className="same-style cart-wrap d-none d-lg-block">
-        {/* <button className="icon-cart" to={process.env.PUBLIC_URL + "/cart"} >
-          <i className="pe-7s-shopbag" />
-          <span className="count-style">
-            {cartCount}
-          </span>
-        </button> */}
-
          <Link className="icon-cart" to={process.env.PUBLIC_URL + "/cart"}>
           <i className="pe-7s-shopbag" />
           <span className="count-style">
