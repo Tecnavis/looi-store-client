@@ -49,8 +49,8 @@ const Contact = () => {
                         </a>
                       </p>
                       <p>
-                        <a href="https://yourwebsitename.com">
-                          yourwebsitename.com
+                        <a href="https://www.looi.in/">
+                        https://www.looi.in
                         </a>
                       </p>
                     </div>
