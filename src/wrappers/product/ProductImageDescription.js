@@ -20,15 +20,6 @@ import SimilarProduct from "../../wrappers/product/SimilarProduct";
 import cogoToast from 'cogo-toast';
 import { BASE_URL} from '../../config/baseurlconfig';
 
-
-// const BASE_URL = 'https://api.looi.in/uploads/';
-
-
-// const BASE_URL = process.env.NODE_ENV === 'development' 
-//   ? 'http://localhost:8000/uploads/' 
-//   : 'https://looi-store-server-ypdx.onrender.com/uploads/';
-
-
 const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType, product, wishlistItem, compareItem }) => {
   const {
     name,

@@ -13,12 +13,6 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // const BASE_URL = 'https://api.looi.in/uploads/';
-
-  // const BASE_URL = process.env.NODE_ENV === 'development' 
-  // ? 'http://localhost:8000/uploads/' 
-  // : 'https://looi-store-server-ypdx.onrender.com/uploads/';
-
   useEffect(() => {
     const fetchProducts = async () => {
       if (!subcategory || !subcategory._id) {

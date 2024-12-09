@@ -194,6 +194,11 @@ const HeaderOne = ({
                             </Link>
                           </li>
                           <li>
+                            <Link to={process.env.PUBLIC_URL + "/addressbook"}>
+                              Address Book
+                            </Link>
+                          </li>
+                          <li>
                             <Link to="#" onClick={handleLogout}>
                               Logout
                             </Link>
