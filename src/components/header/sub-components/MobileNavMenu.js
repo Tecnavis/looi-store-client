@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
@@ -10,7 +9,7 @@ const MobileNavMenu = () => {
   const [mainCategories, setMainCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
-const navigate =useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     fetchMainCategories();
     fetchCategories();
@@ -108,32 +107,137 @@ const navigate =useNavigate()
           <Link to={process.env.PUBLIC_URL + "/wishlist"}>{t("Cart")}</Link>
         </li>
         {token && (
-        <li>
-          <Link to={process.env.PUBLIC_URL + "/my-account"}>
-            My ORDERS
-          </Link>
-        </li>
-      )}
+          <li>
+            <Link to={process.env.PUBLIC_URL + "/my-account"}>My ORDERS</Link>
+          </li>
+        )}
         <li>
           <Link to={process.env.PUBLIC_URL + "/contact"}>
             {t("contact_us")}
           </Link>
         </li>
         <li>
-        {token ? (
-          <Link to="#" onClick={handleLogout}>
-            Logout
-          </Link>
-        ) : (
-          <Link to={process.env.PUBLIC_URL + "/login-register"}>
-            Login
-          </Link>
-        )}
-      </li>
+          {token ? (
+            <Link to="#" onClick={handleLogout}>
+              Logout
+            </Link>
+          ) : (
+            <Link to={process.env.PUBLIC_URL + "/login-register"}>Login</Link>
+          )}
+        </li>
+        {/* //about us */}
+        <li className="menu-item-has-children">
+          <Link to="#">ABOUT US</Link>
+          <ul className="sub-menu">
+            <li>
+              <Link to={process.env.PUBLIC_URL + "/about"}>About us</Link>
+            </li>
+            <li>
+              {/* <Link to={process.env.PUBLIC_URL + "/contact"}>
+                      Contact Us
+                    </Link> */}
+              <a
+                href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/contact_us"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Contact Us
+              </a>
+            </li>
+          </ul>
+        </li>
+        {/* ///more */}
+        <li className="menu-item-has-children">
+          <Link to="#">MORE</Link>
+          <ul className="sub-menu">
+            <li>
+              {/* <Link to={process.env.PUBLIC_URL + "/privacy"}>Privacy Policy</Link> */}
+              <a
+                href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              {/* <Link to={process.env.PUBLIC_URL + "/terms"}>
+                      Terms and Conditions</Link> */}
+              <a
+                href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Terms and Conditions
+              </a>
+            </li>
+            <li>
+              {/* <Link to={process.env.PUBLIC_URL + "/cancellation"}>Cancellation and Refund</Link> */}
+              <a
+                href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/refund"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Cancellation and Refund
+              </a>
+            </li>
+            <li>
+              {/* <Link to={process.env.PUBLIC_URL + "/shipping"}>Shipping and Delivery</Link> */}
+              <a
+                href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/shipping"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Shipping and Delivery
+              </a>
+            </li>
+          </ul>
+        </li>
+        {/* follow us */}
+        <li className="menu-item-has-children">
+          <Link to="#">FOLLOW US</Link>
+          <ul className="sub-menu">
+            <li>
+              <a
+                href="//www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Facebook
+              </a>
+            </li>
+            <li>
+              <a
+                href="//www.twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Twitter
+              </a>
+            </li>
+            <li>
+              <a
+                href="//www.instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Instagram
+              </a>
+            </li>
+            <li>
+              <a
+                href="//www.youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Youtube
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
   );
 };
 
 export default MobileNavMenu;
-
