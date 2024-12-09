@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import axiosInstance from "../../../config/axiosconfig";
@@ -10,7 +10,7 @@ const MobileNavMenu = () => {
   const [mainCategories, setMainCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
-
+const navigate =useNavigate()
   useEffect(() => {
     fetchMainCategories();
     fetchCategories();
@@ -55,7 +55,13 @@ const MobileNavMenu = () => {
       (subcategory) => subcategory.category?._id === categoryId
     );
   };
+  const token = localStorage.getItem("token");
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+    navigate(process.env.PUBLIC_URL + "/login-register"); // Redirect to login/register page
+  };
   return (
     <nav className="offcanvas-navigation" id="offcanvas-navigation">
       <ul>
@@ -96,10 +102,34 @@ const MobileNavMenu = () => {
 
         {/* Contact Us Link */}
         <li>
+          <Link to={process.env.PUBLIC_URL + "/cart"}>{t("Wishlist")}</Link>
+        </li>
+        <li>
+          <Link to={process.env.PUBLIC_URL + "/wishlist"}>{t("Cart")}</Link>
+        </li>
+        {token && (
+        <li>
+          <Link to={process.env.PUBLIC_URL + "/my-account"}>
+            My ORDERS
+          </Link>
+        </li>
+      )}
+        <li>
           <Link to={process.env.PUBLIC_URL + "/contact"}>
             {t("contact_us")}
           </Link>
         </li>
+        <li>
+        {token ? (
+          <Link to="#" onClick={handleLogout}>
+            Logout
+          </Link>
+        ) : (
+          <Link to={process.env.PUBLIC_URL + "/login-register"}>
+            Login
+          </Link>
+        )}
+      </li>
       </ul>
     </nav>
   );
