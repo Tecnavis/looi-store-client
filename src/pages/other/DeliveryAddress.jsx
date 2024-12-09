@@ -106,23 +106,44 @@ function DeliveryAddress() {
         });
     };
     const handleSaveAddress = async () => {
-        try {
-            setLoading(true);
-            const userId = localStorage.getItem('userId');
-            const response = await axiosInstance.post(`/add-address/${userId}`, address);
-            if (response.status === 200) {
-                // Handle successful address update
-                cogoToast.success("Address updated successfully:");
-                window.location.reload();
-                handleClose();
-            }
-        } catch (error) {
-            console.error("Error saving address:", error);
-            setError("Failed to update address");
-        } finally {
-            setLoading(false);
-        }
-    };
+      // Check if any field is empty
+      const requiredFields = [
+          'firstName',
+          'lastName',
+          'houseBuilding',
+          'streetArea',
+          'landmark',
+          'postalCode',
+          'cityDistrict',
+          'state',
+          'phoneNumber',
+      ];
+  
+      for (const field of requiredFields) {
+          if (!address[field].trim()) {
+              cogoToast.error(`${field.replace(/([A-Z])/g, ' $1')} is required.`);
+              return; // Stop execution if validation fails
+          }
+      }
+  
+      try {
+          setLoading(true);
+          const userId = localStorage.getItem('userId');
+          const response = await axiosInstance.post(`/add-address/${userId}`, address);
+          if (response.status === 200) {
+              // Handle successful address update
+              cogoToast.success("Address updated successfully");
+              window.location.reload();
+              handleClose();
+          }
+      } catch (error) {
+          console.error("Error saving address:", error);
+          setError("Failed to update address");
+      } finally {
+          setLoading(false);
+      }
+  };
+  
     const deleteAddress = async (addressId) => {
         if (!window.confirm('Are you sure you want to delete this address?')) return;
         setLoading(true);
