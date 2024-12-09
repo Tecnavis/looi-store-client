@@ -124,7 +124,7 @@ const Shipping = lazy(() => import("./pages/other/Links/Shipping"))
 
 // Myorders
 const Myorders = lazy(() => import("./pages/other/MyOrder"))
-
+const AddressBook = lazy(() => import("./pages/other/addressbook"))
 
 const App = () => {
   return (
@@ -148,7 +148,10 @@ const App = () => {
                   path={process.env.PUBLIC_URL + "/"}
                   element={<HomeFashionThree />}
                 />
-
+<Route 
+                  path={process.env.PUBLIC_URL + "/addressbook"}
+                  element={<AddressBook />}
+                />
                 {/* Homepages */}
                 <Route
                   path={process.env.PUBLIC_URL + "/home-fashion"}

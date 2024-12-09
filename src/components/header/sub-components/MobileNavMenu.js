@@ -106,10 +106,28 @@ const MobileNavMenu = () => {
         <li>
           <Link to={process.env.PUBLIC_URL + "/wishlist"}>{t("Cart")}</Link>
         </li>
-        {token && (
+        {/* {token && (
           <li>
             <Link to={process.env.PUBLIC_URL + "/my-account"}>My ORDERS</Link>
           </li>
+        )}
+        {token && (
+          <li>
+            <Link to={process.env.PUBLIC_URL + "/my-account"}>My ACCOUNT</Link>
+          </li>
+        )} */}
+        {token && (
+        <li className="menu-item-has-children">
+          <Link to="#">PROFILE</Link>
+          <ul className="sub-menu">
+          <li>
+            <Link to={process.env.PUBLIC_URL + "/my-account"}>My ORDERS</Link>
+          </li>
+            <li>
+            <Link to={process.env.PUBLIC_URL + "/addressbook"}>ADDRESS BOOK</Link>
+          </li>
+          </ul>
+        </li>
         )}
         <li>
           <Link to={process.env.PUBLIC_URL + "/contact"}>
@@ -133,9 +151,6 @@ const MobileNavMenu = () => {
               <Link to={process.env.PUBLIC_URL + "/about"}>About us</Link>
             </li>
             <li>
-              {/* <Link to={process.env.PUBLIC_URL + "/contact"}>
-                      Contact Us
-                    </Link> */}
               <a
                 href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/contact_us"
                 target="_blank"
