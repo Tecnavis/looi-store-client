@@ -20,10 +20,9 @@ const FooterOne = ({
       <div className={`${containerClass ? containerClass : "container"}`}>
         <div className="row">
           <div
-            className={`${sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
+            className={`${sideMenu ? "col-xl-1 col-sm-4" : "col-lg-1 col-sm-4"
               }`}
           >
-            {/* footer copyright */}
             <FooterCopyright
               footerLogo="/assets/img/logo/logo.png"
               spaceBottomClass="mb-30"
@@ -61,17 +60,10 @@ const FooterOne = ({
             </div>
           </div>
           <div
-            className={`${sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
+            className={`${sideMenu ? "col-xl-3 col-sm-4" : "col-lg-3 col-sm-4"
               }`}
           >
-            {/* <div
-              className={`${
-                sideMenu
-                  ? "footer-widget mb-30 ml-95"
-                  : "footer-widget mb-30 ml-50"
-              }`}
-            > */}
-            <div className={`footer-widget mb-30 ml-50`}>
+            <div className={`footer-widget mb-30 `}>
               <div className="footer-title">
                 <h3>IMPORTANT LINKS</h3>
               </div>
@@ -174,7 +166,22 @@ const FooterOne = ({
             />
           </div>
         </div>
+        <hr/>
+        <div className="footer-bottom">
+          <div className="copyright" style={{ textAlign: "center" }}>
+            <p>
+              Copyright © 2025{" "}
+              <a href="https://www.looi.in/" target="_blank" rel="noopener noreferrer">
+                Looi
+              </a>
+              . All Rights Reserved
+            </p>
+          </div>
+        </div>
+        <br/>
       </div>
+      
+      
     </footer>
   );
 };
