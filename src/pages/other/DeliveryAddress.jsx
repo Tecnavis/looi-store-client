@@ -319,106 +319,136 @@ function DeliveryAddress() {
                   </Card>
                 </Col>
               </Row>
-              <Modal show={show} onHide={handleClose}>
+              <Modal show={show} onHide={handleClose} centered size="xl">
                 <Modal.Header closeButton>
                   <Modal.Title>Add New Address</Modal.Title>
                 </Modal.Header>
                 <Modal.Body style={{ maxHeight: "400px", overflowY: "auto" }}>
                   <Form>
-                    <Form.Group className="mb-3">
-                      <Form.Control
-                        type="text"
-                        placeholder="First Name"
-                        name="firstName"
-                        value={address.firstName}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Control
-                        type="text"
-                        placeholder="Last Name"
-                        name="lastName"
-                        value={address.lastName}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Control
-                        type="text"
-                        placeholder="House No., Building Name"
-                        name="houseBuilding"
-                        value={address.houseBuilding}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Control
-                        type="text"
-                        placeholder="Street Name, Area"
-                        name="streetArea"
-                        value={address.streetArea}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Control
-                        type="text"
-                        placeholder="Landmark"
-                        name="landmark"
-                        value={address.landmark}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Control
-                        type="text"
-                        placeholder="Postal Code"
-                        name="postalCode"
-                        value={address.postalCode}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Control
-                        type="text"
-                        placeholder="City/District"
-                        name="cityDistrict"
-                        value={address.cityDistrict}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Control
-                        type="text"
-                        name="country"
-                        value={address.country}
-                        disabled
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Select
-                        name="state"
-                        value={address.state}
-                        onChange={handleInputChange}
-                      >
-                        <option value="">Select State</option>
-                        {indiaData.states.map((state, index) => (
-                          <option key={index} value={state}>
-                            {state}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Control
-                        type="text"
-                        placeholder="Phone No"
-                        name="phoneNumber"
-                        value={address.phoneNumber}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="text"
+                            placeholder="First Name"
+                            name="firstName"
+                            value={address.firstName}
+                            onChange={handleInputChange}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="text"
+                            placeholder="Last Name"
+                            name="lastName"
+                            value={address.lastName}
+                            onChange={handleInputChange}
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="text"
+                            placeholder="House No., Building Name"
+                            name="houseBuilding"
+                            value={address.houseBuilding}
+                            onChange={handleInputChange}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="text"
+                            placeholder="Street Name, Area"
+                            name="streetArea"
+                            value={address.streetArea}
+                            onChange={handleInputChange}
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="text"
+                            placeholder="Landmark"
+                            name="landmark"
+                            value={address.landmark}
+                            onChange={handleInputChange}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="text"
+                            placeholder="Phone No"
+                            name="phoneNumber"
+                            value={address.phoneNumber}
+                            onChange={handleInputChange}
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Select
+                            name="state"
+                            value={address.state}
+                            onChange={handleInputChange}
+                          >
+                            <option value="">Select State</option>
+                            {indiaData.states.map((state, index) => (
+                              <option key={index} value={state}>
+                                {state}
+                              </option>
+                            ))}
+                          </Form.Select>
+                        </Form.Group>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="text"
+                            name="country"
+                            value={address.country}
+                            disabled
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="text"
+                            placeholder="City/District"
+                            name="cityDistrict"
+                            value={address.cityDistrict}
+                            onChange={handleInputChange}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="text"
+                            placeholder="Postal Code"
+                            name="postalCode"
+                            value={address.postalCode}
+                            onChange={handleInputChange}
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
                   </Form>
                 </Modal.Body>
                 <Modal.Footer>

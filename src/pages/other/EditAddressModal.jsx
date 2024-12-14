@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axiosInstance from '../../config/axiosconfig';
+import Swal from 'sweetalert2';
 
 const EditAddressModal = ({ show, handleClose, address, userId, refreshAddresses }) => {
   const [formData, setFormData] = useState({
@@ -50,7 +51,14 @@ const EditAddressModal = ({ show, handleClose, address, userId, refreshAddresses
         formData
       );
       if (response.status === 200) {
-        alert('Address updated successfully');
+        // alert('Address updated successfully');
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Your address has been updated.',
+          showConfirmButton: false,
+          timer: 1500
+        })
         handleClose(); // Close the modal
         refreshAddresses(); // Refresh the address list after update
       }
@@ -73,6 +81,7 @@ const EditAddressModal = ({ show, handleClose, address, userId, refreshAddresses
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
+              placeholder='First Name'
               required
             />
             </Form.Group>
@@ -82,50 +91,7 @@ const EditAddressModal = ({ show, handleClose, address, userId, refreshAddresses
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              required
-            />
-            </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Control
-              type="text"
-              name="houseBuilding"
-              value={formData.houseBuilding}
-              onChange={handleChange}
-              required
-            />
-            </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Control
-              type="text"
-              name="streetArea"
-              value={formData.streetArea}
-              onChange={handleChange}
-              required
-            />
-            </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Control
-              type="text"
-              name="landmark"
-              value={formData.landmark}
-              onChange={handleChange}
-            />
-            </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Control
-              type="text"
-              name="postalCode"
-              value={formData.postalCode}
-              onChange={handleChange}
-              required
-            />
-            </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Control
-              type="text"
-              name="cityDistrict"
-              value={formData.cityDistrict}
-              onChange={handleChange}
+              placeholder='Last Name'
               required
             />
             </Form.Group>
@@ -135,8 +101,61 @@ const EditAddressModal = ({ show, handleClose, address, userId, refreshAddresses
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleChange}
+              placeholder='Phone Number'
               required
             />
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Control
+              type="text"
+              name="houseBuilding"
+              value={formData.houseBuilding}
+              onChange={handleChange}
+              placeholder='House/Building'
+              required
+            />
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Control
+              type="text"
+              name="streetArea"
+              value={formData.streetArea}
+              onChange={handleChange}
+              placeholder='Street/Area'
+              required
+            />
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Control
+              type="text"
+              name="landmark"
+              value={formData.landmark}
+              placeholder='Landmark'
+              onChange={handleChange}
+            />
+            </Form.Group>
+            
+            <Form.Group className="mb-3">
+                <Form.Control
+              type="text"
+              name="cityDistrict"
+              value={formData.cityDistrict}
+              onChange={handleChange}
+              placeholder='City/District'
+              required
+            />
+            </Form.Group>
+           
+            <Form.Group className="mb-3">
+                <Form.Control
+              type="text"
+              name="postalCode"
+              placeholder='Postal Code'
+              value={formData.postalCode}
+              onChange={handleChange}
+              required
+            />
+            
             </Form.Group>
         </Form>
     </Modal.Body>
