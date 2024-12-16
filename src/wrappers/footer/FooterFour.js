@@ -137,7 +137,7 @@ const FooterFour = ({
                   </li>
                   <li>
                     <a
-                      href="//www.instagram.com"
+                      href="https://www.instagram.com/looi_clothing_stores/profilecard/?igsh=MXg2MGhjdDQybmdpdA=="
                       target="_blank"
                       rel="noopener noreferrer"
                     >

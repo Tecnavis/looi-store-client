@@ -115,7 +115,7 @@ const BlogPost = () => {
                 </a>
               </li>
               <li>
-                <a className="instagram" href="//instagram.com">
+                <a className="instagram" href="https://www.instagram.com/looi_clothing_stores/profilecard/?igsh=MXg2MGhjdDQybmdpdA==">
                   <i className="fa fa-instagram" />
                 </a>
               </li>

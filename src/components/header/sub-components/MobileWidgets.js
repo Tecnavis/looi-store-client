@@ -22,7 +22,7 @@ const MobileWidgets = () => {
         <a href="//twitter.com" title="Twitter">
           <i className="fa fa-twitter"></i>
         </a>
-        <a href="//instagram.com" title="Instagram">
+        <a href="https://www.instagram.com/looi_clothing_stores/profilecard/?igsh=MXg2MGhjdDQybmdpdA==" title="Instagram">
           <i className="fa fa-instagram"></i>
         </a>
         <a href="//facebook.com" title="Facebook">
