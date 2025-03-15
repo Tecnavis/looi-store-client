@@ -8,7 +8,7 @@ import NavMenu from "../../components/header/NavMenu";
 import IconGroup from "../../components/header/IconGroup";
 import MobileMenu from "../../components/header/MobileMenu";
 import HeaderTop from "../../components/header/HeaderTop";
-import logo from "../../assets/images/logo/LOOIwh.png";
+import logo from "../../assets/images/logo/looii.jpg";
 import './headerstyle.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
