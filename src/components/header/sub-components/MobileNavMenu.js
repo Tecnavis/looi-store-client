@@ -152,7 +152,7 @@ const MobileNavMenu = () => {
             </li>
             <li>
               <a
-                href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/contact_us"
+                href="https://merchant.razorpay.com/policy/PFsg8WPM8WLN4t/contact_us"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -168,7 +168,7 @@ const MobileNavMenu = () => {
             <li>
               {/* <Link to={process.env.PUBLIC_URL + "/privacy"}>Privacy Policy</Link> */}
               <a
-                href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/privacy"
+                href="https://merchant.razorpay.com/policy/PFsg8WPM8WLN4t/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -179,7 +179,7 @@ const MobileNavMenu = () => {
               {/* <Link to={process.env.PUBLIC_URL + "/terms"}>
                       Terms and Conditions</Link> */}
               <a
-                href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/terms"
+                href="https://merchant.razorpay.com/policy/PFsg8WPM8WLN4t/terms"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -189,7 +189,7 @@ const MobileNavMenu = () => {
             <li>
               {/* <Link to={process.env.PUBLIC_URL + "/cancellation"}>Cancellation and Refund</Link> */}
               <a
-                href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/refund"
+                href="https://merchant.razorpay.com/policy/PFsg8WPM8WLN4t/refund"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -199,7 +199,7 @@ const MobileNavMenu = () => {
             <li>
               {/* <Link to={process.env.PUBLIC_URL + "/shipping"}>Shipping and Delivery</Link> */}
               <a
-                href="https://merchant.razorpay.com/policy/PFsg9pWAtycjFk/shipping"
+                href="https://merchant.razorpay.com/policy/PFsg8WPM8WLN4t/shipping"
                 target="_blank"
                 rel="noopener noreferrer"
               >
