@@ -201,35 +201,29 @@ const colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
               +
             </button>
           </div>
-          <div className="pro-details-cart btn-hover">
-            {productStock && productStock > 0 ? (
-              <button
-              onClick={handleClick}
-                // onClick={() => {
-                //   // Add product to cart
-                //   const cartProduct = {
-                //     ...product,
-                //     quantity: quantityCount,
-                //     selectedProductColor: selectedProductColor || product.selectedProductColor,
-                //     selectedProductSize: selectedProductSize || product.selectedProductSize,
-                //   };
-                //   console.log("Add to Cart", cartProduct);
-                // }}
-                disabled={productCartQty >= productStock}
-              >
-                Add To Cart
-              </button>
-              <button
-                className="buy-now-btn btn-hover ml-10"
-                type="button"
-                onClick={handleBuyNow}
-              >
-                Buy Now
-              </button>
-            ) : (
-              <button disabled>Out of Stock</button>
-            )}
-          </div>
+      <div className="pro-details-cart btn-hover">
+  {productStock && productStock > 0 ? (
+    <>
+      <button
+        onClick={handleClick}
+        disabled={productCartQty >= productStock}
+      >
+        Add To Cart
+      </button>
+
+      <button
+        className="buy-now-btn btn-hover ml-10"
+        type="button"
+        onClick={handleBuyNow}
+      >
+        Buy Now
+      </button>
+    </>
+  ) : (
+    <button disabled>Out of Stock</button>
+  )}
+</div>
+
           <div className="pro-details-wishlist">
             <button
               className={wishlistItem !== undefined ? "active" : ""}
