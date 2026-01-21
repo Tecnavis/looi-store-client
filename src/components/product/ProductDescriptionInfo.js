@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getProductCartQuantity } from "../../helpers/product";
 import Rating from "./sub-components/ProductRating";
-import { addToCart } from "../../redux/actions/cartActions";
 
 const ProductDescriptionInfo = ({
   product,
@@ -343,5 +342,4 @@ ProductDescriptionInfo.propTypes = {
 };
 
 export default ProductDescriptionInfo;
-
 
