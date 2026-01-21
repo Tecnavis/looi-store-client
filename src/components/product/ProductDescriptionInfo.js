@@ -43,7 +43,14 @@ const colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
         navigate('/cart');
   }
 
-  return (
+  const handleBuyNow = () => {
+    // Direct redirect to checkout/place order page
+    // Change the route below if your project uses a different checkout URL
+    window.location.href = "/checkout";
+  };
+
+
+  return(
     <div className="product-details-content ml-70">
       {/* <h2>{product.name}</h2> */}
       <h1 style={{color:'grey'}}>Men's Grey All Over Printed Super Loose Fit Shirt</h1>
