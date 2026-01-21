@@ -1,9 +1,11 @@
 
 import PropTypes from "prop-types";
-import React, {  useState } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getProductCartQuantity } from "../../helpers/product";
 import Rating from "./sub-components/ProductRating";
+import { addToCart } from "../../redux/actions/cartActions";
 
 const ProductDescriptionInfo = ({
   product,
@@ -16,7 +18,8 @@ const ProductDescriptionInfo = ({
   compareItem,
 }) => {
   // const { id } = useParams();
-  const colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
+    const dispatch = useDispatch();
+const colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
   
   const [selectedProductColor, setSelectedProductColor] = useState(
     product.variation ? product.variation[0].color : ""
@@ -215,6 +218,13 @@ const ProductDescriptionInfo = ({
                 disabled={productCartQty >= productStock}
               >
                 Add To Cart
+              </button>
+              <button
+                className="buy-now-btn btn-hover ml-10"
+                type="button"
+                onClick={handleBuyNow}
+              >
+                Buy Now
               </button>
             ) : (
               <button disabled>Out of Stock</button>
