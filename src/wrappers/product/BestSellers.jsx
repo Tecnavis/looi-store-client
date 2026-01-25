@@ -3,7 +3,6 @@ import { Carousel, Col, Row } from "react-bootstrap";
 import axiosInstance from "../../config/axiosconfig";
 import "./styles/beststyle.css";
 import { useNavigate } from "react-router-dom";
-import { getImageUrl } from "../../utils/imageUrl";
 
 const BestSellers = () => {
   const [categoriesData, setCategoriesData] = useState([]);
@@ -60,7 +59,7 @@ const BestSellers = () => {
     );
 
     if (relatedSubcategories.length > 0) {
-      navigate(`/shop-grid-full-width/${relatedSubcategories[0]._id));
+      navigate(`/shop-grid-full-width/${relatedSubcategories[0]._id}`);
     } else {
       console.log("No subcategories found for this category");
     }
@@ -85,7 +84,7 @@ const BestSellers = () => {
     }
 
     // if local filename (old system)
-    return `/uploads/${first);
+    return `/uploads/${first}`;
   };
 
   return (

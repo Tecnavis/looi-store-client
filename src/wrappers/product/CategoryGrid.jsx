@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import axiosInstance from '../../config/axiosconfig'; // Assuming axios instance is already set up
 import './styles/categories.css';
-import { getImageUrl } from '../../utils/imageUrl';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL} from '../../config/baseurlconfig';
 
@@ -16,12 +15,9 @@ const CategoryGrid = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axiosInstance.get('/get-subcategory'); // Adjust API endpoint as necessary
-        const response = await axiosInstance.get('/get-subcategory'); // Adjust API endpoint as necessary
-        const data = response?.data;
-        // API may return { data: [...] } or { subcategories: [...] } etc.
-        const list = Array.isArray(data) ? data : (Array.isArray(data?.subcategories) ? data.subcategories : (Array.isArray(data?.data) ? data.data : []));
-        setCategoriesData(list);
+        const res = await axiosInstance.get('/get-subcategory'); // Adjust API endpoint as necessary
+        setCategoriesData(Array.isArray(res.data) ? res.data : (res.data?.categories || res.data?.data || [])); // Assuming the response contains an array of categories
+      } catch (error) {
         console.error('Error fetching categories data:', error);
       }
     };
@@ -30,7 +26,7 @@ const CategoryGrid = () => {
   }, []);
 
   const handleSubcategoryClick = (subcategoryId) => {
-    navigate(`/shop-grid-full-width/${subcategoryId));
+    navigate(`/shop-grid-full-width/${subcategoryId}`);
   };
 
   return (
@@ -39,14 +35,14 @@ const CategoryGrid = () => {
      
       {/* Render categories dynamically */}
       <Row className="mb-4">
-        {(Array.isArray(categoriesData) ? categoriesData : []).slice(0, 3).map((category, index) => (
+        {categoriesData.slice(0, 3).map((category, index) => (
           <Col key={category._id} md={4}>
             <Card className="h-100 mb-3" style={{ border: 'none' }}>
               <div className="zoom-container" onClick={() => handleSubcategoryClick(category._id)}>
                 <Card.Img
                   variant="top"
                   className="zoom-image"
-                  src={getImageUrl(category.subcategoryimage)}
+                  src={`${BASE_URL}/uploads/${category.images[0]}`} // Adjust the image path as per your backend
                   alt={category.subcategoryname}
                 />
               </div>
@@ -60,14 +56,14 @@ const CategoryGrid = () => {
 
       {/* Second Row - Render the rest of the categories */}
       <Row>
-        {(Array.isArray(categoriesData) ? categoriesData : []).slice(0, 3).map((category, index) => (
+        {categoriesData.slice(3).map((category, index) => (
           <Col key={category._id} md={3}>
             <Card className="h-100 mb-3" style={{ border: 'none' }}>
               <div className="zoom-container">
                 <Card.Img
                   variant="top"
                   className="zoom-image"
-                  src={getImageUrl(category.subcategoryimage)}
+                  src={`${BASE_URL}/uploads/${category.images[0]}`} // Adjust the image path as per your backend
                   alt={category.subcategoryname}
                 />
               </div>
