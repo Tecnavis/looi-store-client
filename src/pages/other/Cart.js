@@ -101,7 +101,7 @@
 //         {}, // No data in the body
 //         {
 //           headers: {
-//             Authorization: `Bearer ${token), // Include the JWT token in headers
+//             Authorization: `Bearer ${token}`, // Include the JWT token in headers
 //           },
 //         }
 //       );
@@ -375,7 +375,7 @@ const Cart = () => {
         {},
         {
           headers: {
-            Authorization: `Bearer ${token),
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -399,12 +399,12 @@ const Cart = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axiosInstance.put(`/cart/${productId), {
+      const response = await axiosInstance.put(`/cart/${productId}`, {
         size,
         quantity: newQuantity
       }, {
         headers: {
-          Authorization: `Bearer ${token)
+          Authorization: `Bearer ${token}`
         }
       });
 
