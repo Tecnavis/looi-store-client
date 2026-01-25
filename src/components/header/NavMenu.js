@@ -38,7 +38,7 @@
 //   };
 
 //   const getCategoriesByMainCategory = (mainCategoryId) => {
-//     return categories.filter(category => category.maincategoriesData._id === mainCategoryId);
+//     return (Array.isArray(categories) ? categories : []).filter(category => category.maincategoriesData._id === mainCategoryId);
 //   };
 
   
@@ -607,7 +607,7 @@
 //   };
 
 //   const getCategoriesByMainCategory = (mainCategoryId) => {
-//     return categories.filter(category => 
+//     return (Array.isArray(categories) ? categories : []).filter(category => 
 //       category && 
 //       category.maincategoriesData && 
 //       category.maincategoriesData._id === mainCategoryId
@@ -615,7 +615,7 @@
 //   };
 
 //   const getSubcategoriesByCategory = (categoryId) => {
-//     return subcategories.filter(subcategory => 
+//     return (Array.isArray(subcategories) ? subcategories : []).filter(subcategory => 
 //       subcategory && 
 //       subcategory.maincategory === categoryId
 //     );
@@ -732,7 +732,7 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }) => {
   };
 
   const getCategoriesByMainCategory = (mainCategoryId) => {
-    return categories.filter(category => 
+    return (Array.isArray(categories) ? categories : []).filter(category => 
       category && 
       category.maincategoriesData && 
       category.maincategoriesData._id === mainCategoryId
@@ -740,7 +740,7 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }) => {
   };
 
   const getSubcategoriesByCategory = (categoryId) => {
-    return subcategories.filter(subcategory => 
+    return (Array.isArray(subcategories) ? subcategories : []).filter(subcategory => 
       subcategory && 
       subcategory.category && 
       subcategory.category._id === categoryId
