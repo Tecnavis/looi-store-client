@@ -10,6 +10,7 @@ import { useCart } from "../../context/CartContext";
 import cogoToast from 'cogo-toast';
 import { Loader } from 'lucide-react';
 import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from "../../utils/imageUrl";
 
 
 
@@ -54,7 +55,7 @@ const Wishlist = () => {
   }, []);
 
   const handleCardClick = (productId) => {
-    navigate(`/product-tab-left/${productId}`);
+    navigate(`/product-tab-left/${productId));
   };
 
   const handleRemoveFromWishlist = async (productId) => {
@@ -167,7 +168,7 @@ const Wishlist = () => {
                         {item.productId.coverImage ? (
                           <Card.Img
                             variant="top"
-                            src={`${BASE_URL}/uploads/${item.productId.coverImage}`}
+                            src={getImageUrl(item.productId.coverImage)}
                             alt={item.productId.name}
                             
                           />

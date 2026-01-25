@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Fragment } from "react";
 import LayoutOne from "../../layouts/LayoutOne";
 import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from "../../utils/imageUrl";
 
 
 
@@ -15,7 +16,7 @@ const SearchResults = () => {
   const searchTerm = location.state?.searchTerm || '';
 
   const handleCardClick = (productId) => {
-    navigate(`/product-tab-left/${productId}`);
+    navigate(`/product-tab-left/${productId));
   };
 
   if (isSearching) {
@@ -49,7 +50,7 @@ const SearchResults = () => {
                 >
                   {product.coverImage ? (
                     <img
-                      src={`${BASE_URL}/uploads/${product.coverImage}`}
+                      src={getImageUrl(product.coverImage)}
                       alt={product.name}
                       style={{ width: '100%', height: '380px', objectFit: 'cover' }}
                     />

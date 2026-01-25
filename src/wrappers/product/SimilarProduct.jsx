@@ -5,6 +5,7 @@ import './styles/newarrivalstyle.css';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from "../../utils/imageUrl";
 
 
 const SimilarProducts = ({ subcategory, currentProductId }) => {
@@ -52,7 +53,7 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
   }, [subcategory, currentProductId]);
 
   const handleCardClick = (productId) => {
-    navigate(`/product-tab-left/${productId}`);
+    navigate(`/product-tab-left/${productId));
     window.location.reload(); // Navigate to the /cart page with productId
   };
 
@@ -71,7 +72,7 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
           <Card style={{ width: '100%', border: 'none', height: '100%' }} onClick={() => handleCardClick(product._id)}>
             {product.coverImage ? (
               <img
-                src={`${BASE_URL}/uploads/${product.coverImage}`}
+                src={getImageUrl(product.coverImage)}
                 alt={product.name}
                 style={{ width: '100%', height: '380px', objectFit: 'cover' }}
               />

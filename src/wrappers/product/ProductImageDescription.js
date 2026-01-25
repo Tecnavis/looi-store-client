@@ -19,6 +19,7 @@ import { useCart } from "../../context/CartContext"; // Import useCart
 import SimilarProduct from "../../wrappers/product/SimilarProduct";
 import cogoToast from 'cogo-toast';
 import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from "../../utils/imageUrl";
 
 const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType, product, wishlistItem, compareItem }) => {
   const {
@@ -80,7 +81,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
   }, [selectedColor, sizes, coverImage]);
 
   const slides = currentImages.map((imgFileName, i) => ({
-    src: `${BASE_URL}/uploads/${imgFileName}`,
+    src: getImageUrl(imgFileName),
     key: i,
   }));
 
@@ -152,11 +153,11 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
       }
 
       const response = await axiosInstance.post(
-        `/add-wishlist/${product._id}`,
+        `/add-wishlist/${product._id),
         {}, // No data in the body
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Include the JWT token in headers
+            Authorization: `Bearer ${token), // Include the JWT token in headers
           },
         }
       );
@@ -243,7 +244,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                             <i className="pe-7s-expand1"></i>
                           </button>
                           {/* <div className="single-image">
-                            <img src={single.src} className="img-fluid" alt={`${name} - Image ${key + 1}`} />
+                            <img src={single.src} className="img-fluid" alt={`${name} - Image ${key + 1)} />
                           </div> */}
                           <div className="single-image">
                             <img src={single.src} className="img-fluid" alt={name} />
@@ -269,7 +270,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                       {slides.map((single, key) => (
                         <SwiperSlide key={key}>
                           <div className="single-image" onClick={() => handleThumbnailClick(key)}>
-                            <img src={single.src} className="img-fluid" alt={`${name} - Thumbnail ${key + 1}`} />
+                            <img src={single.src} className="img-fluid" alt={`${name} - Thumbnail ${key + 1)} />
                           </div>
                         </SwiperSlide>
                       ))}
@@ -309,7 +310,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                     {availableSizes.map((size, key) => (
                       <button
                         key={key}
-                        className={`size-button ${size === selectedSize ? 'selected' : ''}`}
+                        className={`size-button ${size === selectedSize ? 'selected' : '')}
                         onClick={() => handleSizeChange(size)}
                       >
                         {size}

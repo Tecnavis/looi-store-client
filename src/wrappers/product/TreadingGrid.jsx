@@ -4,6 +4,7 @@ import axiosInstance from '../../config/axiosconfig';
 import './styles/newarrivalstyle.css';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from "../../utils/imageUrl";
 
 const TrendingGrid = () => {
   const [products, setProducts] = useState([]);
@@ -35,7 +36,7 @@ const TrendingGrid = () => {
   }
 
   const handleCardClick = (productId) => {
-    navigate(`/product-tab-left/${productId}`); // Navigate to the /cart page with productId
+    navigate(`/product-tab-left/${productId)); // Navigate to the /cart page with productId
   };
 
   // Limit the displayed products to 4
@@ -52,7 +53,7 @@ const TrendingGrid = () => {
               <Card style={{ width: '100%' }} onClick={() => handleCardClick(product._id)}>
                 {product.coverImage ? (
                   <img
-                    src={`${BASE_URL}/uploads/${product.coverImage}`} // Adjusted to use product.coverImage
+                    src={getImageUrl(product.coverImage)} // Adjusted to use product.coverImage
                     alt={product.name}
                     style={{ width: '100%', height: 'auto' }} // Maintain aspect ratio
                   />

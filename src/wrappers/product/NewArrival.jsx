@@ -4,6 +4,7 @@ import axiosInstance from '../../config/axiosconfig';
 import './styles/newarrivalstyle.css';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from "../../utils/imageUrl";
 
 const NewArrival = () => {
   const [products, setProducts] = useState([]);
@@ -36,7 +37,7 @@ const NewArrival = () => {
   const limitedProducts = products.slice(0, 4);
 
   const handleCardClick = (productId) => {
-    navigate(`/product-tab-left/${productId}`); // Navigate to the /cart page with productId
+    navigate(`/product-tab-left/${productId)); // Navigate to the /cart page with productId
   };
 
   return (
@@ -52,7 +53,7 @@ const NewArrival = () => {
               <Card style={{ width: '100%', border: 'none', height: '100%' }} onClick={() => handleCardClick(product._id)}>
                 {product.coverImage ? (
                   <img
-                    src={`${BASE_URL}/uploads/${product.coverImage}`}
+                    src={getImageUrl(product.coverImage)}
                     alt={product.name}
                     style={{ width: '100%', height: '380px', objectFit: 'cover' }}
                   />

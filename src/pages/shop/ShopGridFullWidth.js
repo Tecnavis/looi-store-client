@@ -10,6 +10,7 @@ import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import axiosInstance from '../../config/axiosconfig';
 import { Loader } from 'lucide-react';
 import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from "../../utils/imageUrl";
 
 
 
@@ -96,7 +97,7 @@ const ShopGridFullWidth = () => {
             try {
                 const response = await axiosInstance.get('/get-adbanner', {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${token),
                         'Content-Type': 'application/json',
                     },
                 });
@@ -179,7 +180,7 @@ const ShopGridFullWidth = () => {
     };
 
     const handleCardClick = (productId) => {
-        navigate(`/product-tab-left/${productId}`);
+        navigate(`/product-tab-left/${productId));
     };
 
     const getLayout = (layout) => {
@@ -216,9 +217,9 @@ const ShopGridFullWidth = () => {
                                 <div className="banner-div">
                                     {banner.image ? (
                                         <img
-                                            src={`${BASE_URL}/uploads/${banner.image}`}
+                                            src={getImageUrl(banner.image)}
                                             className="img-fluid"
-                                            alt={`Banner ${index}`}
+                                            alt={`Banner ${index)}
                                             style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
                                         />
                                     ) : (
@@ -241,7 +242,7 @@ const ShopGridFullWidth = () => {
                                         <Form.Check
                                             type="checkbox"
                                             label={color}
-                                            id={`color-${color}`}
+                                            id={`color-${color)}
                                             onChange={() => handleColorChange(color)}
                                             checked={selectedColors.includes(color)}
                                         />
@@ -253,7 +254,7 @@ const ShopGridFullWidth = () => {
                                         <Form.Check
                                             type="checkbox"
                                             label={size}
-                                            id={`size-${size}`}
+                                            id={`size-${size)}
                                             onChange={() => handleSizeChange(size)}
                                             checked={selectedSizes.includes(size)}
                                         />
@@ -265,7 +266,7 @@ const ShopGridFullWidth = () => {
                                         <Form.Check
                                             type="checkbox"
                                             label={range.label}
-                                            id={`priceRange-${idx}`}
+                                            id={`priceRange-${idx)}
                                             onChange={() => handlePriceChange(range.value)}
                                             checked={selectedPriceRanges.includes(range.value)}
                                         />
@@ -284,7 +285,7 @@ const ShopGridFullWidth = () => {
                                                 <div className="position-relative">
                                                     <Card.Img
                                                         variant="top"
-                                                        src={`${BASE_URL}/uploads/${product.coverImage}`}
+                                                        src={getImageUrl(product.coverImage)}
                                                         alt={product.name}
                                                         style={{ width: '100%', height: '300px', objectFit: 'cover' }}
                                                     />

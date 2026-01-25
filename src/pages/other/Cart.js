@@ -62,11 +62,11 @@
 //       try {
 //         const token = localStorage.getItem("token");  // Assuming the token is stored in localStorage
 
-//         const response = await fetch(`http://localhost:8000/cart/${productId}`, {
+//         const response = await fetch(`http://localhost:8000/cart/${productId), {
 //           method: 'PUT',
 //           headers: {
 //             'Content-Type': 'application/json',
-//             'Authorization': `Bearer ${token}` // Add Authorization header
+//             'Authorization': `Bearer ${token) // Add Authorization header
 //           },
 //           body: JSON.stringify({ size, quantity: newQuantity }),
 //         });
@@ -97,11 +97,11 @@
 //       }
 
 //       const response = await axiosInstance.post(
-//         `/add-wishlist/${product._id}`,
+//         `/add-wishlist/${product._id),
 //         {}, // No data in the body
 //         {
 //           headers: {
-//             Authorization: `Bearer ${token}`, // Include the JWT token in headers
+//             Authorization: `Bearer ${token), // Include the JWT token in headers
 //           },
 //         }
 //       );
@@ -128,7 +128,7 @@
 //                 {/* Product Image */}
 //                 <Col xs={12} sm={3}>
 //                   <img
-//                     src={`http://localhost:8000/uploads/${item.coverImage || item.product?.coverImage || image}`}
+//                     src={`http://localhost:8000/uploads/${item.coverImage || item.product?.coverImage || image)}
 //                     alt="Product"
 //                     className="product-image"
 //                   />
@@ -308,6 +308,7 @@ import CheckoutHeader from "../../components/checkout-header/CheckOutHeader";
 import axiosInstance from '../../config/axiosconfig';
 import cogoToast from 'cogo-toast';
 import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from "../../utils/imageUrl";
 
 
 const Cart = () => {
@@ -370,11 +371,11 @@ const Cart = () => {
       }
 
       const response = await axiosInstance.post(
-        `/add-wishlist/${productId}`,
+        `/add-wishlist/${productId),
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token),
           },
         }
       );
@@ -398,12 +399,12 @@ const Cart = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axiosInstance.put(`/cart/${productId}`, {
+      const response = await axiosInstance.put(`/cart/${productId), {
         size,
         quantity: newQuantity
       }, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token)
         }
       });
 
@@ -439,7 +440,7 @@ const Cart = () => {
               <Row className="align-items-center">
                 <Col xs={12} sm={3}>
                   <img
-                    src={`${BASE_URL}/uploads/${item.coverImage || item.product?.coverImage || image}`}
+                    src={getImageUrl(item.coverImage || item.product?.coverImage || image)}
                     alt="Product"
                     className="product-image"
                   />
