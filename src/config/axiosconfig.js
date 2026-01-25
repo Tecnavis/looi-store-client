@@ -4,11 +4,13 @@ import axios from 'axios';
 // export const BASE_URL = 'http://localhost:8000';
 export const BASE_URL = 'https://api.looi.in';
 
+const API_BASE =
+  BASE_URL.endsWith('/api') ? BASE_URL : `${BASE_URL}/api`;
+
 const instance = axios.create({
-  // baseURL: 'http://localhost:8000',
-  baseURL: BASE_URL,
+  baseURL: API_BASE,
   headers: {
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'Content-Type': 'application/json',
   },
 });
