@@ -55,7 +55,7 @@ const Wishlist = () => {
   }, []);
 
   const handleCardClick = (productId) => {
-    navigate(`/product-tab-left/${productId));
+    navigate(`/product-tab-left/${productId}`);
   };
 
   const handleRemoveFromWishlist = async (productId) => {

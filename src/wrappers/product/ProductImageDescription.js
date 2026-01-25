@@ -270,7 +270,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                       {slides.map((single, key) => (
                         <SwiperSlide key={key}>
                           <div className="single-image" onClick={() => handleThumbnailClick(key)}>
-                            <img src={single.src} className="img-fluid" alt={`${name} - Thumbnail ${key + 1)} />
+                            <img src={single.src} className="img-fluid" alt={`${name} - Thumbnail ${key + 1}`} />
                           </div>
                         </SwiperSlide>
                       ))}

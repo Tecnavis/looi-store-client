@@ -97,7 +97,7 @@ const ShopGridFullWidth = () => {
             try {
                 const response = await axiosInstance.get('/get-adbanner', {
                     headers: {
-                        Authorization: `Bearer ${token),
+                        Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
                 });
@@ -180,7 +180,7 @@ const ShopGridFullWidth = () => {
     };
 
     const handleCardClick = (productId) => {
-        navigate(`/product-tab-left/${productId));
+        navigate(`/product-tab-left/${productId};
     };
 
     const getLayout = (layout) => {
