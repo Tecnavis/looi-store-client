@@ -16,44 +16,65 @@ const MobileNavMenu = () => {
     fetchSubcategories();
   }, []);
 
-  const fetchMainCategories = async () => {
-    try {
-      const response = await axiosInstance.get("/get-maincategory");
-      setMainCategories(response.data || []);
-    } catch (error) {
-      console.error("Error fetching main categories:", error);
-    }
-  };
+const fetchMainCategories = async () => {
+  try {
+    const response = await axiosInstance.get("/get-maincategory");
 
-  const fetchCategories = async () => {
-    try {
-      const response = await axiosInstance.get("/get-category");
-      setCategories(response.data || []);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
+    const data = response.data;
+    const list = Array.isArray(data)
+      ? data
+      : data?.maincategories || data?.mainCategories || data?.data || [];
 
-  const fetchSubcategories = async () => {
-    try {
-      const response = await axiosInstance.get("/get-subcategory");
-      setSubcategories(response.data || []);
-    } catch (error) {
-      console.error("Error fetching subcategories:", error);
-    }
-  };
+    setMainCategories(Array.isArray(list) ? list : []);
+  } catch (error) {
+    console.error("Error fetching main categories:", error);
+    setMainCategories([]);
+  }
+};
 
-  const getCategoriesByMainCategory = (mainCategoryId) => {
-    return categories.filter(
-      (category) => category.maincategoriesData?._id === mainCategoryId
-    );
-  };
+const fetchCategories = async () => {
+  try {
+    const response = await axiosInstance.get("/get-category");
 
-  const getSubcategoriesByCategory = (categoryId) => {
-    return subcategories.filter(
-      (subcategory) => subcategory.category?._id === categoryId
-    );
-  };
+    const data = response.data;
+    const list = Array.isArray(data) ? data : data?.categories || data?.data || [];
+
+    setCategories(Array.isArray(list) ? list : []);
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    setCategories([]);
+  }
+};
+
+const fetchSubcategories = async () => {
+  try {
+    const response = await axiosInstance.get("/get-subcategory");
+
+    const data = response.data;
+    const list = Array.isArray(data)
+      ? data
+      : data?.subcategories || data?.subCategories || data?.data || [];
+
+    setSubcategories(Array.isArray(list) ? list : []);
+  } catch (error) {
+    console.error("Error fetching subcategories:", error);
+    setSubcategories([]);
+  }
+};
+
+
+ const getCategoriesByMainCategory = (mainCategoryId) => {
+  return (Array.isArray(categories) ? categories : []).filter(
+    (category) => category.maincategoriesData?._id === mainCategoryId
+  );
+};
+
+const getSubcategoriesByCategory = (categoryId) => {
+  return (Array.isArray(subcategories) ? subcategories : []).filter(
+    (subcategory) => subcategory.category?._id === categoryId
+  );
+};
+
   const token = localStorage.getItem("token");
 
   const handleLogout = () => {
