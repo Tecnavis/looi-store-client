@@ -153,11 +153,11 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
       }
 
       const response = await axiosInstance.post(
-        `/add-wishlist/${product._id),
+        `/add-wishlist/${product._id}`,
         {}, // No data in the body
         {
           headers: {
-            Authorization: `Bearer ${token), // Include the JWT token in headers
+            Authorization: `Bearer ${token}`, // Include the JWT token in headers
           },
         }
       );
