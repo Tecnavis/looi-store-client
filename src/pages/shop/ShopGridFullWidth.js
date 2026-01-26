@@ -219,7 +219,7 @@ const ShopGridFullWidth = () => {
                                         <img
                                             src={getImageUrl(banner.image)}
                                             className="img-fluid"
-                                            alt={`Banner ${index}`}
+                                            alt={'Banner ' + index}
                                             style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
                                         />
                                     ) : (
