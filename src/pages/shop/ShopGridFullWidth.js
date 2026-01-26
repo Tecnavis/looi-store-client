@@ -179,16 +179,16 @@ const ShopGridFullWidth = () => {
     );
   };
 
-  const handlePriceChange = (value) => {
-    setSelectedPriceRanges((prev) =>
-      prev.includes(value) ? prev.filter((r) => r !== value) : [...prev, value]
-    );
-  };
+const handlePriceChange = (value) => {
+  setSelectedPriceRanges((prev) =>
+    prev.includes(value) ? prev.filter((r) => r !== value) : [...prev, value]
+  );
+};
 
-  ✅ FIXED HERE
-  const handleCardClick = (productId) => {
-    navigate(`/product-tab-left/${productId}`);
-  };
+const handleCardClick = (productId) => {
+  navigate(`/product-tab-left/${productId}`);
+};
+
 
   const getLayout = (layout) => {
     setLayout(layout);
@@ -275,8 +275,7 @@ const ShopGridFullWidth = () => {
                   <div key={idx} className="mb-2">
                     <Form.Check
                       type="checkbox"
-                      label={size}
-                      ✅ FIXED HERE
+                      label={size}    
                       id={`size-${size}`}
                       onChange={() => handleSizeChange(size)}
                       checked={selectedSizes.includes(size)}
@@ -292,7 +291,6 @@ const ShopGridFullWidth = () => {
                     <Form.Check
                       type="checkbox"
                       label={range.label}
-                      ✅ FIXED HERE
                       id={`priceRange-${idx}`}
                       onChange={() => handlePriceChange(range.value)}
                       checked={selectedPriceRanges.includes(range.value)}
