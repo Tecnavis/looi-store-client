@@ -16,7 +16,7 @@ const SearchResults = () => {
   const searchTerm = location.state?.searchTerm || '';
 
   const handleCardClick = (productId) => {
-    navigate(`/product-tab-left/${productId));
+    navigate(`/product-tab-left/${productId}`);
   };
 
   if (isSearching) {

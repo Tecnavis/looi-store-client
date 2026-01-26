@@ -101,7 +101,7 @@
 //         {}, // No data in the body
 //         {
 //           headers: {
-//             Authorization: `Bearer ${token), // Include the JWT token in headers
+//             Authorization: `Bearer ${token}`, // Include the JWT token in headers
 //           },
 //         }
 //       );
@@ -371,11 +371,11 @@ const Cart = () => {
       }
 
       const response = await axiosInstance.post(
-        `/add-wishlist/${productId),
+        `/add-wishlist/${productId}`,
         {},
         {
           headers: {
-            Authorization: `Bearer ${token),
+            Authorization: `Bearer ${token}`,
           },
         }
       );
