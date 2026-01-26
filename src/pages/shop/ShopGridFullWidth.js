@@ -242,7 +242,7 @@ const ShopGridFullWidth = () => {
                                         <Form.Check
                                             type="checkbox"
                                             label={color}
-                                            id={`color-${color)}
+                                            id={`color-${color}`}
                                             onChange={() => handleColorChange(color)}
                                             checked={selectedColors.includes(color)}
                                         />
