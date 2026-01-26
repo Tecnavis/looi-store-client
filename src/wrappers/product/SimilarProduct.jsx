@@ -53,7 +53,7 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
   }, [subcategory, currentProductId]);
 
   const handleCardClick = (productId) => {
-    navigate(`/product-tab-left/${productId));
+    navigate(`/product-tab-left/${productId}`);
     window.location.reload(); // Navigate to the /cart page with productId
   };
 
