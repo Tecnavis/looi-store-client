@@ -399,12 +399,12 @@ const Cart = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axiosInstance.put(`/cart/${productId), {
+      const response = await axiosInstance.put(`/cart/${productId}`, {
         size,
         quantity: newQuantity
       }, {
         headers: {
-          Authorization: `Bearer ${token)
+          Authorization: `Bearer ${token}`
         }
       });
 
