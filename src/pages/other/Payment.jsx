@@ -424,7 +424,7 @@ const Payment = () => {
                 totalAmount: billingDetails.cartTotal
             };
 
-            const response = await axiosInstance.post('/place', orderData);
+            const response = await axiosInstance.post('/postOrder', orderData);
             const orderId = response.data.order._id;
             cogoToast.success('Order placed successfully!');
             navigate(`/myorders/${orderId}`);
@@ -511,7 +511,7 @@ const Payment = () => {
                                 razorpayPaymentId: response.razorpay_payment_id
                             };
 
-                            const orderResponse = await axiosInstance.post('/place', orderData);
+                            const orderResponse = await axiosInstance.post('/postOrder', orderData);
                             const orderId = orderResponse.data.order._id;
 
                             cogoToast.success('Payment successful, order placed!');
