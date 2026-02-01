@@ -12,7 +12,7 @@ const ProductTabRight = () => {
   let { pathname } = useLocation();
   let { id } = useParams();
   const { products } = useSelector((state) => state.product);
-  const product = products.find(product => product.id === id);
+  const product = products.find(product => product._id === id);
 
   return (
     <Fragment>
