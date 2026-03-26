@@ -29,7 +29,7 @@ const ShopGridFullWidth = () => {
     const [availableColors, setAvailableColors] = useState([]);
     const [sortOrder, setSortOrder] = useState('default');
 
-    // const BASE_URL = process.env.REACT_APP_BASE_URL || 'https://looi-store-server-ypdx.onrender.com'
+    // const BASE_URL = process.env.REACT_APP_BASE_URL || 'https://looi-store-server-izvs.onrender.com/api'
     // pagination
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(12); // Show 12 items per page
