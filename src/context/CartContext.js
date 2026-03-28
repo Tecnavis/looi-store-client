@@ -343,71 +343,80 @@ export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
 
-  // Use useCallback to memoize the fetchCartData function
   const fetchCartData = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
-      if (token) {
-        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const response = await axiosInstance.get('/cart');
-        console.log('Cart response:', response.data);
+      if (!token) return;
 
-        if (response.data && response.data.cart) {
-          const { cart } = response.data;
-          if (Array.isArray(cart.items)) {
-            setCartItems(cart.items);
-            setCartCount(cart.items.length);
-          } else {
-            console.error("Unexpected items structure in cart:", cart);
-            setCartItems([]);
-            setCartCount(0);
-          }
-        } else {
-          console.error("Unexpected response structure:", response.data);
-          setCartItems([]);
-          setCartCount(0);
-        }
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      const response = await axiosInstance.get('/cart');
+
+      if (response.data?.cart?.items) {
+        setCartItems(response.data.cart.items);
+        setCartCount(response.data.cart.items.length);
+      } else {
+        setCartItems([]);
+        setCartCount(0);
       }
+
     } catch (error) {
-      console.error("Error fetching cart data:", error);
+      console.error("Error fetching cart:", error);
       setCartItems([]);
       setCartCount(0);
     }
-  }, []); // Empty dependency array since it doesn't depend on any props or state
+  }, []);
 
-  const removeFromCart = async (productId) => {
+  // ✅ FIXED REMOVE (with size)
+  const removeFromCart = async (productId, size) => {
     try {
       const token = localStorage.getItem('token');
-      if (token) {
-        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
-        const response = await axiosInstance.delete(`/delete-cart/${productId}`);
-        console.log(response.data.message);
-  
-        await fetchCartData();
-      }
+      if (!token) return;
+
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      await axiosInstance.delete(`/delete-cart/${productId}`, {
+        params: { size }
+      });
+
+      await fetchCartData();
+
     } catch (error) {
-      if (error.response && error.response.status === 404) {
-        console.log("Item not found in cart. Refreshing cart data...");
-        await fetchCartData();
-      } else {
-        console.error("Error removing item from cart:", error);
-      }
+      console.error("Remove error:", error);
     }
   };
 
-  const addToCart = async (productId, quantity = 1, size = '', color = '', hsn = '', sku = '', length = '', width = '', height = '', weight = '') => {
+  // ✅ FIXED ADD TO CART
+  const addToCart = async (
+    productId,
+    quantity = 1,
+    size,
+    color = '',
+    hsn = '',
+    sku = '',
+    length = '',
+    width = '',
+    height = '',
+    weight = ''
+  ) => {
     try {
+      if (!size) {
+        alert("Please select size");
+        return;
+      }
+
       const token = localStorage.getItem('token');
-      if(!token) {
+      if (!token) {
         navigate('/login-register');
         return;
       }
+
       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const response = await axiosInstance.post(`/cart/${productId}`, { 
-        productId, 
-        quantity, 
-        size, 
+
+      const payload = {
+        productId,
+        quantity,
+        size: size.trim().toUpperCase(), // ✅ normalize
         color,
         hsn,
         sku,
@@ -415,25 +424,29 @@ export const CartProvider = ({ children }) => {
         width,
         height,
         weight,
-        
-      });
-      
+      };
+
+      console.log("Adding to cart:", payload); // 🔍 debug
+
+      await axiosInstance.post(`/cart/${productId}`, payload);
+
       await fetchCartData();
+
     } catch (error) {
-      console.error("Error adding item to cart:", error);
+      console.error("Add to cart error:", error.response?.data || error);
     }
   };
 
-  const value = {
-    cartCount,
-    cartItems,
-    removeFromCart,
-    addToCart,
-    fetchCartData
-  };
-
   return (
-    <CartContext.Provider value={value}>
+    <CartContext.Provider
+      value={{
+        cartCount,
+        cartItems,
+        removeFromCart,
+        addToCart,
+        fetchCartData
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
