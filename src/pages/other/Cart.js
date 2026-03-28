@@ -307,7 +307,7 @@ import { WishlistContext } from "../../context/WishlistContext";
 import CheckoutHeader from "../../components/checkout-header/CheckOutHeader";
 import axiosInstance from '../../config/axiosconfig';
 import cogoToast from 'cogo-toast';
-import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from '../../helpers/imageUrl';
 
 
 const Cart = () => {
@@ -439,7 +439,7 @@ const Cart = () => {
               <Row className="align-items-center">
                 <Col xs={12} sm={3}>
                   <img
-                    src={`${BASE_URL}/uploads/${item.coverImage || item.product?.coverImage || image}`}
+                    src={getImageUrl(item.coverImage || item.product?.coverImage) || image}
                     alt="Product"
                     className="product-image"
                   />

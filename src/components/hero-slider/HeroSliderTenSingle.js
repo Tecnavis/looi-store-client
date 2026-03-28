@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import axiosInstance from '../../config/axiosconfig'; // Adjust path as needed
-import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from '../../helpers/imageUrl';
 
 const HeroSliderTenSingle = () => {
   const [banners, setBanners] = useState([]);
@@ -62,7 +62,7 @@ const HeroSliderTenSingle = () => {
   }
 
   const currentBanner = banners[currentBannerIndex];
-  const imageUrl = `${BASE_URL}/uploads/${currentBanner.images[0]}`;
+  const imageUrl = getImageUrl(currentBanner.images[0]);
 
   return (
     <div

@@ -9,7 +9,7 @@ import { WishlistContext } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext";
 import cogoToast from 'cogo-toast';
 import { Loader } from 'lucide-react';
-import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from '../../helpers/imageUrl';
 
 
 
@@ -167,7 +167,7 @@ const Wishlist = () => {
                         {item.productId.coverImage ? (
                           <Card.Img
                             variant="top"
-                            src={`${BASE_URL}/uploads/${item.productId.coverImage}`}
+                            src={getImageUrl(item.productId.coverImage)}
                             alt={item.productId.name}
                             
                           />

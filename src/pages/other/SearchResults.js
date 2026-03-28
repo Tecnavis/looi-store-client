@@ -4,7 +4,7 @@ import { Card, Row, Col, Spinner } from "react-bootstrap";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Fragment } from "react";
 import LayoutOne from "../../layouts/LayoutOne";
-import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from '../../helpers/imageUrl';
 
 
 
@@ -49,7 +49,7 @@ const SearchResults = () => {
                 >
                   {product.coverImage ? (
                     <img
-                      src={`${BASE_URL}/uploads/${product.coverImage}`}
+                      src={getImageUrl(product.coverImage)}
                       alt={product.name}
                       style={{ width: '100%', height: '380px', objectFit: 'cover' }}
                     />

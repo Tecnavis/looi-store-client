@@ -9,7 +9,7 @@ import LayoutOne from '../../layouts/LayoutOne';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import axiosInstance from '../../config/axiosconfig';
 import { Loader } from 'lucide-react';
-import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from '../../helpers/imageUrl';
 
 
 
@@ -216,7 +216,7 @@ const ShopGridFullWidth = () => {
                                 <div className="banner-div">
                                     {banner.image ? (
                                         <img
-                                            src={`${BASE_URL}/uploads/${banner.image}`}
+                                            src={getImageUrl(banner.image)}
                                             className="img-fluid"
                                             alt={`Banner ${index}`}
                                             style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
@@ -284,7 +284,7 @@ const ShopGridFullWidth = () => {
                                                 <div className="position-relative">
                                                     <Card.Img
                                                         variant="top"
-                                                        src={`${BASE_URL}/uploads/${product.coverImage}`}
+                                                        src={getImageUrl(product.coverImage)}
                                                         alt={product.name}
                                                         style={{ width: '100%', height: '300px', objectFit: 'cover' }}
                                                     />

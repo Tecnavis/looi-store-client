@@ -18,7 +18,7 @@ import { WishlistContext } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext"; // Import useCart
 import SimilarProduct from "../../wrappers/product/SimilarProduct";
 import cogoToast from 'cogo-toast';
-import { BASE_URL} from '../../config/baseurlconfig';
+import { getImageUrl } from '../../helpers/imageUrl';
 
 const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType, product, wishlistItem, compareItem }) => {
   const {
@@ -80,7 +80,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
   }, [selectedColor, sizes, coverImage]);
 
   const slides = currentImages.map((imgFileName, i) => ({
-    src: `${BASE_URL}/uploads/${imgFileName}`,
+    src: getImageUrl(imgFileName),
     key: i,
   }));
 
