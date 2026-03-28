@@ -19,20 +19,24 @@ const Payment = () => {
     const [showOrderSummary, setShowOrderSummary] = useState(false);
 
     const { cartItems, billingDetails, selectedAddress } = location.state || {};
-    const userId = localStorage.getItem('userId');
-    const userEmail = localStorage.getItem("email");
-    const user = JSON.parse(localStorage.getItem("user")) || null;
+
+    // ── Read user info from localStorage ──────────────────────────────────────
+    // Support multiple possible key names set during login
+    const userId    = localStorage.getItem('userId')   || localStorage.getItem('user_id');
+    const userEmail = localStorage.getItem('email')    || localStorage.getItem('userEmail') || localStorage.getItem('user_email');
+    const user      = (() => {
+        try { return JSON.parse(localStorage.getItem('user')); } catch { return null; }
+    })();
 
     // Load Razorpay script
     useEffect(() => {
         const loadRazorpayScript = () => {
             return new Promise((resolve) => {
-                // Don't load twice if already loaded
                 if (window.Razorpay) { resolve(true); return; }
                 const script = document.createElement('script');
                 script.src = 'https://checkout.razorpay.com/v1/checkout.js';
                 script.async = true;
-                script.onload = () => resolve(true);
+                script.onload  = () => resolve(true);
                 script.onerror = () => resolve(false);
                 document.body.appendChild(script);
             });
@@ -57,35 +61,33 @@ const Payment = () => {
     };
 
     // ─── Build orderItems from cart items ────────────────────────────────────
-    // Cart items from server have: productId, productName, quantity, price,
-    // color, size, hsn, sku, length, width, height, weight
     const buildOrderItems = () =>
         cartItems.map(item => ({
             productId:   item.productId   || item.product?._id || item.product,
             productName: item.productName || item.product?.name,
             quantity:    item.quantity,
             price:       item.price       || item.product?.price,
-            color:       item.color,
-            size:        item.size,
-            hsn:         item.hsn,
-            sku:         item.sku,
-            length:      item.length,
-            width:       item.width,
-            height:      item.height,
-            weight:      item.weight,
+            color:       item.color  || '',
+            size:        item.size   || '',
+            hsn:         item.hsn    || '',
+            sku:         item.sku    || '',
+            length:      item.length || 0,
+            width:       item.width  || 0,
+            height:      item.height || 0,
+            weight:      item.weight || 0,
         }));
 
     const buildShippingAddress = () => ({
-        firstName:    selectedAddress.firstName,
-        lastName:     selectedAddress.lastName,
+        firstName:     selectedAddress.firstName,
+        lastName:      selectedAddress.lastName,
         houseBuilding: selectedAddress.houseBuilding,
-        streetArea:   selectedAddress.streetArea,
-        landmark:     selectedAddress.landmark,
-        postalCode:   selectedAddress.postalCode,
-        cityDistrict: selectedAddress.cityDistrict,
-        country:      selectedAddress.country || 'India',
-        state:        selectedAddress.state,
-        phoneNumber:  selectedAddress.phoneNumber,
+        streetArea:    selectedAddress.streetArea,
+        landmark:      selectedAddress.landmark,
+        postalCode:    selectedAddress.postalCode,
+        cityDistrict:  selectedAddress.cityDistrict,
+        country:       selectedAddress.country || 'India',
+        state:         selectedAddress.state,
+        phoneNumber:   selectedAddress.phoneNumber,
     });
 
     // ─── Pay on Delivery ─────────────────────────────────────────────────────
@@ -94,34 +96,37 @@ const Payment = () => {
             cogoToast.error('Please select a payment method.');
             return;
         }
+        // Validate essential user data before hitting the API
+        if (!userId) {
+            cogoToast.error('Session expired. Please log in again.');
+            navigate('/login');
+            return;
+        }
+
         setIsLoading(true);
         try {
             const orderData = {
                 user:            userId,
-                email:           userEmail,
+                email:           userEmail || user?.email || '',
                 orderItems:      buildOrderItems(),
                 shippingAddress: buildShippingAddress(),
                 paymentMethod:   'COD',
                 paymentStatus:   'Pending',
                 totalAmount:     billingDetails.cartTotal,
-                skipShipping:    true,   // skip courier API creation on backend
+                skipShipping:    true,
             };
 
             const response = await axiosInstance.post('/postOrder', orderData);
             const orderId = response.data.order?._id || response.data?.orderId;
 
-            if (!orderId) throw new Error('No order ID returned');
+            if (!orderId) throw new Error('No order ID returned from server');
 
-            // Clear cart after successful order
             clearCart();
-
             cogoToast.success('Order placed successfully!');
             navigate(`/myorders/${orderId}`);
         } catch (error) {
             console.error('Error placing order:', error);
 
-            // If the backend saved the order but failed only at shipping-label
-            // creation, treat it as a successful order placement.
             const errMsg = error.response?.data?.message || '';
             const fallbackOrderId =
                 error.response?.data?.order?._id ||
@@ -138,14 +143,18 @@ const Payment = () => {
                 return;
             }
 
-            const msg = errMsg || 'Failed to place order. Please try again.';
-            cogoToast.error(msg);
+            cogoToast.error(errMsg || 'Failed to place order. Please try again.');
         } finally {
             setIsLoading(false);
         }
     };
 
     // ─── Razorpay Online Payment ──────────────────────────────────────────────
+    // Correct flow:
+    //   1. Create order in YOUR DB first  (/postOrder)  → get dbOrderId
+    //   2. Open Razorpay with that amount
+    //   3. On success → verify signature (/verify-payment) passing dbOrderId
+    //      → backend marks order as Paid + Processing
     const handleRazorpayPayment = async (e) => {
         e.preventDefault();
 
@@ -153,58 +162,68 @@ const Payment = () => {
             cogoToast.error('Payment gateway is loading. Please try again in a moment.');
             return;
         }
+        if (!userId) {
+            cogoToast.error('Session expired. Please log in again.');
+            navigate('/login');
+            return;
+        }
 
         setIsLoading(true);
-        try {
-            const amount = Math.round(billingDetails.cartTotal * 100); // paise, must be integer
+        let dbOrderId = null; // will hold the MongoDB _id of the saved order
 
-            const orderResponse = await axiosInstance.post('/order', {
+        try {
+            // ── STEP 1: Save order to DB first (paymentStatus = Pending) ──────
+            const orderData = {
+                user:            userId,
+                email:           userEmail || user?.email || '',
+                orderItems:      buildOrderItems(),
+                shippingAddress: buildShippingAddress(),
+                paymentMethod:   'Razorpay',
+                paymentStatus:   'Pending',   // will be updated to Paid after verify
+                totalAmount:     billingDetails.cartTotal,
+                skipShipping:    true,         // courier will be pushed after payment
+            };
+
+            const orderRes = await axiosInstance.post('/postOrder', orderData);
+            dbOrderId = orderRes.data.order?._id;
+
+            if (!dbOrderId) throw new Error('Failed to create order record');
+
+            // ── STEP 2: Create Razorpay payment order ─────────────────────────
+            const amount = Math.round(billingDetails.cartTotal * 100); // paise
+            const razorpayOrderRes = await axiosInstance.post('/order', {
                 amount,
                 currency: 'INR',
-                receipt: userId,
+                receipt:  userId,
             });
 
-            if (!orderResponse.data?.id) {
+            if (!razorpayOrderRes.data?.id) {
                 throw new Error('Failed to create Razorpay order');
             }
 
+            // ── STEP 3: Open Razorpay checkout ────────────────────────────────
             const options = {
                 key:         process.env.REACT_APP_RAZORPAY_KEY_ID,
                 amount,
                 currency:    'INR',
-                name:        "LOOI",
-                description: "Payment for your order",
+                name:        'LOOI',
+                description: 'Payment for your order',
                 image:       Logo,
-                order_id:    orderResponse.data.id,
+                order_id:    razorpayOrderRes.data.id,
                 handler: async function (response) {
                     try {
-                        const validationResponse = await axiosInstance.post('/verify-payment', {
+                        // ── STEP 4: Verify payment & update DB order to Paid ──
+                        const verifyRes = await axiosInstance.post('/verify-payment', {
                             razorpay_order_id:   response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
                             razorpay_signature:  response.razorpay_signature,
+                            dbOrderId,   // ← tells backend which order to mark Paid
                         });
 
-                        if (validationResponse.data?.success) {
-                            const orderData = {
-                                user:            userId,
-                                email:           userEmail,
-                                orderItems:      buildOrderItems(),
-                                shippingAddress: buildShippingAddress(),
-                                paymentMethod:   'Razorpay',
-                                paymentStatus:   'Paid',
-                                totalAmount:     billingDetails.cartTotal,
-                                razorpayOrderId:   response.razorpay_order_id,
-                                razorpayPaymentId: response.razorpay_payment_id,
-                            };
-
-                            const orderRes = await axiosInstance.post('/postOrder', orderData);
-                            const orderId = orderRes.data.order._id;
-
-                            // Clear cart after successful payment
+                        if (verifyRes.data?.success) {
                             clearCart();
-
                             cogoToast.success('Payment successful, order placed!');
-                            navigate(`/myorders/${orderId}`);
+                            navigate(`/myorders/${dbOrderId}`);
                         } else {
                             throw new Error('Payment verification failed');
                         }
@@ -215,10 +234,10 @@ const Payment = () => {
                 },
                 prefill: {
                     name:    user?.username || '',
-                    email:   userEmail || '',
-                    contact: user?.phonenumber || '',
+                    email:   userEmail || user?.email || '',
+                    contact: user?.phonenumber || user?.phone || '',
                 },
-                theme: { color: "#3399cc" },
+                theme: { color: '#3399cc' },
             };
 
             const razorpayInstance = new window.Razorpay(options);
@@ -230,7 +249,8 @@ const Payment = () => {
 
         } catch (error) {
             console.error('Error initiating Razorpay payment:', error);
-            cogoToast.error('Failed to initiate payment. Please try again.');
+            const errMsg = error.response?.data?.message || error.message || '';
+            cogoToast.error(errMsg || 'Failed to initiate payment. Please try again.');
         } finally {
             setIsLoading(false);
         }
