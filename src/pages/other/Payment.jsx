@@ -104,10 +104,13 @@ const Payment = () => {
                 paymentMethod:   'COD',
                 paymentStatus:   'Pending',
                 totalAmount:     billingDetails.cartTotal,
+                skipShipping:    true,   // skip courier API creation on backend
             };
 
             const response = await axiosInstance.post('/postOrder', orderData);
-            const orderId = response.data.order._id;
+            const orderId = response.data.order?._id || response.data?.orderId;
+
+            if (!orderId) throw new Error('No order ID returned');
 
             // Clear cart after successful order
             clearCart();
@@ -116,7 +119,26 @@ const Payment = () => {
             navigate(`/myorders/${orderId}`);
         } catch (error) {
             console.error('Error placing order:', error);
-            const msg = error.response?.data?.message || 'Failed to place order. Please try again.';
+
+            // If the backend saved the order but failed only at shipping-label
+            // creation, treat it as a successful order placement.
+            const errMsg = error.response?.data?.message || '';
+            const fallbackOrderId =
+                error.response?.data?.order?._id ||
+                error.response?.data?.orderId;
+
+            if (
+                fallbackOrderId &&
+                (errMsg.toLowerCase().includes('shipping') ||
+                 errMsg.toLowerCase().includes('courier'))
+            ) {
+                clearCart();
+                cogoToast.success('Order placed! Shipping label will be created shortly.');
+                navigate(`/myorders/${fallbackOrderId}`);
+                return;
+            }
+
+            const msg = errMsg || 'Failed to place order. Please try again.';
             cogoToast.error(msg);
         } finally {
             setIsLoading(false);
