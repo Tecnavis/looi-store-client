@@ -1,11 +1,9 @@
 import axios from 'axios';
 
 export const BASE_URL = 'https://looi-store-server-izvs.onrender.com/api';
-// export const BASE_URL = 'http://localhost:8000';
-//export const BASE_URL = 'https://api.looi.in/api';
+// export const BASE_URL = 'http://localhost:8000/api';
 
 const instance = axios.create({
-  // baseURL: 'http://localhost:8000',
   baseURL: BASE_URL,
   headers: {
     'Accept': 'application/json',
@@ -13,13 +11,24 @@ const instance = axios.create({
   },
 });
 
+// ✅ Attach JWT token to every request automatically
+instance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// ✅ Handle 401 - session expired
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Clear any existing auth tokens
       localStorage.removeItem('token');
-      // Redirect to login page
       window.location.href = '/';
     }
     return Promise.reject(error);
