@@ -45,6 +45,14 @@ const Payment = () => {
         return 0;
     })();
 
+    // ── DEBUG: log what arrived from the previous page (remove after fixing) ──
+    useEffect(() => {
+        console.log('[Payment] location.state:', JSON.stringify(location.state, null, 2));
+        console.log('[Payment] computedCartTotal:', computedCartTotal);
+        console.log('[Payment] cartItems:', JSON.stringify(cartItems));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     // Load Razorpay script
     useEffect(() => {
         const loadRazorpayScript = () => {
@@ -219,7 +227,10 @@ const Payment = () => {
 
             // STEP 3: Open Razorpay checkout
             const options = {
-                key:         import.meta.env.VITE_RAZORPAY_KEY_ID || process.env.REACT_APP_RAZORPAY_KEY_ID,
+                // CRA uses process.env; Vite uses import.meta.env — support both safely
+                key:         (typeof import.meta !== 'undefined' && import.meta.env?.VITE_RAZORPAY_KEY_ID)
+                               || process.env.REACT_APP_RAZORPAY_KEY_ID
+                               || '',
                 amount:      amountInPaise,
                 currency:    'INR',
                 name:        'LOOI',
