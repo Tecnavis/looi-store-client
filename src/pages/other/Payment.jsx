@@ -13,19 +13,36 @@ const Payment = () => {
     const navigate = useNavigate();
     const { clearCart } = useCart();
 
-    const [paymentMode, setPaymentMode] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [scriptLoaded, setScriptLoaded] = useState(false);
+    const [paymentMode, setPaymentMode]       = useState('');
+    const [isLoading, setIsLoading]           = useState(false);
+    const [scriptLoaded, setScriptLoaded]     = useState(false);
     const [showOrderSummary, setShowOrderSummary] = useState(false);
 
     const { cartItems, billingDetails, selectedAddress } = location.state || {};
 
-    // ── Read user info from localStorage ──────────────────────────────────────
-    // Support multiple possible key names set during login
+    // ── Read user info from localStorage ─────────────────────────────────────
     const userId    = localStorage.getItem('userId')   || localStorage.getItem('user_id');
     const userEmail = localStorage.getItem('email')    || localStorage.getItem('userEmail') || localStorage.getItem('user_email');
     const user      = (() => {
         try { return JSON.parse(localStorage.getItem('user')); } catch { return null; }
+    })();
+
+    // ── FIX: Calculate cartTotal from cartItems if billingDetails.cartTotal is missing ──
+    // This is the ROOT CAUSE of ₹1 bug — previous page wasn't passing cartTotal correctly
+    const computedCartTotal = (() => {
+        // 1. Use billingDetails.cartTotal if it's a valid positive number
+        const fromBilling = billingDetails?.cartTotal || billingDetails?.total || billingDetails?.totalAmount;
+        if (fromBilling && Number(fromBilling) > 0) return Number(fromBilling);
+
+        // 2. Fallback: sum from cartItems directly
+        if (cartItems && cartItems.length > 0) {
+            return cartItems.reduce((sum, item) => {
+                const price = item.price || item.product?.price || 0;
+                const qty   = item.quantity || 1;
+                return sum + (price * qty);
+            }, 0);
+        }
+        return 0;
     })();
 
     // Load Razorpay script
@@ -56,11 +73,24 @@ const Payment = () => {
         );
     }
 
+    // Guard: warn if total is still 0 (means cart data is broken upstream)
+    if (computedCartTotal <= 0) {
+        return (
+            <Container className="mt-5">
+                <Alert variant="warning">
+                    <Alert.Heading>Invalid Order Amount</Alert.Heading>
+                    <p>Your cart total is ₹0. Please go back and check your cart.</p>
+                    <button className="btn btn-secondary" onClick={() => navigate(-1)}>Go Back</button>
+                </Alert>
+            </Container>
+        );
+    }
+
     const handlePaymentChange = (event) => {
         setPaymentMode(event.target.value);
     };
 
-    // ─── Build orderItems from cart items ────────────────────────────────────
+    // ── Build orderItems from cart ────────────────────────────────────────────
     const buildOrderItems = () =>
         cartItems.map(item => ({
             productId:   item.productId   || item.product?._id || item.product,
@@ -90,13 +120,12 @@ const Payment = () => {
         phoneNumber:   selectedAddress.phoneNumber,
     });
 
-    // ─── Pay on Delivery ─────────────────────────────────────────────────────
+    // ── Pay on Delivery ───────────────────────────────────────────────────────
     const handlePlaceOrder = async () => {
         if (!paymentMode) {
             cogoToast.error('Please select a payment method.');
             return;
         }
-        // Validate essential user data before hitting the API
         if (!userId) {
             cogoToast.error('Session expired. Please log in again.');
             navigate('/login');
@@ -112,12 +141,12 @@ const Payment = () => {
                 shippingAddress: buildShippingAddress(),
                 paymentMethod:   'COD',
                 paymentStatus:   'Pending',
-                totalAmount:     billingDetails.cartTotal,
+                totalAmount:     computedCartTotal,   // ← FIXED: use computed total
                 skipShipping:    true,
             };
 
             const response = await axiosInstance.post('/postOrder', orderData);
-            const orderId = response.data.order?._id || response.data?.orderId;
+            const orderId  = response.data.order?._id || response.data?.orderId;
 
             if (!orderId) throw new Error('No order ID returned from server');
 
@@ -126,40 +155,27 @@ const Payment = () => {
             navigate(`/myorders/${orderId}`);
         } catch (error) {
             console.error('Error placing order:', error);
-
             const errMsg = error.response?.data?.message || '';
-            const fallbackOrderId =
-                error.response?.data?.order?._id ||
-                error.response?.data?.orderId;
+            const fallbackOrderId = error.response?.data?.order?._id || error.response?.data?.orderId;
 
-            if (
-                fallbackOrderId &&
-                (errMsg.toLowerCase().includes('shipping') ||
-                 errMsg.toLowerCase().includes('courier'))
-            ) {
+            if (fallbackOrderId && (errMsg.toLowerCase().includes('shipping') || errMsg.toLowerCase().includes('courier'))) {
                 clearCart();
                 cogoToast.success('Order placed! Shipping label will be created shortly.');
                 navigate(`/myorders/${fallbackOrderId}`);
                 return;
             }
-
             cogoToast.error(errMsg || 'Failed to place order. Please try again.');
         } finally {
             setIsLoading(false);
         }
     };
 
-    // ─── Razorpay Online Payment ──────────────────────────────────────────────
-    // Correct flow:
-    //   1. Create order in YOUR DB first  (/postOrder)  → get dbOrderId
-    //   2. Open Razorpay with that amount
-    //   3. On success → verify signature (/verify-payment) passing dbOrderId
-    //      → backend marks order as Paid + Processing
+    // ── Razorpay Online Payment ───────────────────────────────────────────────
     const handleRazorpayPayment = async (e) => {
         e.preventDefault();
 
         if (!scriptLoaded) {
-            cogoToast.error('Payment gateway is loading. Please try again in a moment.');
+            cogoToast.error('Payment gateway is loading. Please wait a moment.');
             return;
         }
         if (!userId) {
@@ -169,19 +185,19 @@ const Payment = () => {
         }
 
         setIsLoading(true);
-        let dbOrderId = null; // will hold the MongoDB _id of the saved order
+        let dbOrderId = null;
 
         try {
-            // ── STEP 1: Save order to DB first (paymentStatus = Pending) ──────
+            // STEP 1: Save order to DB first (paymentStatus = Pending)
             const orderData = {
                 user:            userId,
                 email:           userEmail || user?.email || '',
                 orderItems:      buildOrderItems(),
                 shippingAddress: buildShippingAddress(),
                 paymentMethod:   'Razorpay',
-                paymentStatus:   'Pending',   // will be updated to Paid after verify
-                totalAmount:     billingDetails.cartTotal,
-                skipShipping:    true,         // courier will be pushed after payment
+                paymentStatus:   'Pending',
+                totalAmount:     computedCartTotal,   // ← FIXED: use computed total
+                skipShipping:    true,
             };
 
             const orderRes = await axiosInstance.post('/postOrder', orderData);
@@ -189,22 +205,22 @@ const Payment = () => {
 
             if (!dbOrderId) throw new Error('Failed to create order record');
 
-            // ── STEP 2: Create Razorpay payment order ─────────────────────────
-            const amount = Math.round(billingDetails.cartTotal * 100); // paise
+            // STEP 2: Create Razorpay payment order
+            const amountInPaise = Math.round(computedCartTotal * 100); // ← FIXED: paise
             const razorpayOrderRes = await axiosInstance.post('/order', {
-                amount,
+                amount:   amountInPaise,
                 currency: 'INR',
-                receipt:  userId,
+                receipt:  `receipt_${Date.now()}`,
             });
 
             if (!razorpayOrderRes.data?.id) {
-                throw new Error('Failed to create Razorpay order');
+                throw new Error(razorpayOrderRes.data?.message || 'Failed to create Razorpay order');
             }
 
-            // ── STEP 3: Open Razorpay checkout ────────────────────────────────
+            // STEP 3: Open Razorpay checkout
             const options = {
-                key:         process.env.REACT_APP_RAZORPAY_KEY_ID,
-                amount,
+                key:         import.meta.env.VITE_RAZORPAY_KEY_ID || process.env.REACT_APP_RAZORPAY_KEY_ID,
+                amount:      amountInPaise,
                 currency:    'INR',
                 name:        'LOOI',
                 description: 'Payment for your order',
@@ -212,17 +228,17 @@ const Payment = () => {
                 order_id:    razorpayOrderRes.data.id,
                 handler: async function (response) {
                     try {
-                        // ── STEP 4: Verify payment & update DB order to Paid ──
+                        // STEP 4: Verify payment
                         const verifyRes = await axiosInstance.post('/verify-payment', {
                             razorpay_order_id:   response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
                             razorpay_signature:  response.razorpay_signature,
-                            dbOrderId,   // ← tells backend which order to mark Paid
+                            dbOrderId,
                         });
 
                         if (verifyRes.data?.success) {
                             clearCart();
-                            cogoToast.success('Payment successful, order placed!');
+                            cogoToast.success('Payment successful! Order placed.');
                             navigate(`/myorders/${dbOrderId}`);
                         } else {
                             throw new Error('Payment verification failed');
@@ -233,9 +249,9 @@ const Payment = () => {
                     }
                 },
                 prefill: {
-                    name:    user?.username || '',
+                    name:    user?.username || `${selectedAddress.firstName} ${selectedAddress.lastName}`,
                     email:   userEmail || user?.email || '',
-                    contact: user?.phonenumber || user?.phone || '',
+                    contact: selectedAddress.phoneNumber || user?.phonenumber || '',
                 },
                 theme: { color: '#3399cc' },
             };
@@ -277,10 +293,13 @@ const Payment = () => {
                                             className="btn btn-link p-0 text-decoration-none"
                                             onClick={() => setShowOrderSummary(!showOrderSummary)}
                                         >
-                                            <h5 className="d-flex align-items-center">
-                                                <i className={`bi bi-chevron-${showOrderSummary ? 'up' : 'down'} me-2`}></i>
+                                            <h5 className="d-flex align-items-center gap-2 mb-0">
+                                                <i className={`bi bi-chevron-${showOrderSummary ? 'up' : 'down'}`}></i>
                                                 Order Summary
-                                                <Badge bg="secondary" className="ms-2">₹{billingDetails.cartTotal}</Badge>
+                                                <Badge bg="secondary">
+                                                    {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}
+                                                </Badge>
+                                                <span className="text-dark fw-bold">₹{computedCartTotal.toLocaleString('en-IN')}</span>
                                             </h5>
                                         </button>
 
@@ -290,14 +309,22 @@ const Payment = () => {
                                                 <p className="mb-1">{selectedAddress.firstName} {selectedAddress.lastName}</p>
                                                 <p className="mb-1">{selectedAddress.houseBuilding}, {selectedAddress.streetArea}</p>
                                                 <p className="mb-1">{selectedAddress.cityDistrict}, {selectedAddress.postalCode}</p>
-                                                <p className="mb-0">Phone: {selectedAddress.phoneNumber}</p>
-                                                <hr />
-                                                <p className="mb-1"><strong>Items:</strong></p>
+                                                <p className="mb-3">📞 {selectedAddress.phoneNumber}</p>
+                                                <hr className="my-2" />
+                                                <p className="mb-2"><strong>Items:</strong></p>
                                                 {cartItems.map((item, i) => (
-                                                    <p key={i} className="mb-0 small">
-                                                        {item.productName || item.product?.name} × {item.quantity} — ₹{(item.price || item.product?.price) * item.quantity}
-                                                    </p>
+                                                    <div key={i} className="d-flex justify-content-between small mb-1">
+                                                        <span>{item.productName || item.product?.name} × {item.quantity}
+                                                            {(item.size || item.color) && <span className="text-muted"> ({[item.size, item.color].filter(Boolean).join(', ')})</span>}
+                                                        </span>
+                                                        <span>₹{((item.price || item.product?.price || 0) * item.quantity).toLocaleString('en-IN')}</span>
+                                                    </div>
                                                 ))}
+                                                <hr className="my-2" />
+                                                <div className="d-flex justify-content-between fw-bold">
+                                                    <span>Total</span>
+                                                    <span>₹{computedCartTotal.toLocaleString('en-IN')}</span>
+                                                </div>
                                             </div>
                                         )}
                                     </div>
@@ -307,12 +334,7 @@ const Payment = () => {
                                         <h5 className="mb-3">Select Payment Method</h5>
 
                                         <div className="payment-option mb-3">
-                                            <Form.Check
-                                                type="radio"
-                                                id="payOnDelivery"
-                                                name="payment"
-                                                className="payment-radio"
-                                            >
+                                            <Form.Check type="radio" id="payOnDelivery" name="payment" className="payment-radio">
                                                 <Form.Check.Input
                                                     type="radio"
                                                     value="payOnDelivery"
@@ -327,12 +349,7 @@ const Payment = () => {
                                         </div>
 
                                         <div className="payment-option mb-4">
-                                            <Form.Check
-                                                type="radio"
-                                                id="razorPay"
-                                                name="payment"
-                                                className="payment-radio"
-                                            >
+                                            <Form.Check type="radio" id="razorPay" name="payment" className="payment-radio">
                                                 <Form.Check.Input
                                                     type="radio"
                                                     value="razorPay"
@@ -343,7 +360,7 @@ const Payment = () => {
                                                 <Form.Check.Label className="d-flex align-items-center">
                                                     <i className="bi bi-credit-card me-2 text-primary"></i>
                                                     Pay Online with Razorpay
-                                                    {!scriptLoaded && <span className="ms-2 text-muted">(Loading...)</span>}
+                                                    {!scriptLoaded && <span className="ms-2 text-muted small">(Loading...)</span>}
                                                 </Form.Check.Label>
                                             </Form.Check>
                                         </div>
@@ -361,10 +378,9 @@ const Payment = () => {
                                                         type="button"
                                                         onClick={handlePlaceOrder}
                                                     >
-                                                        Place Order — ₹{billingDetails.cartTotal}
+                                                        Place Order — ₹{computedCartTotal.toLocaleString('en-IN')}
                                                     </button>
                                                 )}
-
                                                 {paymentMode === 'razorPay' && (
                                                     <button
                                                         className="btn btn-primary btn-lg"
@@ -372,12 +388,11 @@ const Payment = () => {
                                                         onClick={handleRazorpayPayment}
                                                         disabled={!scriptLoaded}
                                                     >
-                                                        Pay Now — ₹{billingDetails.cartTotal}
+                                                        Pay Now — ₹{computedCartTotal.toLocaleString('en-IN')}
                                                     </button>
                                                 )}
-
                                                 {!paymentMode && (
-                                                    <p className="text-center text-muted small">
+                                                    <p className="text-center text-muted small mt-2">
                                                         Please select a payment method above
                                                     </p>
                                                 )}
