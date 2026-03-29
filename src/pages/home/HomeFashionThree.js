@@ -1,51 +1,4 @@
-// import React, { Fragment } from "react";
-// import SEO from "../../components/seo";
-// import LayoutOne from "../../layouts/LayoutOne";
-// import FeatureIconTwo from "../../wrappers/feature-icon/FeatureIconTwo";
-// import BlogFeatured from "../../wrappers/blog-featured/BlogFeatured";
-// import HeroSliderTen from "../../wrappers/hero-slider/HeroSliderTen";
-// import NewProductGrid from "../../wrappers/product/NewProductGrid";
-// import TreadingGrid from "../../wrappers/product/TreadingGrid";
-// import NewArrival from "../../wrappers/product/NewArrival";
-// import TopRated from "../../wrappers/product/TopRated";
-// import CategoryGrid from "../../wrappers/product/CategoryGrid";
-// import TopSelling from "../../wrappers/product/TopSelling";
-// import BestSellers from "../../wrappers/product/BestSellers";
-
-// const HomeFashionThree = () => {
-//   return (
-//     <Fragment>
-//       <SEO
-//         titleTemplate="LOOI"
-       
-//       />
-//       <LayoutOne
-//         headerContainerClass="container-fluid"
-//         headerPaddingClass="header-padding-2"
-//         headerTop="visible"
-//       >
-//         {/* hero slider */}
-//         <HeroSliderTen  />
-       
-//         {/* <NewProductGrid category="accessories" limit={10}   /> */}
-//         <BestSellers/>
-//         {/* <TreadingGrid/> */}
-//         <CategoryGrid/>
-//         <NewArrival/>
-//         {/* <TopRated/> */}
-        
-//        {/* <TopSelling/> */}
-//       </LayoutOne>
-//     </Fragment>
-//   );
-// };
-
-// export default HomeFashionThree;
-
-
 import React, { useState, useEffect, Fragment } from "react";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
 import HeroSliderTen from "../../wrappers/hero-slider/HeroSliderTen";
@@ -53,16 +6,38 @@ import NewArrival from "../../wrappers/product/NewArrival";
 import BestSellers from "../../wrappers/product/BestSellers";
 import CategoryGrid from "../../wrappers/product/CategoryGrid";
 
+// Minimal inline promo banner — no extra dep needed
+const PromoBanner = () => (
+  <div style={{
+    background: '#1a1a1a',
+    padding: '18px 32px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '40px',
+    overflow: 'hidden',
+  }}>
+    {['Free Shipping on Orders ₹999+', 'Secure & Easy Returns', 'New Drops Every Week'].map((text, i) => (
+      <span key={i} style={{
+        fontFamily: "'DM Sans', sans-serif",
+        fontSize: '12px',
+        fontWeight: 500,
+        letterSpacing: '1.5px',
+        textTransform: 'uppercase',
+        color: '#f5f5f0',
+        whiteSpace: 'nowrap',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+      }}>
+        <span style={{ color: '#b08d6a', fontSize: '16px' }}>✦</span>
+        {text}
+      </span>
+    ))}
+  </div>
+);
+
 const HomeFashionThree = () => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate a loading delay
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000); // adjust the delay as needed
-  }, []);
-
   return (
     <Fragment>
       <SEO titleTemplate="LOOI" />
@@ -72,38 +47,22 @@ const HomeFashionThree = () => {
         headerTop="visible"
       >
         {/* Hero Slider */}
-        {loading ? (
-          <Skeleton height={400} />
-        ) : (
-          <HeroSliderTen />
-        )}
+        <HeroSliderTen />
 
-        {/* Best Sellers Section */}
-        {loading ? (
-          <Skeleton height={300} count={1} />
-        ) : (
-          <BestSellers />
-        )}
+        {/* Promo strip */}
+        <PromoBanner />
 
-        {/* Category Grid Section */}
-        {loading ? (
-          <Skeleton height={300} count={1} />
-        ) : (
-          <CategoryGrid />
-        )}
+        {/* Best Sellers */}
+        <BestSellers />
 
-        {/* New Arrivals Section */}
-        {loading ? (
-          <Skeleton height={300} count={1} />
-        ) : (
-          <NewArrival />
-        )}
+        {/* Shop by Print + Categories (dark bg) */}
+        <CategoryGrid />
+
+        {/* New Arrivals */}
+        <NewArrival />
       </LayoutOne>
     </Fragment>
   );
 };
 
 export default HomeFashionThree;
-
-
-

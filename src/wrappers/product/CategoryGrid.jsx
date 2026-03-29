@@ -3,21 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../config/axiosconfig';
 import './styles/categories.css';
 
-// ── Helper: image src is either a full Cloudinary URL or a local filename ──
 const resolveImage = (src) => {
   if (!src) return '';
-  if (src.startsWith('http://') || src.startsWith('https://')) return src; // Cloudinary
-  return `https://looi-store-server-izvs.onrender.com/uploads/${src}`; // fallback
+  if (src.startsWith('http://') || src.startsWith('https://')) return src;
+  return `https://looi-store-server-izvs.onrender.com/uploads/${src}`;
 };
 
 const CategoryGrid = () => {
   const navigate = useNavigate();
-  const [categories, setCategories]   = useState([]);
-  const [prints, setPrints]           = useState([]);
-  const [catLoading, setCatLoading]   = useState(true);
+  const [categories, setCategories]     = useState([]);
+  const [prints, setPrints]             = useState([]);
+  const [catLoading, setCatLoading]     = useState(true);
   const [printLoading, setPrintLoading] = useState(true);
 
-  // Fetch subcategories
   useEffect(() => {
     axiosInstance.get('/get-subcategory')
       .then(res => setCategories(res.data || []))
@@ -25,7 +23,6 @@ const CategoryGrid = () => {
       .finally(() => setCatLoading(false));
   }, []);
 
-  // Fetch prints (this was MISSING before — now correctly fetches from /get-print)
   useEffect(() => {
     axiosInstance.get('/get-print')
       .then(res => {
@@ -39,10 +36,10 @@ const CategoryGrid = () => {
   return (
     <div className="looi-home-sections">
 
-      {/* ── PRINTS SECTION ──────────────────────────────────────────────── */}
+      {/* ── PRINTS SECTION ── */}
       <section className="looi-prints-section">
         <div className="looi-section-header">
-          <span className="looi-section-tag">EXPLORE</span>
+          <span className="looi-section-tag">Explore</span>
           <h2 className="looi-section-title">Shop by Print</h2>
           <p className="looi-section-sub">Find your vibe, wear your story</p>
         </div>
@@ -56,7 +53,11 @@ const CategoryGrid = () => {
         ) : (
           <div className="looi-prints-grid">
             {prints.map((print, idx) => (
-              <div key={print._id || idx} className="looi-print-card" onClick={() => navigate('/shop-grid-full-width')}>
+              <div
+                key={print._id || idx}
+                className="looi-print-card"
+                onClick={() => navigate('/shop-grid-full-width')}
+              >
                 <div className="looi-print-img-wrap">
                   <img
                     src={resolveImage(print.image)}
@@ -74,10 +75,10 @@ const CategoryGrid = () => {
         )}
       </section>
 
-      {/* ── CATEGORIES SECTION ──────────────────────────────────────────── */}
+      {/* ── CATEGORIES SECTION ── */}
       <section className="looi-categories-section">
         <div className="looi-section-header">
-          <span className="looi-section-tag">BROWSE</span>
+          <span className="looi-section-tag">Browse</span>
           <h2 className="looi-section-title">Categories</h2>
           <p className="looi-section-sub">Discover our curated collections</p>
         </div>
