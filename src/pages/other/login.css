@@ -50,3 +50,31 @@
     100% { transform: rotate(360deg); }
   }
   
+/* Social login buttons */
+.social-btn {
+  flex: 1;
+  max-width: 180px;
+  height: 44px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: opacity 0.2s;
+}
+.social-btn:hover { opacity: 0.85; }
+
+.google-btn {
+  border: 1.5px solid #ddd;
+  background: #fff;
+  color: #444;
+}
+
+.facebook-btn {
+  border: 1.5px solid #1877F2;
+  background: #1877F2;
+  color: #fff;
+}
