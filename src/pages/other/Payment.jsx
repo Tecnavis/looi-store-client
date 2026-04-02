@@ -149,7 +149,7 @@ const Payment = () => {
                 paymentMethod:   'COD',
                 paymentStatus:   'Pending',
                 totalAmount:     computedCartTotal,
-                skipShipping:    true,
+                
             };
 
             console.log('[Payment] COD payload totalAmount:', orderData.totalAmount);
@@ -195,7 +195,7 @@ const Payment = () => {
                 paymentMethod:   'Razorpay',
                 paymentStatus:   'Pending',
                 totalAmount:     computedCartTotal,
-                skipShipping:    true,
+                
             };
 
             console.log('[Payment] Razorpay payload totalAmount:', orderData.totalAmount);
@@ -215,10 +215,7 @@ const Payment = () => {
             if (!rzpOrderRes.data?.id) throw new Error(rzpOrderRes.data?.message || 'Failed to create Razorpay order');
 
             // STEP 3: Open Razorpay checkout
-            // Support both CRA (process.env) and Vite (import.meta.env) safely
-            const rzpKey = process.env.REACT_APP_RAZORPAY_KEY_ID
-                        || (typeof import.meta !== 'undefined' ? import.meta.env?.VITE_RAZORPAY_KEY_ID : undefined)
-                        || '';
+            const rzpKey = process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_live_S7CUY2gj4xH0tZ';
 
             const options = {
                 key:         rzpKey,
