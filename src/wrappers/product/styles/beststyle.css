@@ -244,6 +244,9 @@
 @media (max-width: 768px) {
   .bs-section { padding: 50px 0 40px; }
   .bs-header { padding: 0 20px 28px; flex-direction: column; align-items: flex-start; gap: 16px; }
-  .bs-grid { grid-template-columns: 1fr; gap: 2px; }
+  .bs-grid { grid-template-columns: repeat(3, 1fr); gap: 2px; }
   .bs-title { font-size: 38px; }
+  .bs-card-name { font-size: 14px; }
+  .bs-card-sub { font-size: 10px; }
+  .bs-card-info { padding: 10px 10px 14px; }
 }
