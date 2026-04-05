@@ -476,7 +476,7 @@ const Cart = () => {
                   <Form.Group as={Row} className="align-items-center mt-3">
                     <Form.Label column xs={3} className="text-nowrap">Size:</Form.Label>
                     <Col xs={3}>
-                      <Form.Control type="text" value={item.size} readOnly className="size-input w-100" />
+                      <Form.Control type="text" value={item.size} readOnly className="size-input w-70" />
                     </Col>
 
                     <Form.Label column xs={3} className="text-nowrap">Qty:</Form.Label>
