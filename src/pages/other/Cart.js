@@ -484,7 +484,7 @@ const Cart = () => {
                         aria-label="Select quantity"
                         defaultValue={item.quantity}
                         className="quantity-select"
-                        style={{ width: '150px' }}
+                        style={{ width: '100px' }}
                         onChange={(e) => handleQuantityChange(item.product._id, item.size, e.target.value)}
                       >
                         {[...Array(10).keys()].map((num) => (
