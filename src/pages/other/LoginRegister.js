@@ -196,7 +196,7 @@ const LoginRegister = () => {
                               </div>
                               <div className="password-input-wrapper mb-2" style={{ position: 'relative' }}>
                                 <input style={{ ...inputStyle, borderColor: loginErrors.password ? '#dc3545' : '', paddingRight: '44px' }} type={showLoginPassword ? "text" : "password"} name="password" placeholder="Password" value={loginForm.password} onChange={handleLoginChange} />
-                                <button type="button" onClick={() => setShowLoginPassword(!showLoginPassword)} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', padding: '0', lineHeight: '1', display: 'flex', alignItems: 'center' }}>
+                                <button type="button" onClick={() => setShowLoginPassword(!showLoginPassword)} style={{ position: 'absolute', right: '12px', top: '20px', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', padding: '0', lineHeight: '1', display: 'flex', alignItems: 'center' }}>
                                   {showLoginPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                 </button>
                                 {loginErrors.password && <span style={errorStyle}>⚠ {loginErrors.password}</span>}
