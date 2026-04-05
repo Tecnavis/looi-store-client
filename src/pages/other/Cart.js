@@ -1,4 +1,3 @@
-
 // // -code a1
 
 // import React, { useEffect,useContext, useState  } from "react";
@@ -473,18 +472,19 @@ const Cart = () => {
                 <Col xs={12} sm={6} className="product-details">
                   <h4><b>{item.productName || item.product?.name}</b></h4>
 
-                  <Form.Group as={Row} className="align-items-center mt-3">
-                    <Form.Label column xs={3} className="text-nowrap">Size:</Form.Label>
-                    <Col xs={3}>
-                      <Form.Control type="text" value={item.size} readOnly className="size-input w-70" />
+                  <Form.Group as={Row} className="align-items-center mt-3 gx-1 gy-0">
+                    <Form.Label column xs="auto" className="text-nowrap pe-1">Size:</Form.Label>
+                    <Col xs="auto">
+                      <Form.Control type="text" value={item.size} readOnly className="size-input" style={{ width: '75px' }} />
                     </Col>
 
-                    <Form.Label column xs={3} className="text-nowrap">Qty:</Form.Label>
-                    <Col xs={3}>
+                    <Form.Label column xs="auto" className="text-nowrap px-2">Qty:</Form.Label>
+                    <Col xs="auto">
                       <Form.Select
                         aria-label="Select quantity"
                         defaultValue={item.quantity}
-                        className="quantity-select w-150"
+                        className="quantity-select"
+                        style={{ width: '150px' }}
                         onChange={(e) => handleQuantityChange(item.product._id, item.size, e.target.value)}
                       >
                         {[...Array(10).keys()].map((num) => (
