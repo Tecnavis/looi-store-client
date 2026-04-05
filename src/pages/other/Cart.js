@@ -484,7 +484,7 @@ const Cart = () => {
                       <Form.Select
                         aria-label="Select quantity"
                         defaultValue={item.quantity}
-                        className="quantity-select w-100"
+                        className="quantity-select w-150"
                         onChange={(e) => handleQuantityChange(item.product._id, item.size, e.target.value)}
                       >
                         {[...Array(10).keys()].map((num) => (
