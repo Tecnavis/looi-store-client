@@ -195,8 +195,8 @@ const LoginRegister = () => {
                                 {loginErrors.email && <span style={errorStyle}>⚠ {loginErrors.email}</span>}
                               </div>
                               <div className="password-input-wrapper mb-2" style={{ position: 'relative' }}>
-                                <input style={{ ...inputStyle, borderColor: loginErrors.password ? '#dc3545' : '' }} type={showLoginPassword ? "text" : "password"} name="password" placeholder="Password" value={loginForm.password} onChange={handleLoginChange} />
-                                <button type="button" onClick={() => setShowLoginPassword(!showLoginPassword)} style={{ position: 'absolute', right: '10px', top: '30%', background: 'none', border: 'none', cursor: 'pointer' }}>
+                                <input style={{ ...inputStyle, borderColor: loginErrors.password ? '#dc3545' : '', paddingRight: '44px' }} type={showLoginPassword ? "text" : "password"} name="password" placeholder="Password" value={loginForm.password} onChange={handleLoginChange} />
+                                <button type="button" onClick={() => setShowLoginPassword(!showLoginPassword)} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', padding: '0', lineHeight: '1', display: 'flex', alignItems: 'center' }}>
                                   {showLoginPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                 </button>
                                 {loginErrors.password && <span style={errorStyle}>⚠ {loginErrors.password}</span>}
@@ -237,15 +237,15 @@ const LoginRegister = () => {
                                 {registerErrors.mobileNumber && <span style={errorStyle}>⚠ {registerErrors.mobileNumber}</span>}
                               </div>
                               <div className="password-input-wrapper mb-2" style={{ position: 'relative' }}>
-                                <input style={{ ...inputStyle, borderColor: registerErrors.password ? '#dc3545' : '' }} type={showRegisterPassword ? "text" : "password"} name="password" placeholder="Password (min 8 chars, letters & numbers)" value={registerForm.password} onChange={handleRegisterChange} />
-                                <button type="button" onClick={() => setShowRegisterPassword(!showRegisterPassword)} style={{ position: 'absolute', right: '10px', top: '30%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer' }}>
+                                <input style={{ ...inputStyle, borderColor: registerErrors.password ? '#dc3545' : '', paddingRight: '44px' }} type={showRegisterPassword ? "text" : "password"} name="password" placeholder="Password (min 8 chars, letters & numbers)" value={registerForm.password} onChange={handleRegisterChange} />
+                                <button type="button" onClick={() => setShowRegisterPassword(!showRegisterPassword)} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', padding: '0', lineHeight: '1', display: 'flex', alignItems: 'center' }}>
                                   {showRegisterPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                 </button>
                                 {registerErrors.password && <span style={errorStyle}>⚠ {registerErrors.password}</span>}
                               </div>
                               <div className="password-input-wrapper mb-2" style={{ position: 'relative' }}>
-                                <input style={{ ...inputStyle, borderColor: registerErrors.passwordConfirm ? '#dc3545' : '' }} type={showRegisterConfirmPassword ? "text" : "password"} name="passwordConfirm" placeholder="Confirm Password" value={registerForm.passwordConfirm} onChange={handleRegisterChange} />
-                                <button type="button" onClick={() => setShowRegisterConfirmPassword(!showRegisterConfirmPassword)} style={{ position: 'absolute', right: '10px', top: '30%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer' }}>
+                                <input style={{ ...inputStyle, borderColor: registerErrors.passwordConfirm ? '#dc3545' : '', paddingRight: '44px' }} type={showRegisterConfirmPassword ? "text" : "password"} name="passwordConfirm" placeholder="Confirm Password" value={registerForm.passwordConfirm} onChange={handleRegisterChange} />
+                                <button type="button" onClick={() => setShowRegisterConfirmPassword(!showRegisterConfirmPassword)} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', padding: '0', lineHeight: '1', display: 'flex', alignItems: 'center' }}>
                                   {showRegisterConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                 </button>
                                 {registerErrors.passwordConfirm && <span style={errorStyle}>⚠ {registerErrors.passwordConfirm}</span>}

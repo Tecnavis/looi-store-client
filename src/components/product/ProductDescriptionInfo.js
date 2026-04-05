@@ -1,4 +1,3 @@
-
 import PropTypes from "prop-types";
 import React, {  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -294,35 +293,61 @@ const ProductDescriptionInfo = ({
         ""
       )} */}
 
-      {/* <div className="pro-details-social">
+      <div className="pro-details-social">
+        <span style={{ fontWeight: '600', fontSize: '14px', color: '#555', marginRight: '10px' }}>Share:</span>
         <ul>
           <li>
-            <a href="//facebook.com">
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Share on Facebook"
+            >
               <i className="fa fa-facebook" />
             </a>
           </li>
           <li>
-            <a href="//dribbble.com">
-              <i className="fa fa-dribbble" />
-            </a>
-          </li>
-          <li>
-            <a href="//pinterest.com">
-              <i className="fa fa-pinterest-p" />
-            </a>
-          </li>
-          <li>
-            <a href="//twitter.com">
+            <a
+              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(product.name || 'Check out this product!')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Share on X (Twitter)"
+            >
               <i className="fa fa-twitter" />
             </a>
           </li>
           <li>
-            <a href="//linkedin.com">
+            <a
+              href={`https://wa.me/?text=${encodeURIComponent((product.name || 'Check out this product!') + ' ' + window.location.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Share on WhatsApp"
+            >
+              <i className="fa fa-whatsapp" />
+            </a>
+          </li>
+          <li>
+            <a
+              href={`https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}&description=${encodeURIComponent(product.name || 'Check out this product!')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Share on Pinterest"
+            >
+              <i className="fa fa-pinterest-p" />
+            </a>
+          </li>
+          <li>
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Share on LinkedIn"
+            >
               <i className="fa fa-linkedin" />
             </a>
           </li>
         </ul>
-      </div> */}
+      </div>
     </div>
   );
 };
@@ -339,5 +364,3 @@ ProductDescriptionInfo.propTypes = {
 };
 
 export default ProductDescriptionInfo;
-
-
