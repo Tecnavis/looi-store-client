@@ -125,6 +125,7 @@ const Shipping = lazy(() => import("./pages/other/Links/Shipping"))
 // Myorders
 const Myorders = lazy(() => import("./pages/other/MyOrder"))
 const AddressBook = lazy(() => import("./pages/other/addressbook"))
+const LoginSuccess = lazy(() => import("./pages/other/LoginSuccess"))
 
 const App = () => {
   return (
@@ -473,6 +474,11 @@ const App = () => {
                 <Route
                   path={process.env.PUBLIC_URL + "/myorders/:orderId"}
                   element={<Myorders />}
+                />
+
+                <Route
+                  path={process.env.PUBLIC_URL + "/login-success"}
+                  element={<LoginSuccess />}
                 />
 
                 <Route path="*" element={<NotFound />} />
