@@ -13,10 +13,10 @@ const FooterNewsletter = ({
     <>
     <div className={clsx("footer-widget", spaceBottomClass, sideMenu ? "ml-ntv5" : spaceLeftClass, widgetColorClass)}>
       <div className="footer-title">
-        <h3>VISIT OUR STORE</h3>
+        <h3>Contact us</h3>
       </div>
       <div className={clsx("subscribe-style", colorClass)}>
-        <p><i className="fa fa-map-marker"></i> MADARI TRADERS ,<br/>ANAKKAYAM <br/>MALAPPURAM KERALA,<br/> 676509 (PIN)</p>
+        {/* <p><i className="fa fa-map-marker"></i> MADARI TRADERS ,<br/>ANAKKAYAM <br/>MALAPPURAM KERALA,<br/> 676509 (PIN)</p> */}
         <p><i className="fa fa-phone"></i> 918891022217</p>
         <p><i className="fa fa-phone"></i> 04833595939</p>
        
