@@ -59,7 +59,7 @@ const NewArrival = () => {
         {limitedProducts.map((product, i) => (
           <article
             key={product._id}
-            className={`na-card ${hoveredId === product._id ? 'na-card--hovered' : ''}`}
+            className={`na-card ${hoveredId === product._id ? 'na-card--hovered' : ''} ${product.totalStock === 0 ? 'na-card--oos' : ''}`}
             style={{ animationDelay: `${i * 100}ms` }}
             onClick={() => navigate(`/product-tab-left/${product._id}`)}
             onMouseEnter={() => setHoveredId(product._id)}
@@ -75,7 +75,11 @@ const NewArrival = () => {
               ) : (
                 <div className="na-no-img">No Image</div>
               )}
-              <div className="na-card-tag">New</div>
+              {product.totalStock === 0 ? (
+                <div className="na-card-tag na-card-tag--oos">Out of Stock</div>
+              ) : (
+                <div className="na-card-tag">New</div>
+              )}
               <div className="na-card-overlay">
                 <button className="na-quick-view">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>

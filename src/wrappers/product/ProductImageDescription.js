@@ -1,4 +1,3 @@
-
 // ------------------------------------------------------------------------------
 
 import PropTypes from "prop-types";
@@ -180,41 +179,47 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
   const [cartStatus, setCartStatus] = useState('');
 
   const handleAddToCart = async () => {
-
     try {
       const token = localStorage.getItem('token');
-
       if (!token) {
         navigate('/login-register');
         return;
       }
       await addToCart(product._id, quantityCount, selectedSize, selectedColor);
+      // Only runs if addToCart did NOT throw (i.e. API call succeeded)
       setIsInCart(true);
       setCartStatus('Product added to cart successfully!');
       cogoToast.success("Product added to cart successfully", { position: "top-right" });
-
     } catch (error) {
-      console.error('Error adding to cart:', error.message);
+      console.error('Error adding to cart:', error.response?.data || error.message);
       setCartStatus('Failed to add product to cart.');
+      cogoToast.error(
+        error.response?.data?.message || "Failed to add product to cart",
+        { position: "top-right" }
+      );
     }
   };
-  const handleAddToCart1 = async () => {
 
+  const handleAddToCart1 = async () => {
     try {
       const token = localStorage.getItem('token');
-
       if (!token) {
         navigate('/login-register');
         return;
       }
       await addToCart(product._id, quantityCount, selectedSize, selectedColor);
+      // Only runs if addToCart did NOT throw (i.e. API call succeeded)
       setIsInCart(true);
       setCartStatus('Product added to cart successfully!');
       cogoToast.success("Product added to cart successfully", { position: "top-right" });
-     navigate('/cart');
+      navigate('/cart');
     } catch (error) {
-      console.error('Error adding to cart:', error.message);
+      console.error('Error adding to cart:', error.response?.data || error.message);
       setCartStatus('Failed to add product to cart.');
+      cogoToast.error(
+        error.response?.data?.message || "Failed to add product to cart",
+        { position: "top-right" }
+      );
     }
   };
 

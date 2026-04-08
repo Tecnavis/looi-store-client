@@ -1,4 +1,3 @@
-
 // editing code-new
 
 import React, { Fragment, useState, useEffect } from 'react';
@@ -280,14 +279,37 @@ const ShopGridFullWidth = () => {
                                 <Row className="justify-content-center">
                                     {filteredProducts.map((product) => (
                                         <Col xs={6} sm={6} md={4} lg={3} className="mb-4" key={product._id}>
-                                            <Card style={{ width: '100%', border: 'none', height: '100%' }} onClick={() => handleCardClick(product._id)}>
+                                            <Card style={{ width: '100%', border: 'none', height: '100%', cursor: 'pointer' }} onClick={() => handleCardClick(product._id)}>
                                                 <div className="position-relative">
                                                     <Card.Img
                                                         variant="top"
                                                         src={getImageUrl(product.coverImage)}
                                                         alt={product.name}
-                                                        style={{ width: '100%', height: '300px', objectFit: 'cover' }}
+                                                        style={{
+                                                            width: '100%',
+                                                            height: '300px',
+                                                            objectFit: 'cover',
+                                                            opacity: product.totalStock === 0 ? 0.6 : 1,
+                                                            filter: product.totalStock === 0 ? 'grayscale(30%)' : 'none',
+                                                        }}
                                                     />
+                                                    {product.totalStock === 0 && (
+                                                        <span style={{
+                                                            position: 'absolute',
+                                                            top: '12px',
+                                                            left: '12px',
+                                                            background: '#cc3333',
+                                                            color: '#fff',
+                                                            fontSize: '10px',
+                                                            fontWeight: 700,
+                                                            letterSpacing: '1px',
+                                                            textTransform: 'uppercase',
+                                                            padding: '4px 10px',
+                                                            borderRadius: '50px',
+                                                        }}>
+                                                            Out of Stock
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 <Card.Body>
                                                     <Card.Title className="product-name" style={{ color: '#5b5b5b', fontSize: '16px', height: '20px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -296,6 +318,9 @@ const ShopGridFullWidth = () => {
                                                     <hr />
                                                     <Card.Text>
                                                         <b>₹ {product.price}</b>
+                                                        {product.totalStock === 0 && (
+                                                            <span style={{ marginLeft: '8px', color: '#cc3333', fontSize: '12px', fontWeight: 500 }}>· Out of Stock</span>
+                                                        )}
                                                     </Card.Text>
                                                 </Card.Body>
                                             </Card>

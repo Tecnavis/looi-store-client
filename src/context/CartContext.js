@@ -99,6 +99,7 @@ export const CartProvider = ({ children }) => {
       await fetchCartData();
     } catch (error) {
       console.error("Add to cart error:", error.response?.data || error);
+      throw error; // Re-throw so callers can show error feedback
     }
   };
 
