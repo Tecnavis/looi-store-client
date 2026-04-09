@@ -333,10 +333,12 @@ const Cart = () => {
   // }, [fetchCartData]);
 
   const handleClick = () => {
+    const gst = calculateGST();
     const billingDetails = {
       cartTotal: calculateTotal(),
-      gst: 0,
+      gst,
       shippingCharges: 0,
+      totalAmount: calculateGrandTotal(),
     };
     navigate('/delivery-address', {
       state: { cartItems, billingDetails }
@@ -538,6 +540,18 @@ const Cart = () => {
     return cartItems.reduce((total, item) => total + ((item.price || item.product?.price || 0) * item.quantity), 0);
   };
 
+  const calculateGST = () => {
+    return cartItems.reduce((total, item) => {
+      const price = (item.price || item.product?.price || 0) * item.quantity;
+      const taxRate = item.product?.taxRate ?? 5; // default 5% if not set
+      return total + Math.round((price * taxRate) / 100);
+    }, 0);
+  };
+
+  const calculateGrandTotal = () => {
+    return calculateTotal() + calculateGST();
+  };
+
   return (
     <React.Fragment>
       <SEO
@@ -586,7 +600,7 @@ const Cart = () => {
                         </Row>
                         <Row className="mb-2">
                           <Col>GST</Col>
-                          <Col className="text-end">₹ 0</Col>
+                          <Col className="text-end">₹ {calculateGST()}</Col>
                         </Row>
                         <Row className="mb-2">
                           <Col>Shipping Charges</Col>
@@ -595,7 +609,7 @@ const Cart = () => {
                         <hr />
                         <Row>
                           <Col>Total Amount</Col>
-                          <Col className="text-end">₹ {calculateTotal()}</Col>
+                          <Col className="text-end">₹ {calculateGrandTotal()}</Col>
                         </Row>
                       </Card.Body>
                     </Card>
