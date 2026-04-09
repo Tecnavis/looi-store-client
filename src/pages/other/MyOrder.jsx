@@ -167,7 +167,7 @@ const MyOrder = () => {
     }
 
     const calculateTotalAmount = () => {
-        return order.orderItems.reduce((total, item) => total + item.price, 0);
+        return order.orderItems.reduce((total, item) => total + (item.price * item.quantity), 0);
     };
     
     return (
@@ -212,7 +212,22 @@ const MyOrder = () => {
                             ))}
 
                             <div className="border-top pt-3 mt-3">
-                                <h6 className="mb-3">Total Amount: ₹{calculateTotalAmount()}</h6>
+                                <div className="d-flex justify-content-between mb-1">
+                                    <small className="text-muted">Subtotal (excl. GST 5%)</small>
+                                    <small className="text-muted">₹{(calculateTotalAmount() / 1.05).toFixed(2)}</small>
+                                </div>
+                                <div className="d-flex justify-content-between mb-1">
+                                    <small className="text-muted">CGST (2.5%)</small>
+                                    <small className="text-muted">₹{((calculateTotalAmount() - calculateTotalAmount() / 1.05) / 2).toFixed(2)}</small>
+                                </div>
+                                <div className="d-flex justify-content-between mb-2">
+                                    <small className="text-muted">SGST (2.5%)</small>
+                                    <small className="text-muted">₹{((calculateTotalAmount() - calculateTotalAmount() / 1.05) / 2).toFixed(2)}</small>
+                                </div>
+                                <div className="d-flex justify-content-between border-top pt-2">
+                                    <h6 className="mb-0"><strong>Total Amount (incl. GST)</strong></h6>
+                                    <h6 className="mb-0"><strong>₹{order.totalAmount?.toFixed ? order.totalAmount.toFixed(2) : order.totalAmount}</strong></h6>
+                                </div>
                             </div>
 
                             {/* Delivery Address */}
