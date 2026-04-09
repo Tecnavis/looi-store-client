@@ -334,11 +334,12 @@ const Cart = () => {
 
   const handleClick = () => {
     const gst = calculateGST();
+    const total = calculateTotal();
     const billingDetails = {
-      cartTotal: calculateTotal(),
+      cartTotal: total,
       gst,
       shippingCharges: 0,
-      totalAmount: calculateGrandTotal(),
+      totalAmount: total, // price is GST-inclusive, so total IS the grand total
     };
     navigate('/delivery-address', {
       state: { cartItems, billingDetails }
@@ -540,16 +541,19 @@ const Cart = () => {
     return cartItems.reduce((total, item) => total + ((item.price || item.product?.price || 0) * item.quantity), 0);
   };
 
+  // Price stored is GST-inclusive — extract the tax portion
   const calculateGST = () => {
     return cartItems.reduce((total, item) => {
-      const price = (item.price || item.product?.price || 0) * item.quantity;
-      const taxRate = item.product?.taxRate ?? 5; // default 5% if not set
-      return total + Math.round((price * taxRate) / 100);
+      const inclusivePrice = (item.price || item.product?.price || 0) * item.quantity;
+      const taxRate = item.taxRate ?? item.product?.taxRate ?? 5; // default 5%
+      const taxAmount = inclusivePrice - (inclusivePrice / (1 + taxRate / 100));
+      return total + Math.round(taxAmount);
     }, 0);
   };
 
+  // Grand total = cart total (already inclusive of GST), no extra addition needed
   const calculateGrandTotal = () => {
-    return calculateTotal() + calculateGST();
+    return calculateTotal();
   };
 
   return (
