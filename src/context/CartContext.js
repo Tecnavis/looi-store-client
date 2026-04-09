@@ -35,10 +35,20 @@ export const CartProvider = ({ children }) => {
     }
   }, []);
 
-  // Clear cart locally (called after order is placed)
-  const clearCart = useCallback(() => {
+  // Clear cart locally AND on the server (called after order is placed)
+  const clearCart = useCallback(async () => {
     setCartItems([]);
     setCartCount(0);
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        await axiosInstance.delete('/clear-cart');
+      }
+    } catch (error) {
+      // Non-fatal: local state is already cleared
+      console.error('Error clearing server cart:', error);
+    }
   }, []);
 
   const removeFromCart = async (productId, size) => {

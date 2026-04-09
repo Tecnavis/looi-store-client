@@ -286,3 +286,83 @@
   .na-card-price { font-size: 13px; }
   .na-card-meta { font-size: 9px; }
 }
+/* ── Wishlist & Share action buttons ───────────────────────────── */
+.na-card-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+.na-action-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  opacity: 0;
+  transform: translateX(8px);
+}
+
+/* Show buttons on card hover */
+.na-card:hover .na-action-btn,
+.na-card--hovered .na-action-btn {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.na-action-btn:nth-child(2) {
+  transition-delay: 0.05s;
+}
+
+.na-action-btn:hover {
+  background: #1a1a1a;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  transform: scale(1.08);
+}
+
+/* Wishlist active (product in wishlist) */
+.na-wishlist-btn--active {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+  background: #fff0f0 !important;
+  color: #e53935 !important;
+}
+.na-wishlist-btn--active:hover {
+  background: #e53935 !important;
+  color: #fff !important;
+}
+
+/* Loading spinner state */
+.na-action-btn--loading {
+  pointer-events: none;
+  opacity: 0.6 !important;
+}
+
+/* Share "copied!" feedback */
+.na-share-btn.na-share-copied {
+  background: #e8f5e9 !important;
+  color: #2e7d32 !important;
+}
+
+/* On mobile — always show (no hover) */
+@media (max-width: 768px) {
+  .na-action-btn {
+    opacity: 1;
+    transform: translateX(0);
+    width: 32px;
+    height: 32px;
+  }
+}
