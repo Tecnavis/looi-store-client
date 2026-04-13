@@ -107,7 +107,7 @@ const NewArrival = () => {
   if (!limitedProducts.length) return null;
 
   return (
-    <section className="na-section">
+    <section className="na-section" id="new-arrivals">
       <div className="na-header">
         <div>
           <span className="na-eyebrow">Just Dropped</span>

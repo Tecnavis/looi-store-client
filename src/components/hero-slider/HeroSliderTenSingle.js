@@ -1,9 +1,26 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from '../../config/axiosconfig';
 import { getImageUrl } from '../../helpers/imageUrl';
 
 const HeroSliderTenSingle = () => {
+  const navigate = useNavigate();
+
+  const handleShopNow = (e) => {
+    e.preventDefault();
+    // If already on home page, scroll to new arrivals
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      const el = document.getElementById('new-arrivals');
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    }
+    // Otherwise navigate home and scroll after load
+    navigate('/#new-arrivals');
+    setTimeout(() => {
+      const el = document.getElementById('new-arrivals');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 400);
+  };
   const [banners, setBanners] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -106,8 +123,9 @@ const HeroSliderTenSingle = () => {
               </p>
             )}
             <a
-              href="/shop-grid-full-width"
+              href="/#new-arrivals"
               className="hero-cta"
+              onClick={handleShopNow}
               onMouseEnter={e => {
                 e.currentTarget.style.background = '#fff';
                 e.currentTarget.style.color = '#1a1a1a';
