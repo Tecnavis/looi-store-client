@@ -70,11 +70,9 @@ const HeroSliderTenSingle = () => {
     <div style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
       {/* Main Slide */}
       <div
+        className="hero-slide-bg"
         style={{
           width: '100%',
-          height: '90vh',
-          maxHeight: '760px',
-          minHeight: '420px',
           backgroundImage: `url(${imageUrl})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
@@ -86,57 +84,30 @@ const HeroSliderTenSingle = () => {
         {/* Dark gradient overlay */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to right, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)',
+          background: 'linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)',
           pointerEvents: 'none',
         }} />
 
         {/* Content */}
-        <div style={{
+        <div className="hero-content-wrap" style={{
           position: 'absolute', inset: 0,
           display: 'flex', alignItems: 'center',
-          padding: '0 48px',
         }}>
-          <div style={{ maxWidth: '520px' }}>
-            <span style={{
-              display: 'inline-block',
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '11px', fontWeight: 700,
-              letterSpacing: '3px', textTransform: 'uppercase',
-              color: '#b08d6a', marginBottom: '18px',
-            }}>
+          <div className="hero-text-block">
+            <span className="hero-eyebrow">
               New Collection
             </span>
-            <h1 style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(42px, 6vw, 76px)',
-              fontWeight: 600, color: '#fff',
-              lineHeight: 1.05, letterSpacing: '-1.5px',
-              margin: '0 0 20px', textShadow: '0 2px 20px rgba(0,0,0,0.2)',
-            }}>
+            <h1 className="hero-title">
               {currentBanner.title || 'New Season\nArrival'}
             </h1>
             {currentBanner.subtitle && (
-              <p style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: '16px', color: 'rgba(255,255,255,0.8)',
-                margin: '0 0 32px', lineHeight: 1.6,
-              }}>
+              <p className="hero-subtitle">
                 {currentBanner.subtitle}
               </p>
             )}
             <a
               href="/shop-grid-full-width"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '10px',
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: '13px', fontWeight: 700,
-                letterSpacing: '1px', textTransform: 'uppercase',
-                color: '#fff', background: 'transparent',
-                border: '1.5px solid rgba(255,255,255,0.7)',
-                padding: '14px 32px', borderRadius: '50px',
-                textDecoration: 'none',
-                transition: 'all 0.25s ease',
-              }}
+              className="hero-cta"
               onMouseEnter={e => {
                 e.currentTarget.style.background = '#fff';
                 e.currentTarget.style.color = '#1a1a1a';
@@ -158,10 +129,7 @@ const HeroSliderTenSingle = () => {
 
         {/* Slide dots */}
         {banners.length > 1 && (
-          <div style={{
-            position: 'absolute', bottom: '32px', left: '48px',
-            display: 'flex', gap: '8px', alignItems: 'center',
-          }}>
+          <div className="hero-dots">
             {banners.map((_, i) => (
               <button
                 key={i}
@@ -180,12 +148,8 @@ const HeroSliderTenSingle = () => {
           </div>
         )}
 
-        {/* Scroll hint */}
-        <div style={{
-          position: 'absolute', bottom: '32px', right: '48px',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
-          opacity: 0.5,
-        }}>
+        {/* Scroll hint — hidden on mobile */}
+        <div className="hero-scroll-hint">
           <span style={{
             fontFamily: "'DM Sans', sans-serif", fontSize: '10px',
             letterSpacing: '2px', textTransform: 'uppercase', color: '#fff',
@@ -200,13 +164,96 @@ const HeroSliderTenSingle = () => {
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+        /* ── Hero slide container ── */
+        .hero-slide-bg {
+          height: 90vh;
+          max-height: 760px;
+          min-height: 320px;
+        }
+
+        /* ── Content wrapper ── */
+        .hero-content-wrap { padding: 0 48px; }
+
+        .hero-text-block { max-width: 520px; }
+
+        .hero-eyebrow {
+          display: inline-block;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 11px; font-weight: 700;
+          letter-spacing: 3px; text-transform: uppercase;
+          color: #b08d6a; margin-bottom: 18px;
+        }
+
+        .hero-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(32px, 6vw, 76px);
+          font-weight: 600; color: #fff;
+          line-height: 1.05; letter-spacing: -1.5px;
+          margin: 0 0 20px; text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero-subtitle {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 16px; color: rgba(255,255,255,0.8);
+          margin: 0 0 32px; line-height: 1.6;
+        }
+
+        .hero-cta {
+          display: inline-flex; align-items: center; gap: 10px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px; font-weight: 700;
+          letter-spacing: 1px; text-transform: uppercase;
+          color: #fff; background: transparent;
+          border: 1.5px solid rgba(255,255,255,0.7);
+          padding: 14px 32px; border-radius: 50px;
+          text-decoration: none;
+          transition: all 0.25s ease;
+        }
+
+        /* ── Dots ── */
+        .hero-dots {
+          position: absolute; bottom: 32px; left: 48px;
+          display: flex; gap: 8px; align-items: center;
+        }
+
+        /* ── Scroll hint ── */
+        .hero-scroll-hint {
+          position: absolute; bottom: 32px; right: 48px;
+          display: flex; flex-direction: column; align-items: center; gap: 6px;
+          opacity: 0.5;
+        }
+
         @keyframes scrollPulse {
           0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
           50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
           100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
         }
-        @media (max-width: 768px) {
-          .hero-content-wrap { padding: 0 24px !important; }
+
+        /* ── MOBILE ── */
+        @media (max-width: 767px) {
+          .hero-slide-bg {
+            height: 100vw;          /* square-ish crop on phones */
+            max-height: 520px;
+            min-height: 260px;
+            background-position: center center;
+          }
+          .hero-content-wrap { padding: 0 20px; }
+          .hero-text-block  { max-width: 100%; }
+          .hero-eyebrow     { font-size: 9px; letter-spacing: 2px; margin-bottom: 10px; }
+          .hero-title       { font-size: clamp(26px, 8vw, 42px); letter-spacing: -0.5px; margin-bottom: 12px; }
+          .hero-subtitle    { font-size: 13px; margin-bottom: 20px; }
+          .hero-cta         { padding: 11px 24px; font-size: 11px; }
+          .hero-dots        { bottom: 16px; left: 20px; }
+          .hero-scroll-hint { display: none; }
+        }
+
+        /* ── SMALL MOBILE ── */
+        @media (max-width: 480px) {
+          .hero-slide-bg {
+            height: 110vw;
+            max-height: 420px;
+          }
         }
       `}</style>
     </div>
