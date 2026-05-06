@@ -1,6 +1,7 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import ScrollToTop from "./helpers/scroll-top";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { initGA, trackPageView } from "./helpers/analytics";
 import { WishlistProvider } from "./context/WishlistContext";
 import { CartProvider } from "./context/CartContext";
 import Payment from "./pages/other/Payment";
@@ -127,9 +128,22 @@ const Myorders = lazy(() => import("./pages/other/MyOrder"))
 const AddressBook = lazy(() => import("./pages/other/addressbook"))
 const LoginSuccess = lazy(() => import("./pages/other/LoginSuccess"))
 
+// Initialize GA once when the module loads
+initGA();
+
+// Tracks page views on every route change
+const GATracker = () => {
+  const location = useLocation();
+  useEffect(() => {
+    trackPageView(location.pathname + location.search);
+  }, [location]);
+  return null;
+};
+
 const App = () => {
   return (
     <Router>
+      <GATracker />
       <ScrollToTop>
         <Suspense
           fallback={
