@@ -21,7 +21,7 @@ const ProductTabLeft = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axiosInstance.get(`/get-productid/${productId}`); // Fetch product by id
+        const response = await axiosInstance.get(`/get-product/${productId}`); // Fetch product by id
         setProduct(response.data.product); // Adjust based on your actual response structure
         setLoading(false);
       } catch (err) {

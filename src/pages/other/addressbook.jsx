@@ -6,6 +6,7 @@ import axiosInstance from "../../config/axiosconfig";
 import EditAddressModal from "./EditAddressModal";
 import cogoToast from 'cogo-toast';
 import indiaData from './indiaStates.json'
+import countriesData from './countries.json'
 
 
 function Addressbook() {
@@ -311,12 +312,18 @@ function Addressbook() {
                       />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                      <Form.Control
-                        type="text"
+                      <Form.Select
                         name="country"
                         value={address.country}
-                        disabled
-                      />
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Select Country</option>
+                        {countriesData.countries.map((country, index) => (
+                          <option key={index} value={country}>
+                            {country}
+                          </option>
+                        ))}
+                      </Form.Select>
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Select
