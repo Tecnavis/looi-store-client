@@ -326,18 +326,28 @@ function Addressbook() {
                       </Form.Select>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                      <Form.Select
-                        name="state"
-                        value={address.state}
-                        onChange={handleInputChange}
-                      >
-                        <option value="">Select State</option>
-                        {indiaData.states.map((state, index) => (
-                          <option key={index} value={state}>
-                            {state}
-                          </option>
-                        ))}
-                      </Form.Select>
+                      {address.country === "India" ? (
+                        <Form.Select
+                          name="state"
+                          value={address.state}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">Select State</option>
+                          {indiaData.states.map((state, index) => (
+                            <option key={index} value={state}>
+                              {state}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      ) : (
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter State"
+                          name="state"
+                          value={address.state}
+                          onChange={handleInputChange}
+                        />
+                      )}
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Control
