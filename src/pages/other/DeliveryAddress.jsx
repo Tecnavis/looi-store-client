@@ -8,7 +8,6 @@ import EditAddressModal from "./EditAddressModal";
 import cogoToast from 'cogo-toast';
 import { Loader } from 'lucide-react';
 import indiaData from './indiaStates.json'
-import countriesData from './countries.json'
 
 
 function DeliveryAddress() {
@@ -390,18 +389,12 @@ function DeliveryAddress() {
                       />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                      <Form.Select
+                      <Form.Control
+                        type="text"
                         name="country"
                         value={address.country}
-                        onChange={handleInputChange}
-                      >
-                        <option value="">Select Country</option>
-                        {countriesData.countries.map((country, index) => (
-                          <option key={index} value={country}>
-                            {country}
-                          </option>
-                        ))}
-                      </Form.Select>
+                        disabled
+                      />
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Select

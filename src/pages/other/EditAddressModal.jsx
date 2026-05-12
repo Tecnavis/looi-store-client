@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axiosInstance from '../../config/axiosconfig';
-import countriesData from './countries.json';
 
 const EditAddressModal = ({ show, handleClose, address, userId, refreshAddresses }) => {
   const [formData, setFormData] = useState({
@@ -12,7 +11,6 @@ const EditAddressModal = ({ show, handleClose, address, userId, refreshAddresses
     landmark: '',
     postalCode: '',
     cityDistrict: '',
-    country: 'India',
     phoneNumber: ''
   });
 
@@ -28,7 +26,6 @@ const EditAddressModal = ({ show, handleClose, address, userId, refreshAddresses
         landmark: address.landmark,
         postalCode: address.postalCode,
         cityDistrict: address.cityDistrict,
-        country: address.country || 'India',
         phoneNumber: address.phoneNumber
       });
     }
@@ -131,20 +128,6 @@ const EditAddressModal = ({ show, handleClose, address, userId, refreshAddresses
               onChange={handleChange}
               required
             />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Select
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-              >
-                <option value="">Select Country</option>
-                {countriesData.countries.map((country, index) => (
-                  <option key={index} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
                <Form.Control
