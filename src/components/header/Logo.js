@@ -31,7 +31,9 @@ const Logo = ({ imageUrl, className }) => {
           className={className} 
           style={{
             maxHeight: '60px',
+            maxWidth: '100%',
             width: 'auto',
+            height: 'auto',
             objectFit: 'contain'
           }}
         />

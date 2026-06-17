@@ -78,3 +78,75 @@
   background: #1877F2;
   color: #fff;
 }
+
+/* OTP auth UI */
+.channel-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.channel-toggle-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1.5px solid #ddd;
+  background: #fff;
+  color: #666;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.channel-toggle-btn.active {
+  border-color: #007FFF;
+  background: #007FFF;
+  color: #fff;
+}
+
+.otp-input {
+  width: 100%;
+  height: 56px;
+  border-radius: 12px;
+  border: 1.5px solid #ddd;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 10px;
+  color: #1a1a1a;
+}
+
+.otp-input:focus {
+  outline: none;
+  border-color: #007FFF;
+}
+
+.otp-sent-note {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.otp-change-link,
+.otp-resend-link {
+  background: none;
+  border: none;
+  color: #007FFF;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 0;
+}
+
+.otp-resend-link:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
