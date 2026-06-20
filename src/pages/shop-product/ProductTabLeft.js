@@ -26,7 +26,19 @@ const ProductTabLeft = () => {
         setLoading(false);
       } catch (err) {
         console.error("Error fetching product:", err);
-        setError("Failed to load product");
+        if (err.response) {
+          // Server responded with an error status
+          if (err.response.status === 404) {
+            setError("This product could not be found. It may have been removed.");
+          } else {
+            setError(err.response.data?.message || `Server error (${err.response.status}) while loading this product.`);
+          }
+        } else if (err.request) {
+          // Request was made but no response received — server down/unreachable
+          setError("Could not reach the server. Please check your connection and try again.");
+        } else {
+          setError("Failed to load product.");
+        }
         setLoading(false);
       }
     };
@@ -44,7 +56,22 @@ const ProductTabLeft = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return (
+      <Fragment>
+        <SEO titleTemplate="Product Page" description="Product page" />
+        <LayoutOne headerTop="visible">
+          <div className="d-flex flex-column justify-content-center align-items-center text-center" style={{ height: '60vh', padding: '0 20px' }}>
+            <p style={{ fontSize: '16px', color: '#555', marginBottom: '20px' }}>{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              style={{ borderRadius: '12px', backgroundColor: '#007FFF', padding: '10px 28px', color: 'white', border: 'none', fontWeight: '600' }}
+            >
+              Try Again
+            </button>
+          </div>
+        </LayoutOne>
+      </Fragment>
+    );
   }
 
   return (
