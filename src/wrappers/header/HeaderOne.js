@@ -77,13 +77,14 @@ const HeaderOne = ({
     setSearchTerm(e.target.value);
   };
   const handleLogout = () => {
-   
     localStorage.removeItem('token');
-    window.location.reload();
-
-    fetchWishlistData();
-    fetchCartData();
-    navigate(process.env.PUBLIC_URL + "/login-register"); // Corrected the route
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    // A full page navigation (not reload()) both resets all React/context state
+    // cleanly AND actually lands the user on the login page — reload() was
+    // cutting execution short before the redirect below ever ran.
+    window.location.assign(process.env.PUBLIC_URL + "/login-register");
   };
   const token = localStorage.getItem('token'); 
 
@@ -120,24 +121,23 @@ const HeaderOne = ({
           "sticky-bar header-res-padding clearfix",
           scroll > headerTop && "stick"
         )}
-        style={{ backgroundColor: "#007fff" }}
+        style={{ backgroundColor: "#000000" }}
       >
         <div className={layout === "container-fluid" ? layout : "container"}>
           <div className="row align-items-center">
             {/* Logo Column */}
             <div
               className="col-xl-2 col-lg-2 col-md-6 col-4"
-              style={{ height: "80px" }}
+              style={{ paddingTop: "12px", paddingBottom: "12px" }}
             >
               <div
                 className="logo-container "
                 style={{
-                  height: "100%",
                   display: "flex",
                   alignItems: "center",
                 }}
               >
-                <Logo imageUrl={logo} className="header-logo mb-3" />
+                <Logo imageUrl={logo} className="header-logo" />
               </div>
             </div>
 
@@ -148,7 +148,7 @@ const HeaderOne = ({
 
             {/* Icon Group Column */}
             <div className="col-xl-2 col-lg-2 col-md-6 col-8">
-              <div className={clsx("header-right-wrap", iconWhiteClass)}>
+              <div className={clsx("header-right-wrap", iconWhiteClass)} style={{ margin: 0, display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                 {/* <IconGroup /> */}
  {/* //profile */}
  <div
@@ -240,6 +240,17 @@ const HeaderOne = ({
                     <span className="count-style">{wishlistCount}</span>
                   </Link>
                 </div>
+                {token && (
+                  <div
+                    className="same-style header-orders d-none d-lg-block"
+                    style={{ marginLeft: "0px" }}
+                    title="My Orders"
+                  >
+                    <Link to={process.env.PUBLIC_URL + "/my-account"}>
+                      <i className="pe-7s-box1" />
+                    </Link>
+                  </div>
+                )}
                 <div
                   className="same-style cart-wrap  d-lg-block"
                   style={{ marginRight: "0px" }}

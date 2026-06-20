@@ -51,7 +51,7 @@ const PromoBanner = () => {
         }
         .marquee-track:hover { animation-play-state: paused; }
         .marquee-item {
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Poppins', sans-serif;
           font-size: 12px;
           font-weight: 500;
           letter-spacing: 1.5px;
@@ -102,9 +102,9 @@ const MyOrdersQuickLink = () => {
           gap: 8px;
           padding: 11px 28px;
           border-radius: 50px;
-          background: #007fff;
+          background: #000000;
           color: #fff;
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Poppins', sans-serif;
           font-size: 13px;
           font-weight: 700;
           letter-spacing: 0.5px;

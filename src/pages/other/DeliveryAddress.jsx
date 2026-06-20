@@ -220,8 +220,8 @@ function DeliveryAddress() {
                             <div className="d-flex gap-2">
                               <button
                                 style={{
-                                  border: "#007fff 1px solid",
-                                  color: "#007fff",
+                                  border: "#000000 1px solid",
+                                  color: "#000000",
                                 }}
                                 className="edit-btn w-50 w-md-50"
                                 onClick={() => handleEditClick(address)}
@@ -312,7 +312,7 @@ function DeliveryAddress() {
                       <Button
                         onClick={handleContinueToPayment}
                         className="mt-3 w-100"
-                        style={{ backgroundColor: "#007fff", border: "none" }}
+                        style={{ backgroundColor: "#000000", border: "none" }}
                       >
                         CONTINUE TO PAYMENT
                       </Button>

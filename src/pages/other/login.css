@@ -103,8 +103,8 @@
 }
 
 .channel-toggle-btn.active {
-  border-color: #007FFF;
-  background: #007FFF;
+  border-color: #000000;
+  background: #000000;
   color: #fff;
 }
 
@@ -122,7 +122,7 @@
 
 .otp-input:focus {
   outline: none;
-  border-color: #007FFF;
+  border-color: #000000;
 }
 
 .otp-sent-note {
@@ -135,7 +135,7 @@
 .otp-resend-link {
   background: none;
   border: none;
-  color: #007FFF;
+  color: #000000;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;

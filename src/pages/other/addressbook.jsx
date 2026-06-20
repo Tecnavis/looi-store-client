@@ -190,8 +190,8 @@ function Addressbook() {
                             <div className="d-flex gap-2">
                               <button
                                 style={{
-                                  border: "#007fff 1px solid",
-                                  color: "#007fff",
+                                  border: "#000000 1px solid",
+                                  color: "#000000",
                                 }}
                                 className="edit-btn w-50 w-md-50"
                                 onClick={() => handleEditClick(address)}

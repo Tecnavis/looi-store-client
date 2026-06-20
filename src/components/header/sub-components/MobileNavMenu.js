@@ -60,8 +60,13 @@ const MobileNavMenu = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.reload();
-    navigate(process.env.PUBLIC_URL + "/login-register");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    localStorage.removeItem("email");
+    // A full page navigation (not reload()) both resets all React/context state
+    // cleanly AND actually lands the user on the login page — reload() was
+    // cutting execution short before the redirect below ever ran.
+    window.location.assign(process.env.PUBLIC_URL + "/login-register");
   };
 
   return (

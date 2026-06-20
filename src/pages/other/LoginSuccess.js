@@ -41,7 +41,7 @@ const LoginSuccess = () => {
         height: "100vh",
         flexDirection: "column",
         gap: "16px",
-        fontFamily: "sans-serif",
+        fontFamily: "'Poppins', sans-serif",
       }}
     >
       <div className="flone-preloader">

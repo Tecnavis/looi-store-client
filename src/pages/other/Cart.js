@@ -520,7 +520,7 @@ const Cart = () => {
                     </button>
 
                     <button
-                    style={{color: '#007fff', border: '#007fff 1px solid', height: '40px'}}
+                    style={{color: '#000000', border: '#000000 1px solid', height: '40px'}}
                       className="wishlist-btn w-100 w-md-50"
                       variant="outline-secondary"
                       onClick={() => handleAddToWishlist(item.product._id)}
@@ -617,7 +617,7 @@ const Cart = () => {
                         </Row>
                       </Card.Body>
                     </Card>
-                    <Button onClick={handleClick} className="w-100" style={{ backgroundColor: '#007fff', border: 'none' }}>
+                    <Button onClick={handleClick} className="w-100" style={{ backgroundColor: '#000000', border: 'none' }}>
                       PLACE ORDER
                     </Button>
                   </>

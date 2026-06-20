@@ -185,7 +185,14 @@ const NewArrival = () => {
               <h3 className="na-card-name">{product.name}</h3>
               <div className="na-card-footer">
                 <span className="na-card-price">₹{product.price?.toLocaleString()}</span>
-                <span className="na-card-arrow">→</span>
+                {product.totalStock !== 0 && (
+                  <button
+                    className="na-buy-now-btn"
+                    onClick={(e) => { e.stopPropagation(); navigate(`/product-tab-left/${product._id}`); }}
+                  >
+                    Buy Now
+                  </button>
+                )}
               </div>
             </div>
           </article>

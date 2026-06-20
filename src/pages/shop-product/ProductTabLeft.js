@@ -64,7 +64,7 @@ const ProductTabLeft = () => {
             <p style={{ fontSize: '16px', color: '#555', marginBottom: '20px' }}>{error}</p>
             <button
               onClick={() => window.location.reload()}
-              style={{ borderRadius: '12px', backgroundColor: '#007FFF', padding: '10px 28px', color: 'white', border: 'none', fontWeight: '600' }}
+              style={{ borderRadius: '12px', backgroundColor: '#000000', padding: '10px 28px', color: 'white', border: 'none', fontWeight: '600' }}
             >
               Try Again
             </button>

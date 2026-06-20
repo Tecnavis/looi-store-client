@@ -5,7 +5,7 @@
     width: 100%;
     padding: 10px 0;
     font-size: 12px;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
    
   }
   
@@ -16,7 +16,7 @@
   }
   
   .step.active {
-    color: #007fff; /* Highlight active step */
+    color: #000000; /* Highlight active step */
   }
   
   .dashed-line {

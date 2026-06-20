@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import SEO from "../../components/seo";
@@ -212,7 +212,7 @@ const OtpAuthPanel = ({ purpose, onSuccess }) => {
         </div>
 
         <div className="text-center mt-4">
-          <button type="submit" disabled={isSending} style={{ borderRadius: '12px', backgroundColor: '#007FFF', width: '70%', height: '50px', color: 'white', border: 'none', fontWeight: '600' }}>
+          <button type="submit" disabled={isSending} style={{ borderRadius: '12px', backgroundColor: '#000000', width: '70%', height: '50px', color: 'white', border: 'none', fontWeight: '600' }}>
             {isSending ? "Sending..." : "SEND OTP"}
           </button>
         </div>
@@ -248,7 +248,7 @@ const OtpAuthPanel = ({ purpose, onSuccess }) => {
       </div>
 
       <div className="text-center mt-4">
-        <button type="submit" disabled={isVerifying} style={{ borderRadius: '12px', backgroundColor: '#007FFF', width: '70%', height: '50px', color: 'white', border: 'none', fontWeight: '600' }}>
+        <button type="submit" disabled={isVerifying} style={{ borderRadius: '12px', backgroundColor: '#000000', width: '70%', height: '50px', color: 'white', border: 'none', fontWeight: '600' }}>
           {isVerifying ? "Verifying..." : isRegister ? "VERIFY & CREATE ACCOUNT" : "VERIFY & LOGIN"}
         </button>
       </div>
@@ -268,7 +268,27 @@ const OtpAuthPanel = ({ purpose, onSuccess }) => {
 
 const LoginRegister = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isBusy, setIsBusy] = useState(false);
+
+  // Surface a clear message if Google sign-in failed and redirected back here
+  // with an error query param, instead of silently landing on a blank form.
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const error = params.get('error');
+    if (error) {
+      const messages = {
+        user_not_found: "We couldn't find or create your account with Google. Please try again or use email/phone instead.",
+        server_error: "Something went wrong signing in with Google. Please try again.",
+        invalid_token: "Your Google sign-in link was invalid or expired. Please try again.",
+        no_token: "Google sign-in didn't complete. Please try again.",
+      };
+      cogoToast.error(messages[error] || "Google sign-in failed. Please try again.", { position: "top-right" });
+      // Clean the error param out of the URL without adding a history entry.
+      navigate(location.pathname, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
 
   const handleSuccess = () => {
     setIsBusy(true);

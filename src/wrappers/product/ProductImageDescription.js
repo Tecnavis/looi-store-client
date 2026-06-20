@@ -387,7 +387,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                         border: 'none',
                         height: '40px',
                         width: '90%',
-                        backgroundColor: '#007FFF',
+                        backgroundColor: '#000000',
                         color: 'white',
                         borderRadius: '5px'
                       }}
@@ -408,14 +408,14 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
               </div> */}
 
                 <div className="pro-details-cart " style={{ width: '100%' }}>
-                  <button onClick={handleAddToWishlist} style={{ height: '40px', width: '100%', border: '#007FFF 1px solid', borderRadius: '5px', color: '#007FFF' }}>
+                  <button onClick={handleAddToWishlist} style={{ height: '40px', width: '100%', border: '#000000 1px solid', borderRadius: '5px', color: '#000000' }}>
                     Add To Wishlist
                   </button>
                 </div>
                 
               </div><br/>
               <div className="pro-details-cart " style={{ width: '100%' }}>
-                  <button  onClick={handleAddToCart1} style={{ height: '40px', width: '100%',  color: 'white',backgroundColor:"rgb(0, 127, 255)" ,border: 'none', borderRadius: '5px'}}>
+                  <button  onClick={handleAddToCart1} style={{ height: '40px', width: '100%',  color: 'white',backgroundColor:"#000000" ,border: 'none', borderRadius: '5px'}}>
                     BUY NOW
                   </button>
                 </div>

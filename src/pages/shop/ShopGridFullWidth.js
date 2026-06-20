@@ -316,10 +316,33 @@ const ShopGridFullWidth = () => {
                                                         <h5><b>{product.name}</b></h5>
                                                     </Card.Title>
                                                     <hr />
-                                                    <Card.Text>
-                                                        <b>₹ {product.price}</b>
-                                                        {product.totalStock === 0 && (
-                                                            <span style={{ marginLeft: '8px', color: '#cc3333', fontSize: '12px', fontWeight: 500 }}>· Out of Stock</span>
+                                                    <Card.Text className="d-flex align-items-center justify-content-between">
+                                                        <span>
+                                                            <b>₹ {product.price}</b>
+                                                            {product.totalStock === 0 && (
+                                                                <span style={{ marginLeft: '8px', color: '#cc3333', fontSize: '12px', fontWeight: 500 }}>· Out of Stock</span>
+                                                            )}
+                                                        </span>
+                                                        {product.totalStock !== 0 && (
+                                                            <button
+                                                                onClick={(e) => { e.stopPropagation(); navigate(`/product-tab-left/${product._id}`); }}
+                                                                style={{
+                                                                    fontFamily: "'Poppins', sans-serif",
+                                                                    fontSize: '11px',
+                                                                    fontWeight: 700,
+                                                                    letterSpacing: '0.4px',
+                                                                    textTransform: 'uppercase',
+                                                                    color: '#fff',
+                                                                    background: '#000000',
+                                                                    border: 'none',
+                                                                    borderRadius: '50px',
+                                                                    padding: '7px 14px',
+                                                                    cursor: 'pointer',
+                                                                    whiteSpace: 'nowrap',
+                                                                }}
+                                                            >
+                                                                Buy Now
+                                                            </button>
                                                         )}
                                                     </Card.Text>
                                                 </Card.Body>

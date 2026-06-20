@@ -23,18 +23,19 @@ import PropTypes from 'prop-types';
 
 const Logo = ({ imageUrl, className }) => {
   return (
-    <div className="logo">
-      <a href="/">
+    <div className="logo" style={{ margin: 0, display: 'flex', alignItems: 'center', lineHeight: 0 }}>
+      <a href="/" style={{ display: 'flex', alignItems: 'center' }}>
         <img 
           src={imageUrl} 
           alt="Logo"
           className={className} 
           style={{
-            maxHeight: '60px',
+            maxHeight: '48px',
             maxWidth: '100%',
             width: 'auto',
             height: 'auto',
-            objectFit: 'contain'
+            objectFit: 'contain',
+            display: 'block'
           }}
         />
       </a>

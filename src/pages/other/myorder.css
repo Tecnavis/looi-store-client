@@ -110,7 +110,7 @@
 }
 
 .timeline-step.active .timeline-number {
-    background-color: #0d6efd;
+    background-color: #000000;
     color: white;
 }
 
@@ -120,7 +120,7 @@
 }
 
 .timeline-step.active .timeline-label {
-    color: #0d6efd;
+    color: #000000;
     font-weight: 600;
 }
 

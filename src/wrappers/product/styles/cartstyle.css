@@ -57,7 +57,7 @@
     padding: 10px 15px;
     border: 1px solid #ddd;
     background-color: #fff;
-    color: #007FFF;
+    color: #000000;
     font-size: 14px;
     cursor: pointer;
     transition: all 0.3s;
@@ -71,9 +71,9 @@
   }
 
   .size-button.selected {
-    background-color: #007FFF;
+    background-color: #000000;
     color: #fff;
-    border-color: #007FFF;
+    border-color: #000000;
   }
 
 

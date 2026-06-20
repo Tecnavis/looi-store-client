@@ -41,7 +41,6 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
 
   const handleCardClick = (productId) => {
     navigate(`/product-tab-left/${productId}`);
-    window.location.reload();
   };
 
   if (loading) return <Spinner animation="border" />;
@@ -58,11 +57,29 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
             <Col xs={6} sm={6} md={3} className="mb-4 d-flex justify-content-center" key={product._id}>
               <Card style={{ width: '100%', border: 'none', height: '100%' }} onClick={() => handleCardClick(product._id)}>
                 {product.coverImage ? (
-                  <img
-                    src={getImageUrl(product.coverImage)}
-                    alt={product.name}
-                    style={{ width: '100%', height: '380px', objectFit: 'cover' }}
-                  />
+                  <div style={{ position: 'relative' }}>
+                    <img
+                      src={getImageUrl(product.coverImage)}
+                      alt={product.name}
+                      style={{
+                        width: '100%',
+                        height: '380px',
+                        objectFit: 'cover',
+                        opacity: product.totalStock === 0 ? 0.6 : 1,
+                        filter: product.totalStock === 0 ? 'grayscale(30%)' : 'none',
+                      }}
+                    />
+                    {product.totalStock === 0 && (
+                      <span style={{
+                        position: 'absolute', top: '12px', left: '12px',
+                        background: '#cc3333', color: '#fff', fontSize: '10px',
+                        fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase',
+                        padding: '4px 10px', borderRadius: '50px',
+                      }}>
+                        Out of Stock
+                      </span>
+                    )}
+                  </div>
                 ) : (
                   <p>No Cover Image Available</p>
                 )}
@@ -71,9 +88,32 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
                     <b>{product.name}</b>
                   </Card.Title>
                   <hr />
-                  <Card.Text style={{ flex: 1 }}>
-                    <h5 style={{ color: '#999999' }}>{product.category}</h5>
-                    <b>₹ {product.price}</b>
+                  <Card.Text style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span>
+                      <h5 style={{ color: '#999999', margin: 0 }}>{product.category}</h5>
+                      <b>₹ {product.price}</b>
+                    </span>
+                    {product.totalStock !== 0 && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); navigate(`/product-tab-left/${product._id}`); }}
+                        style={{
+                          fontFamily: "'Poppins', sans-serif",
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          letterSpacing: '0.4px',
+                          textTransform: 'uppercase',
+                          color: '#fff',
+                          background: '#000000',
+                          border: 'none',
+                          borderRadius: '50px',
+                          padding: '7px 14px',
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        Buy Now
+                      </button>
+                    )}
                   </Card.Text>
                 </Card.Body>
               </Card>
