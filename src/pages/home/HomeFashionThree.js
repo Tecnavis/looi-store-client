@@ -1,6 +1,4 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
-import { Package } from "lucide-react";
 import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
 import HeroSliderTen from "../../wrappers/hero-slider/HeroSliderTen";
@@ -79,45 +77,6 @@ const PromoBanner = () => {
   );
 };
 
-const MyOrdersQuickLink = () => {
-  const isLoggedIn = !!localStorage.getItem('token');
-  if (!isLoggedIn) return null;
-
-  return (
-    <div className="my-orders-quicklink-wrap">
-      <Link to="/my-account" className="my-orders-quicklink-btn">
-        <Package size={16} />
-        My Orders
-      </Link>
-      <style>{`
-        .my-orders-quicklink-wrap {
-          display: flex;
-          justify-content: center;
-          padding: 18px 16px;
-          background: #fff;
-        }
-        .my-orders-quicklink-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 11px 28px;
-          border-radius: 50px;
-          background: #000000;
-          color: #fff;
-          font-family: 'Poppins', sans-serif;
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 0.5px;
-          text-transform: uppercase;
-          text-decoration: none;
-          transition: opacity 0.2s ease;
-        }
-        .my-orders-quicklink-btn:hover { opacity: 0.85; color: #fff; }
-      `}</style>
-    </div>
-  );
-};
-
 const HomeFashionThree = () => {
   return (
     <Fragment>
@@ -132,9 +91,6 @@ const HomeFashionThree = () => {
 
         {/* Promo strip */}
         <PromoBanner />
-
-        {/* My Orders quick link — logged-in users only */}
-        <MyOrdersQuickLink />
 
         {/* Best Sellers */}
         <BestSellers />

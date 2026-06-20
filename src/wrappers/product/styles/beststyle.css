@@ -1,7 +1,6 @@
 /* ══════════════════════════════════════════════════
    LOOI — Best Sellers Section
    ══════════════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap');
 
 .bs-section {
   padding: 80px 0 60px;
@@ -45,7 +44,7 @@
 }
 
 .bs-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: clamp(36px, 4vw, 56px);
   font-weight: 600;
   color: #1a1a1a;
@@ -200,7 +199,7 @@
 }
 
 .bs-card-name {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 20px;
   font-weight: 600;
   color: #1a1a1a;

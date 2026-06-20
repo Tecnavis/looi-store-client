@@ -88,7 +88,7 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
                     <b>{product.name}</b>
                   </Card.Title>
                   <hr />
-                  <Card.Text style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Card.Text style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px' }}>
                     <span>
                       <h5 style={{ color: '#999999', margin: 0 }}>{product.category}</h5>
                       <b>₹ {product.price}</b>

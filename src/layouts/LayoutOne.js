@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import HeaderOne from "../wrappers/header/HeaderOne";
 import FooterOne from "../wrappers/footer/FooterOne";
 import ScrollToTop from "../components/scroll-to-top"
+import MyOrdersFloat from "../components/my-orders-float"
 
 const LayoutOne = ({
   children,
@@ -26,6 +27,7 @@ const LayoutOne = ({
         spaceBottomClass="pb-70"
       />
       <ScrollToTop/>
+      <MyOrdersFloat/>
     </Fragment>
   );
 };

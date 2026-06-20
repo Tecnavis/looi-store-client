@@ -240,17 +240,6 @@ const HeaderOne = ({
                     <span className="count-style">{wishlistCount}</span>
                   </Link>
                 </div>
-                {token && (
-                  <div
-                    className="same-style header-orders d-none d-lg-block"
-                    style={{ marginLeft: "0px" }}
-                    title="My Orders"
-                  >
-                    <Link to={process.env.PUBLIC_URL + "/my-account"}>
-                      <i className="pe-7s-box1" />
-                    </Link>
-                  </div>
-                )}
                 <div
                   className="same-style cart-wrap  d-lg-block"
                   style={{ marginRight: "0px" }}

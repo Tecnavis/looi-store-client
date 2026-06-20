@@ -181,8 +181,7 @@ const HeroSliderTenSingle = () => {
       </div>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
-
+        
         /* ── Hero slide container ── */
         .hero-slide-bg {
           height: 90vh;
@@ -197,14 +196,14 @@ const HeroSliderTenSingle = () => {
 
         .hero-eyebrow {
           display: inline-block;
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Poppins', sans-serif;
           font-size: 11px; font-weight: 700;
           letter-spacing: 3px; text-transform: uppercase;
           color: #b08d6a; margin-bottom: 18px;
         }
 
         .hero-title {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'Poppins', sans-serif;
           font-size: clamp(32px, 6vw, 76px);
           font-weight: 600; color: #fff;
           line-height: 1.05; letter-spacing: -1.5px;
@@ -212,14 +211,14 @@ const HeroSliderTenSingle = () => {
         }
 
         .hero-subtitle {
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Poppins', sans-serif;
           font-size: 16px; color: rgba(255,255,255,0.8);
           margin: 0 0 32px; line-height: 1.6;
         }
 
         .hero-cta {
           display: inline-flex; align-items: center; gap: 10px;
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Poppins', sans-serif;
           font-size: 13px; font-weight: 700;
           letter-spacing: 1px; text-transform: uppercase;
           color: #fff; background: transparent;

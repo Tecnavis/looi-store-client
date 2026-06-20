@@ -316,7 +316,7 @@ const ShopGridFullWidth = () => {
                                                         <h5><b>{product.name}</b></h5>
                                                     </Card.Title>
                                                     <hr />
-                                                    <Card.Text className="d-flex align-items-center justify-content-between">
+                                                    <Card.Text className="d-flex align-items-center justify-content-between flex-wrap" style={{ gap: '8px' }}>
                                                         <span>
                                                             <b>₹ {product.price}</b>
                                                             {product.totalStock === 0 && (
