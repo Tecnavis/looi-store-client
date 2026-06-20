@@ -21,9 +21,8 @@ const LoginSuccess = () => {
         // username not in token — set a placeholder, user can update in My Account
         localStorage.setItem("username", payload.email.split("@")[0]);
 
-        // Redirect to last visited page or home
-        const lastVisitedPage = localStorage.getItem("lastVisitedPage") || "/";
-        navigate(lastVisitedPage);
+        // Always land on the home page after a successful login
+        navigate("/");
       } catch (err) {
         console.error("Failed to parse token:", err);
         navigate("/login-register?error=invalid_token");

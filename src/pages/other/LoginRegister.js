@@ -272,8 +272,7 @@ const LoginRegister = () => {
 
   const handleSuccess = () => {
     setIsBusy(true);
-    const lastVisitedPage = localStorage.getItem("lastVisitedPage") || "/";
-    setTimeout(() => navigate(lastVisitedPage), 1500);
+    setTimeout(() => navigate("/"), 1500);
   };
 
   const handleGoogleLogin = () => {
