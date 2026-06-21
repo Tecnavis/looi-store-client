@@ -338,10 +338,10 @@ const LoginRegister = () => {
                     <Tab.Content>
                       {/* LOGIN */}
                       <Tab.Pane eventKey="login">
-                        <div className="login-form-container" style={{ borderRadius: '15px' }}>
+                        <div className="login-form-container">
                           <div className="login-register-form">
                             <div className="d-flex justify-content-center align-items-center mb-4">
-                              <img src={logo} width={80} height={50} alt="Logo" />
+                              <img src={logo} alt="LOOI" style={{ width: '110px', height: 'auto' }} />
                             </div>
                             <OtpAuthPanel purpose="login" onSuccess={handleSuccess} />
                             <SocialButtons />
@@ -351,10 +351,10 @@ const LoginRegister = () => {
 
                       {/* REGISTER */}
                       <Tab.Pane eventKey="register">
-                        <div className="login-form-container" style={{ borderRadius: '15px' }}>
+                        <div className="login-form-container">
                           <div className="login-register-form">
                             <div className="d-flex justify-content-center align-items-center mb-4">
-                              <img src={logo} width={80} height={50} alt="Logo" />
+                              <img src={logo} alt="LOOI" style={{ width: '110px', height: 'auto' }} />
                             </div>
                             <OtpAuthPanel purpose="register" onSuccess={handleSuccess} />
                             <SocialButtons />
