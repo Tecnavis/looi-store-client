@@ -29,8 +29,8 @@ const BestSellers = () => {
   }, []);
 
   const slides = [];
-  for (let i = 0; i < categoriesData.length; i += 3) {
-    slides.push(categoriesData.slice(i, i + 3));
+  for (let i = 0; i < categoriesData.length; i += 4) {
+    slides.push(categoriesData.slice(i, i + 4));
   }
   const totalSlides = slides.length;
 

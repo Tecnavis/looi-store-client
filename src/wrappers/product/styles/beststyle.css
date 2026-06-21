@@ -87,14 +87,27 @@
   text-align: center;
 }
 
-/* Grid */
+/* Grid — 2 per row on mobile, 4 per row on desktop */
 .bs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
   padding: 0 16px;
   max-width: 1400px;
   margin: 0 auto;
+}
+/* A single card (e.g. only one category exists yet) spans the full row
+   instead of looking squeezed into one narrow column. */
+.bs-grid .bs-card:only-child {
+  grid-column: 1 / -1;
+  max-width: 420px;
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .bs-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
 }
 
 .bs-grid--in .bs-card {
@@ -269,7 +282,6 @@
 @media (max-width: 768px) {
   .bs-section { padding: 50px 0 40px; }
   .bs-header { padding: 0 20px 28px; flex-direction: column; align-items: flex-start; gap: 16px; }
-  .bs-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; padding: 0 12px; }
   .bs-title { font-size: 38px; }
   .bs-card-name { font-size: 14px; }
   .bs-card-sub { font-size: 10px; }
