@@ -86,13 +86,15 @@
   border-radius: 16px;
   overflow: hidden;
   background: #fafaf8;
-  border: 1px solid #f0f0f0;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  border: 1.5px solid #e2e2e2;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
   animation: naFadeUp 0.6s ease both;
 }
 .na-card:hover, .na-card--hovered {
   transform: translateY(-8px);
   box-shadow: 0 24px 48px rgba(0,0,0,0.1);
+  border-color: #1a1a1a;
 }
 
 @keyframes naFadeUp {
@@ -229,6 +231,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid #efefef;
 }
 
 .na-card-price {

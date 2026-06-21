@@ -4,7 +4,8 @@ import LayoutOne from "../../layouts/LayoutOne";
 import HeroSliderTen from "../../wrappers/hero-slider/HeroSliderTen";
 import NewArrival from "../../wrappers/product/NewArrival";
 import BestSellers from "../../wrappers/product/BestSellers";
-import CategoryGrid from "../../wrappers/product/CategoryGrid";
+import CategoriesSection from "../../wrappers/product/CategoriesSection";
+import ShopByPrintSection from "../../wrappers/product/ShopByPrintSection";
 
 // ── Scrolling promo ticker — items fetched from /api/get-marquee ──────────────
 const FALLBACK_ITEMS = [
@@ -95,11 +96,14 @@ const HomeFashionThree = () => {
         {/* Best Sellers */}
         <BestSellers />
 
-        {/* Shop by Print + Categories (dark bg) */}
-        <CategoryGrid />
+        {/* Categories */}
+        <CategoriesSection />
 
         {/* New Arrivals */}
         <NewArrival />
+
+        {/* Order by Print */}
+        <ShopByPrintSection />
       </LayoutOne>
     </Fragment>
   );
