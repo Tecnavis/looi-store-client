@@ -98,14 +98,39 @@ button {
   text-decoration: none;
 
   color: #000;
+  // Speeds up tap response on mobile by skipping the double-tap-zoom
+  // detection delay some mobile browsers apply to generic elements.
+  touch-action: manipulation;
 }
 
+// NOTE: previously this was `a, button, img, input, span { transition: all 0.3s ease 0s; }`.
+// `transition: all` makes the browser watch every CSS property (including ones
+// changed by JS, like inline background-color on click) and animate it over
+// 300ms before anything visually updates — on mobile this is exactly what
+// makes buttons feel laggy/unresponsive right after a tap. Scoping it to only
+// the properties that are actually animated (color/background/opacity/transform/
+// box-shadow) keeps the existing hover/focus visual polish without delaying
+// the press feedback on every other property.
 a,
 button,
 img,
 input,
 span {
-  transition: all 0.3s ease 0s;
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease,
+    opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+// Immediate (no-delay) press feedback on tap — :active fires instantly on
+// touch, unlike :hover which mobile browsers don't reliably trigger on tap.
+// This gives the user visible confirmation that their tap registered, even
+// while a slower async action (network request, route chunk download) is
+// still in progress behind it.
+button:active,
+a.btn:active,
+.btn:active {
+  transform: scale(0.97);
+  opacity: 0.85;
+  transition: transform 0.08s ease, opacity 0.08s ease;
 }
 
 *:focus {

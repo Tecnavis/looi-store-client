@@ -266,10 +266,36 @@
   cursor: pointer;
   transition: opacity 0.2s ease, transform 0.15s ease;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 .na-buy-now-btn:hover {
   opacity: 0.85;
   transform: translateY(-1px);
+}
+/* :active fires immediately on touch (unlike :hover), giving instant tap
+   feedback on mobile instead of the button appearing to do nothing until
+   the route's JS chunk finishes loading. */
+.na-buy-now-btn:active {
+  opacity: 0.7;
+  transform: scale(0.96);
+}
+.na-buy-now-btn--loading {
+  opacity: 0.7;
+  cursor: wait;
+}
+.na-buy-now-spinner {
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: naSpin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes naSpin {
+  to { transform: rotate(360deg); }
 }
 
 /* Skeleton */

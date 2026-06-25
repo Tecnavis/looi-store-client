@@ -160,8 +160,11 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
 
   // wishlist
   const { addToWishlist } = useContext(WishlistContext);
+  const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
 
   const handleAddToWishlist = async () => {
+    if (isAddingToWishlist) return; // guard against double-taps while a request is in flight
+    setIsAddingToWishlist(true);
 
     try {
       const token = localStorage.getItem("token"); // Assuming JWT token is stored in localStorage
@@ -191,6 +194,8 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
     } catch (error) {
       console.error("Error adding to wishlist:", error);
       setWishlistStatus("Failed to add product to wishlist.");
+    } finally {
+      setIsAddingToWishlist(false);
     }
   };
   const navigate = useNavigate(); // Initialize navigate hook
@@ -198,8 +203,11 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
   // Function to add a product to the cart
 
   const [cartStatus, setCartStatus] = useState('');
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   const handleAddToCart = async () => {
+    if (isAddingToCart) return; // guard against double-taps while a request is in flight
+    setIsAddingToCart(true);
     try {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -218,6 +226,8 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
         error.response?.data?.message || "Failed to add product to cart",
         { position: "top-right" }
       );
+    } finally {
+      setIsAddingToCart(false);
     }
   };
 
@@ -413,16 +423,18 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                   ) : (
                     <button
                       onClick={handleAddToCart}
+                      disabled={isAddingToCart}
                       style={{
                         border: 'none',
                         height: '40px',
                         width: '90%',
-                        backgroundColor: '#000000',
+                        backgroundColor: isAddingToCart ? '#555555' : '#000000',
                         color: 'white',
-                        borderRadius: '5px'
+                        borderRadius: '5px',
+                        cursor: isAddingToCart ? 'wait' : 'pointer'
                       }}
                     >
-                      Add To Cart
+                      {isAddingToCart ? 'Adding...' : 'Add To Cart'}
                     </button>
                   )}
                 </div>
@@ -438,8 +450,12 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
               </div> */}
 
                 <div className="pro-details-cart " style={{ width: '100%' }}>
-                  <button onClick={handleAddToWishlist} style={{ height: '40px', width: '100%', border: '#000000 1px solid', borderRadius: '5px', color: '#000000' }}>
-                    Add To Wishlist
+                  <button
+                    onClick={handleAddToWishlist}
+                    disabled={isAddingToWishlist}
+                    style={{ height: '40px', width: '100%', border: '#000000 1px solid', borderRadius: '5px', color: '#000000', cursor: isAddingToWishlist ? 'wait' : 'pointer' }}
+                  >
+                    {isAddingToWishlist ? 'Adding...' : 'Add To Wishlist'}
                   </button>
                 </div>
                 

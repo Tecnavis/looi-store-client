@@ -11,6 +11,7 @@ const NewArrival = () => {
   const [hoveredId, setHoveredId] = useState(null);
   const [wishlistIds, setWishlistIds] = useState(new Set());
   const [wishlistLoading, setWishlistLoading] = useState(new Set());
+  const [navigatingId, setNavigatingId] = useState(null);
   const navigate = useNavigate();
 
   // Fetch user's existing wishlist so hearts render correctly
@@ -187,9 +188,16 @@ const NewArrival = () => {
                 <span className="na-card-price">₹{product.price?.toLocaleString()}</span>
                 {product.totalStock !== 0 && (
                   <button
-                    className="na-buy-now-btn"
-                    onClick={(e) => { e.stopPropagation(); navigate(`/product-tab-left/${product._id}`); }}
+                    className={`na-buy-now-btn ${navigatingId === product._id ? 'na-buy-now-btn--loading' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (navigatingId) return; // guard against double taps
+                      setNavigatingId(product._id);
+                      navigate(`/product-tab-left/${product._id}`);
+                    }}
+                    disabled={navigatingId === product._id}
                   >
+                    {navigatingId === product._id && <span className="na-buy-now-spinner" />}
                     Buy Now
                   </button>
                 )}

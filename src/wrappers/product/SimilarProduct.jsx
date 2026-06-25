@@ -10,6 +10,7 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [navigatingId, setNavigatingId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -95,7 +96,13 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
                     </span>
                     {product.totalStock !== 0 && (
                       <button
-                        onClick={(e) => { e.stopPropagation(); navigate(`/product-tab-left/${product._id}`); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (navigatingId) return; // guard against double taps
+                          setNavigatingId(product._id);
+                          navigate(`/product-tab-left/${product._id}`);
+                        }}
+                        disabled={navigatingId === product._id}
                         style={{
                           fontFamily: "'Poppins', sans-serif",
                           fontSize: '11px',
@@ -107,10 +114,16 @@ const SimilarProducts = ({ subcategory, currentProductId }) => {
                           border: 'none',
                           borderRadius: '50px',
                           padding: '7px 14px',
-                          cursor: 'pointer',
+                          cursor: navigatingId === product._id ? 'wait' : 'pointer',
                           whiteSpace: 'nowrap',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
                         }}
                       >
+                        {navigatingId === product._id && (
+                          <Spinner animation="border" size="sm" style={{ width: '10px', height: '10px', borderWidth: '1.5px' }} />
+                        )}
                         Buy Now
                       </button>
                     )}
