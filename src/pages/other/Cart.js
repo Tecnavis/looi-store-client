@@ -598,6 +598,10 @@ const Cart = () => {
                       </Accordion.Item>
                     </Accordion>
                     <h5 style={{ color: 'gray' }}>BILLING DETAILS</h5>
+                    <p style={{ fontSize: '14px', color: '#555', marginTop: '-8px', marginBottom: '12px' }}>
+                      {cartItems.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0)} product
+                      {cartItems.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0) === 1 ? '' : 's'} in your cart, available for checkout
+                    </p>
                     <Card className="mb-4" style={{ border: '0.5px solid lightgrey', borderRadius: 'none' }}>
                       <Card.Body>
                         <Row className="mb-2">

@@ -23,7 +23,13 @@ export const CartProvider = ({ children }) => {
 
       if (response.data?.cart?.items) {
         setCartItems(response.data.cart.items);
-        setCartCount(response.data.cart.items.length);
+        // Total quantity across all line items (e.g. 2 of size M + 3 of size L = 5),
+        // not just the number of distinct product/size/color rows.
+        const totalQty = response.data.cart.items.reduce(
+          (sum, item) => sum + (Number(item.quantity) || 0),
+          0
+        );
+        setCartCount(totalQty);
       } else {
         setCartItems([]);
         setCartCount(0);
