@@ -346,8 +346,9 @@ const Cart = () => {
     });
   };
 
-  const handleRemoveItem = (productId) => {
-    removeFromCart(productId);
+  const handleRemoveItem = (item) => {
+    const productId = item.product?._id || item.product;
+    removeFromCart(productId, item.size, item.color);
   };
   // const handleRemoveItem = (item) => {
   //   // Get the product ID from either the direct item ID or the nested product object
@@ -362,7 +363,8 @@ const Cart = () => {
   // };
 
 
-  const handleAddToWishlist = async (productId) => {
+  const handleAddToWishlist = async (item) => {
+    const productId = item.product?._id || item.product;
     try {
       const token = localStorage.getItem("token");
 
@@ -386,7 +388,7 @@ const Cart = () => {
         setWishlistStatus("Product added to wishlist successfully!");
         cogoToast.success("Product added to wishlist successfully", { position: "top-right" });
         // Remove from cart after successfully adding to wishlist
-        handleRemoveItem(productId);
+        handleRemoveItem(item);
       } else {
         setWishlistStatus(response.data.message);
       }
@@ -513,7 +515,7 @@ const Cart = () => {
                     <button
                       variant="outline-secondary"
                       className="remove-btn w-100 w-md-50 mb-2 mb-md-0 me-md-2"
-                      onClick={() => handleRemoveItem(item.product._id)}
+                      onClick={() => handleRemoveItem(item)}
                       style={{ color: 'white', border: 'none', height: '40px',backgroundColor:'red' }}
                     >
                       REMOVE
@@ -523,7 +525,7 @@ const Cart = () => {
                     style={{color: '#000000', border: '#000000 1px solid', height: '40px'}}
                       className="wishlist-btn w-100 w-md-50"
                       variant="outline-secondary"
-                      onClick={() => handleAddToWishlist(item.product._id)}
+                      onClick={() => handleAddToWishlist(item)}
                     >
                       MOVE TO WISHLIST
                     </button>

@@ -38,10 +38,31 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
   const [index, setIndex] = useState(-1);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Pick a sensible default variant on load: prefer the first size/color
+  // combo that actually has stock, so the page doesn't show "Out of Stock"
+  // just because the very first size/color in the array happens to be 0,
+  // while other colors/sizes of the same product are available.
+  const findDefaultVariant = () => {
+    for (const sizeItem of sizes) {
+      for (const colorItem of sizeItem.colors || []) {
+        if ((colorItem.stock || 0) > 0) {
+          return { size: sizeItem.size, color: colorItem.color, stock: colorItem.stock };
+        }
+      }
+    }
+    // Nothing in stock anywhere — fall back to the first listed combo.
+    return {
+      size: sizes[0]?.size || "",
+      color: sizes[0]?.colors?.[0]?.color || "",
+      stock: sizes[0]?.colors?.[0]?.stock || 0,
+    };
+  };
+  const defaultVariant = findDefaultVariant();
+
   // State for color and size selection
-  const [selectedSize, setSelectedSize] = useState(sizes[0]?.size || "");
-  const [selectedColor, setSelectedColor] = useState(sizes[0]?.colors[0]?.color || "");
-  const [productStock, setProductStock] = useState(sizes[0]?.colors[0]?.stock || 0);
+  const [selectedSize, setSelectedSize] = useState(defaultVariant.size);
+  const [selectedColor, setSelectedColor] = useState(defaultVariant.color);
+  const [productStock, setProductStock] = useState(defaultVariant.stock);
   const [quantityCount, setQuantityCount] = useState(1);
   const [currentImages, setCurrentImages] = useState([]);
 
@@ -228,9 +249,18 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
   };
   // const BASE_URL = 'https://looi-store-server-1.onrender.com';
 
-  const isOutOfStock = () => {
-    return totalStock === 0 || productStock === 0;
+  // Product-level: no stock left anywhere (across every size/color) -> truly out of stock.
+  const isProductOutOfStock = () => {
+    return !totalStock || totalStock === 0;
   };
+
+  // Variant-level: the currently selected size/color combo has none left,
+  // even though other variants of this product may still be in stock.
+  const isSelectedVariantOutOfStock = () => {
+    return !productStock || productStock === 0;
+  };
+
+  const isOutOfStock = () => isProductOutOfStock() || isSelectedVariantOutOfStock();
 
   return (
     <div className={clsx("shop-area", spaceTopClass, spaceBottomClass)}>
@@ -364,7 +394,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                         cursor: 'not-allowed'
                       }}
                     >
-                      Out of Stock
+                      {isProductOutOfStock() ? 'Out of Stock' : 'This option is out of stock'}
                     </button>
                   ) : isInCart ? (
                     <button

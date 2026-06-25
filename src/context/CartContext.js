@@ -51,14 +51,14 @@ export const CartProvider = ({ children }) => {
     }
   }, []);
 
-  const removeFromCart = async (productId, size) => {
+  const removeFromCart = async (productId, size, color) => {
     try {
       const token = localStorage.getItem('token');
       if (!token) return;
 
       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       await axiosInstance.delete(`/delete-cart/${productId}`, {
-        params: { size }
+        params: { size, color }
       });
       await fetchCartData();
     } catch (error) {

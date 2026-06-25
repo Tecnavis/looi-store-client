@@ -215,7 +215,10 @@ const Payment = () => {
             if (!rzpOrderRes.data?.id) throw new Error(rzpOrderRes.data?.message || 'Failed to create Razorpay order');
 
             // STEP 3: Open Razorpay checkout
-            const rzpKey = process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_live_S7CUY2gj4xH0tZ';
+            const rzpKey = process.env.REACT_APP_RAZORPAY_KEY_ID;
+            if (!rzpKey) {
+                throw new Error('Payment is not configured correctly. Please contact support.');
+            }
 
             const options = {
                 key:         rzpKey,
@@ -251,6 +254,16 @@ const Payment = () => {
                     contact: selectedAddress.phoneNumber || '',
                 },
                 theme: { color: '#3399cc' },
+                modal: {
+                    ondismiss: () => {
+                        // The order record was already created (with stock reserved)
+                        // before the popup opened. If the customer closes it without
+                        // paying, let them know the order is still pending rather than
+                        // leaving them wondering what happened — it'll be auto-cancelled
+                        // and the stock released if payment isn't completed shortly.
+                        cogoToast.warn('Payment cancelled. Your order is saved as pending — complete payment from My Orders, or it will be auto-cancelled if left unpaid.');
+                    },
+                },
             };
 
             const rzp = new window.Razorpay(options);
