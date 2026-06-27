@@ -347,20 +347,12 @@ const Cart = () => {
   };
 
   const handleRemoveItem = (item) => {
-    const productId = item.product?._id || item.product;
-    removeFromCart(productId, item.size, item.color);
+    // item._id is this specific cart row's own id — needed because adding
+    // the same product/size/color twice now creates two separate rows, so
+    // matching on product+size+color alone could remove the wrong one (or
+    // be ambiguous about which of several identical rows to delete).
+    removeFromCart(item._id, item.size, item.color);
   };
-  // const handleRemoveItem = (item) => {
-  //   // Get the product ID from either the direct item ID or the nested product object
-  //   const productId = item._id || (item.product && item.product._id);
-    
-  //   if (!productId) {
-  //     console.error('Unable to find product ID for removal:', item);
-  //     return;
-  //   }
-    
-  //   removeFromCart(productId);
-  // };
 
 
   const handleAddToWishlist = async (item) => {
@@ -398,29 +390,6 @@ const Cart = () => {
     }
   };
 
-  const handleQuantityChange = async (productId, size, newQuantity) => {
-    try {
-      const token = localStorage.getItem("token");
-
-      const response = await axiosInstance.put(`/cart/${productId}`, {
-        size,
-        quantity: newQuantity
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      if (response.status === 200) {
-        fetchCartData();
-      } else {
-        console.error("Error updating cart:", response.data.message);
-      }
-    } catch (error) {
-      console.error("Network error:", error);
-    }
-  };
-
   const renderCartContent = () => {
     if (!cartItems || cartItems.length === 0) {
       return (
@@ -437,6 +406,20 @@ const Cart = () => {
 
     return (
       <>
+        <div className="cart-item-count-banner mb-3 d-flex align-items-center" style={{ fontSize: '16px' }}>
+          <span
+            style={{
+              backgroundColor: '#000000',
+              color: '#ffffff',
+              borderRadius: '50px',
+              padding: '6px 16px',
+              fontWeight: 700,
+              fontSize: '15px',
+            }}
+          >
+            {cartItems.length} {cartItems.length === 1 ? 'Item' : 'Items'} in your bag
+          </span>
+        </div>
         {cartItems.map((item) => (
           <Card className="cart-item-card" key={item._id}>
             <Card.Body>
@@ -449,59 +432,18 @@ const Cart = () => {
                   />
                 </Col>
 
-                {/* <Col xs={12} sm={6} className="product-details">
-                  <h4><b>{item.productName || item.product?.name}</b></h4>
-                  
-                  <Form.Group as={Row} className="align-items-center mt-3">
-                    <Form.Label column xs="auto">Size:</Form.Label>
-                    <Col xs="auto">
-                      <Form.Control type="text" value={item.size} readOnly className="size-input" />
-                    </Col>
-                    <Form.Label column xs="auto">Qty:</Form.Label>
-                    <Col xs="auto">
-                      <Form.Select
-                        aria-label="Select quantity"
-                        defaultValue={item.quantity}
-                        className="quantity-select"
-                        onChange={(e) => handleQuantityChange(item.product._id, item.size, e.target.value)}
-                      >
-                        {[...Array(10).keys()].map((num) => (
-                          <option key={num + 1} value={num + 1}>
-                            {num + 1}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Col>
-                  </Form.Group>
-                </Col> */}
                 <Col xs={12} sm={6} className="product-details">
                   <h4><b>{item.productName || item.product?.name}</b></h4>
 
-                  <Form.Group as={Row} className="align-items-center mt-3 gx-1 gy-0">
-                    <Form.Label column xs="auto" className="text-nowrap pe-1">Size:</Form.Label>
-                    <Col xs="auto">
-                      <Form.Control type="text" value={item.size} readOnly className="size-input" style={{ width: '75px' }} />
-                    </Col>
-
-                    <Form.Label column xs="auto" className="text-nowrap px-2">Qty:</Form.Label>
-                    <Col xs="auto">
-                      <Form.Select
-                        aria-label="Select quantity"
-                        defaultValue={item.quantity}
-                        className="quantity-select"
-                        style={{ width: '100px' }}
-                        onChange={(e) => handleQuantityChange(item.product._id, item.size, e.target.value)}
-                      >
-                        {[...Array(10).keys()].map((num) => (
-                          <option key={num + 1} value={num + 1}>
-                            {num + 1}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Col>
-                  </Form.Group>
+                  {/* Each row is always exactly 1 unit — adding more of the
+                      same product creates additional separate rows instead
+                      of incrementing a quantity here, so there's nothing to
+                      edit on this row beyond removing it. */}
+                  <div className="cart-item-meta mt-2" style={{ fontSize: '14px', color: '#555' }}>
+                    <span><strong>Size:</strong> {item.size}</span>
+                    {item.color && <span style={{ marginLeft: '16px' }}><strong>Color:</strong> {item.color}</span>}
+                  </div>
                 </Col>
-
 
                 <Col xs={12} sm={3} className="price-and-actions">
                   <h5>₹ {item.price || item.product?.price}</h5>
