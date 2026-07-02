@@ -341,11 +341,30 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                   <span>Colour: <strong>{selectedColor}</strong></span>
                   <div className="color-buttons-wrap">
                     {allColors.map((color, index) => {
-                      const colorClass = color.toLowerCase().replace(/\s+/g, '-');
+                      // Map color names to reliable hex values — CSS named colors
+                      // work for common names but can be inconsistent across browsers.
+                      const colorHexMap = {
+                        red: '#e53935', blue: '#4798f3', black: '#212121',
+                        white: '#ffffff', green: '#139c57', yellow: '#e2b837',
+                        orange: '#f57c00', pink: '#e91e8c', purple: '#7b1fa2',
+                        maroon: '#736751', brown: '#795548', gray: '#9e9e9e',
+                        grey: '#9e9e9e', navy: '#1a237e', 'navy blue': '#1a237e',
+                        teal: '#00897b', mustard: '#c8941a', olive: '#6d6f1e',
+                        beige: '#f5f0e8', cream: '#f5f0e8', rose: '#f48fb1',
+                        lavender: '#b39ddb', 'sky blue': '#29b6f6',
+                        'light blue': '#29b6f6', 'dark green': '#1b5e20',
+                      };
+                      const bg = colorHexMap[color.toLowerCase()] || color.toLowerCase();
+                      const isLight = ['white', 'yellow', 'cream', 'beige', 'lavender', 'rose'].includes(color.toLowerCase());
+                      const isSelected = color === selectedColor;
                       return (
                         <button
                           key={index}
-                          className={`color-circle-btn color-${colorClass} ${color === selectedColor ? 'color-selected' : ''}`}
+                          className={`color-circle-btn ${isSelected ? 'color-selected' : ''}`}
+                          style={{
+                            backgroundColor: bg,
+                            borderColor: isLight ? '#bbb' : bg,
+                          }}
                           onClick={() => handleColorChange(color)}
                           title={color}
                           aria-label={color}
