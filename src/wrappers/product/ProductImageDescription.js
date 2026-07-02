@@ -338,14 +338,21 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
 
               <div className="pro-details-size-color">
                 <div className="pro-details-color-wrap">
-                  <span>Color</span>
-                  <select value={selectedColor} onChange={(e) => handleColorChange(e.target.value)}>
-                    {allColors.map((color, index) => (
-                      <option key={index} value={color}>
-                        {color}
-                      </option>
-                    ))}
-                  </select>
+                  <span>Colour: <strong>{selectedColor}</strong></span>
+                  <div className="color-buttons-wrap">
+                    {allColors.map((color, index) => {
+                      const colorClass = color.toLowerCase().replace(/\s+/g, '-');
+                      return (
+                        <button
+                          key={index}
+                          className={`color-circle-btn color-${colorClass} ${color === selectedColor ? 'color-selected' : ''}`}
+                          onClick={() => handleColorChange(color)}
+                          title={color}
+                          aria-label={color}
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <div className="pro-details-size">
