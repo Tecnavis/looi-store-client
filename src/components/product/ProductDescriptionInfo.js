@@ -15,8 +15,6 @@ const ProductDescriptionInfo = ({
   compareItem,
 }) => {
   // const { id } = useParams();
-  const colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
-  
   const [selectedProductColor, setSelectedProductColor] = useState(
     product.variation ? product.variation[0].color : ""
   );
@@ -78,30 +76,22 @@ const ProductDescriptionInfo = ({
       {product.variation ? (
         <div className="pro-details-size-color">
           <div className="pro-details-color-wrap">
-            <span>Color</span>
-            
-      <select>
-        {colors.map((color, index) => (
-          <option key={index} value={color}>
-            {color}
-          </option>
-        ))}
-      </select>
-  
-            {/* <div className="pro-details-color-content">
+            <span>Colour: <strong>{selectedProductColor}</strong></span>
+            <div className="pro-details-color-content">
               {product.variation.map((single, key) => {
+                // Normalise the color name to a CSS-safe class (lowercase, spaces→hyphens)
+                const colorClass = single.color.toLowerCase().replace(/\s+/g, '-');
                 return (
                   <label
-                    className={`pro-details-color-content--single ${single.color}`}
+                    className={`pro-details-color-content--single ${colorClass}`}
                     key={key}
+                    title={single.color}
                   >
                     <input
                       type="radio"
                       value={single.color}
                       name="product-color"
-                      checked={
-                        single.color === selectedProductColor ? "checked" : ""
-                      }
+                      checked={single.color === selectedProductColor}
                       onChange={() => {
                         setSelectedProductColor(single.color);
                         setSelectedProductSize(single.size[0].name);
@@ -113,7 +103,7 @@ const ProductDescriptionInfo = ({
                   </label>
                 );
               })}
-            </div> */}
+            </div>
           </div>
          
           <div className="pro-details-size">
