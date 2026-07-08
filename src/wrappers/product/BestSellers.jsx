@@ -28,9 +28,11 @@ const BestSellers = () => {
     fetchData();
   }, []);
 
+  const bestSellerCategories = categoriesData.filter(category => category.isBestSeller);
+
   const slides = [];
-  for (let i = 0; i < categoriesData.length; i += 4) {
-    slides.push(categoriesData.slice(i, i + 4));
+  for (let i = 0; i < bestSellerCategories.length; i += 4) {
+    slides.push(bestSellerCategories.slice(i, i + 4));
   }
   const totalSlides = slides.length;
 
@@ -59,7 +61,7 @@ const BestSellers = () => {
     }
   };
 
-  if (!categoriesData.length) return null;
+  if (!bestSellerCategories.length) return null;
   const currentSlide = slides[slideIdx] || [];
 
   return (
