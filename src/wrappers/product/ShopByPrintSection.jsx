@@ -24,6 +24,8 @@ const ShopByPrintSection = () => {
       .finally(() => setPrintLoading(false));
   }, []);
 
+  if (!printLoading && prints.length === 0) return null;
+
   return (
     <div className="looi-home-sections">
       <section className="looi-prints-section">
@@ -37,8 +39,6 @@ const ShopByPrintSection = () => {
           <div className="looi-grid-skeleton">
             {[1,2,3,4].map(i => <div key={i} className="looi-skeleton-card" />)}
           </div>
-        ) : prints.length === 0 ? (
-          <p className="looi-empty-msg">No prints available yet</p>
         ) : (
           <div className="looi-prints-grid">
             {prints.map((print, idx) => (
