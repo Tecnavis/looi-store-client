@@ -68,7 +68,9 @@ const ShopGridFullWidth = () => {
                 setLoading(true);
                 const response = await axiosInstance.get(`/get-allproduct`);
                 const allProducts = response.data.products;
-                const filteredProducts = allProducts.filter(product => product.subcategory === subcategoryId);
+                const filteredProducts = subcategoryId
+                    ? allProducts.filter(product => product.subcategory === subcategoryId)
+                    : allProducts;
                 setProducts(filteredProducts);
                 setFilteredProducts(filteredProducts);
 

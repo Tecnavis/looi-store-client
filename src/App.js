@@ -359,6 +359,10 @@ const App = () => {
                   element={<ShopGridFullWidth />}
                 />
                 <Route
+                  path={process.env.PUBLIC_URL + "/shop-grid-full-width"}
+                  element={<ShopGridFullWidth />}
+                />
+                <Route
                   path={process.env.PUBLIC_URL + "/shop-grid-right-sidebar"}
                   element={<ShopGridRightSidebar />}
                 />
