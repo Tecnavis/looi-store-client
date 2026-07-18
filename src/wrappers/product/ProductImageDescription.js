@@ -2,6 +2,7 @@
 
 import PropTypes from "prop-types";
 import clsx from "clsx";
+import { getColorHex, isLightColor } from "../../helpers/colorHex";
 import { useState, useEffect, useContext } from "react";
 import { EffectFade, Thumbs } from 'swiper';
 import AnotherLightbox from "yet-another-react-lightbox";
@@ -92,7 +93,10 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
           colorImages = [...colorImages, ...colorData.images];
         }
       });
-      return [coverImage, ...colorImages];
+      // Only fall back to the generic cover image if this color variant has
+      // no images of its own — otherwise every color would lead with the
+      // same static photo instead of showing what that variant looks like.
+      return colorImages.length > 0 ? colorImages : [coverImage];
     };
 
     const newImages = getImagesForColor();
@@ -341,22 +345,8 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                   <span>Colour: <strong>{selectedColor}</strong></span>
                   <div className="color-buttons-wrap">
                     {allColors.map((color, index) => {
-                      // Map color names to reliable hex values — CSS named colors
-                      // work for common names but can be inconsistent across browsers.
-                      const colorHexMap = {
-                        red: '#e53935', blue: '#4798f3', black: '#212121',
-                        white: '#ffffff', green: '#139c57', yellow: '#e2b837',
-                        orange: '#f57c00', pink: '#e91e8c', purple: '#7b1fa2',
-                        maroon: '#736751', brown: '#795548', gray: '#9e9e9e',
-                        chocolate: '#3d2314',
-                        grey: '#9e9e9e', navy: '#1a237e', 'navy blue': '#1a237e',
-                        teal: '#00897b', mustard: '#c8941a', olive: '#6d6f1e',
-                        beige: '#f5f0e8', cream: '#f5f0e8', rose: '#f48fb1',
-                        lavender: '#b39ddb', 'sky blue': '#29b6f6',
-                        'light blue': '#29b6f6', 'dark green': '#1b5e20',
-                      };
-                      const bg = colorHexMap[color.toLowerCase()] || color.toLowerCase();
-                      const isLight = ['white', 'yellow', 'cream', 'beige', 'lavender', 'rose'].includes(color.toLowerCase());
+                      const bg = getColorHex(color);
+                      const isLight = isLightColor(color);
                       const isSelected = color === selectedColor;
                       return (
                         <button
