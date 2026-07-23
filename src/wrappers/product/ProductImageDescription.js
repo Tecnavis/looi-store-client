@@ -2,7 +2,7 @@
 
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import { getColorHex, isLightColor } from "../../helpers/colorHex";
+import { getColorHex, isLightColor, normalizeColorName } from "../../helpers/colorHex";
 import { useState, useEffect, useContext } from "react";
 import { EffectFade, Thumbs } from 'swiper';
 import AnotherLightbox from "yet-another-react-lightbox";
@@ -72,10 +72,23 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
   const { addToCart } = useCart();
   const [isInCart, setIsInCart] = useState(false);
 
-  // Get all available colors
-  const allColors = [...new Set(sizes.flatMap(size =>
-    size.colors.map(color => color.color)
-  ))];
+  // Get all available colors (deduped case-insensitively — the same color is
+  // sometimes stored with different casing, e.g. "Black" vs "black", which
+  // would otherwise render as two separate swatches for the same color)
+  const allColors = (() => {
+    const seen = new Set();
+    const result = [];
+    sizes.forEach(size => {
+      size.colors.forEach(color => {
+        const key = normalizeColorName(color.color);
+        if (key && !seen.has(key)) {
+          seen.add(key);
+          result.push(color.color);
+        }
+      });
+    });
+    return result;
+  })();
 
   // Get sizes available for the selected color
   const availableSizes = sizes.filter(size =>
@@ -415,7 +428,7 @@ const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType,
                         border: 'none',
                         height: '40px',
                         width: '90%',
-                        backgroundColor: '#cccccc',
+                        backgroundColor: '#d9534f',
                         color: 'white',
                         borderRadius: '5px',
                         cursor: 'not-allowed'

@@ -390,6 +390,21 @@ const Cart = () => {
     }
   };
 
+  // Resolve the image that actually matches this cart row's selected size/color,
+  // instead of always showing the product's generic cover image (which was the
+  // same for every color and didn't reflect what the customer actually chose).
+  const getCartItemImage = (item) => {
+    const sizesData = item.product?.sizes;
+    if (Array.isArray(sizesData) && item.size && item.color) {
+      const sizeEntry = sizesData.find(s => s.size === item.size);
+      const colorEntry = sizeEntry?.colors?.find(c => c.color === item.color);
+      if (colorEntry?.images?.length > 0) {
+        return getImageUrl(colorEntry.images[0]) || image;
+      }
+    }
+    return getImageUrl(item.coverImage || item.product?.coverImage) || image;
+  };
+
   const renderCartContent = () => {
     if (!cartItems || cartItems.length === 0) {
       return (
@@ -420,13 +435,15 @@ const Cart = () => {
             {cartItems.length} {cartItems.length === 1 ? 'Item' : 'Items'} in your bag
           </span>
         </div>
-        {cartItems.map((item) => (
+        {cartItems.map((item) => {
+          const itemImage = getCartItemImage(item);
+          return (
           <Card className="cart-item-card" key={item._id}>
             <Card.Body>
               <Row className="align-items-center">
                 <Col xs={12} sm={3}>
                   <img
-                    src={getImageUrl(item.coverImage || item.product?.coverImage) || image}
+                    src={itemImage}
                     alt="Product"
                     className="product-image"
                   />
@@ -476,7 +493,8 @@ const Cart = () => {
               </Row>
             </Card.Body>
           </Card>
-        ))}
+          );
+        })}
       </>
     );
   };
